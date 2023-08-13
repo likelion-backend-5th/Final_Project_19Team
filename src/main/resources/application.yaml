@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: jdbc:sqlite:db.sqlite
+    driver-class-name: org.sqlite.JDBC
+    username: sa
+    password: password
+  jpa:
+    show-sql : true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: false
+  web:
+    resources:
+      static-locations: file:media/,classpath:/static
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+jwt:
+  secret: ZXhlcmNpc2Vjb2x1bW5lZGdlc2xlZXBzcG9ydGNvb2xmb3J0eW1hbnRoZXJlbHVja3ltZWNvbXBvc2l0aW9uYw==
+
