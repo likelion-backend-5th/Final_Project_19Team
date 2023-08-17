@@ -1,6 +1,7 @@
 package com.likelion.teammatch.config;
 
 
+import com.likelion.teammatch.service.JpaUserDetailsService;
 import com.likelion.teammatch.service.UserService;
 import com.likelion.teammatch.utils.JwtTokenFilters;
 import org.springframework.context.annotation.Bean;
@@ -18,11 +19,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfig {
     private final JwtTokenFilters jwtTokenFilter;
-    private final UserService userService;
+    private final JpaUserDetailsService jpaUserDetailsService;
 
-    public SecurityConfig(JwtTokenFilters jwtTokenFilter, UserService userService) {
+    public SecurityConfig(JwtTokenFilters jwtTokenFilter, JpaUserDetailsService jpaUserDetailsService) {
         this.jwtTokenFilter = jwtTokenFilter;
-        this.userService = userService;
+        this.jpaUserDetailsService = jpaUserDetailsService;
     }
 
     @Bean
@@ -60,7 +61,7 @@ public class SecurityConfig {
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userService);
+        authProvider.setUserDetailsService(jpaUserDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
