@@ -74,14 +74,4 @@ public class User implements UserDetails {
         return true;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)  // 팀 하나에 유저 여러명
-    @JoinColumn(name = "team_id")
-    private Team team;
-
-    private Integer adminId;
-    private String nickname;
-
-    public void joinTeam(Team team) {
-        this.team = team;
-    }
 }
