@@ -101,7 +101,7 @@ public class UserService {
 
 
         //유저네임은 변경 불가! DTO의 username 필드는 비어있어야 한다.
-        if (dto.getUsername() != null || !dto.getUsername().equals("")) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        if (dto.getUsername() != null) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 
         //이메일 또는 전화번호가 중복이라면 에러!
         if (emailExists(dto.getEmail())) throw new ResponseStatusException(HttpStatus.CONFLICT);
