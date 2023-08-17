@@ -1,36 +1,39 @@
 package com.likelion.teammatch.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
+@ToString
+@EqualsAndHashCode
 public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter(AccessLevel.PACKAGE)
     private Long id;
 
     private String teamName;
 
-    private boolean isFinished;
+    private Boolean isFinished;
 
     private Integer memberNum;
 
-    private boolean onRecruit;
+    private Boolean onRecruit;
 
-    private boolean open;
+    private Boolean open;
 
-    private LocalDateTime dateTime;
+    @Column(columnDefinition = "TEXT")
+    private String teamDescribe;
 
-    private boolean deleted;
+    private Long teamMangerId;
 
-    public Team(String teamName) {
-        this.teamName = teamName;
-    }
+    private Boolean deleted;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime finishedAt;
 }

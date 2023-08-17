@@ -1,15 +1,21 @@
 package com.likelion.teammatch.service.team;
 
-import com.likelion.teammatch.dto.team.request.CreateTeamRequestDto;
-import com.likelion.teammatch.dto.team.request.JoinTeamRequestDto;
-import com.likelion.teammatch.dto.team.response.*;
+
+import com.likelion.teammatch.dto.team.TeamDraftDto;
+import com.likelion.teammatch.dto.team.TeamInfoDto;
 import com.likelion.teammatch.entity.Team;
 import com.likelion.teammatch.entity.User;
+import com.likelion.teammatch.entity.UserTeam;
+import com.likelion.teammatch.repository.team.UserTeamRepository;
 import com.likelion.teammatch.repository.team.TeamRepository;
 import com.likelion.teammatch.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,53 +23,80 @@ import java.util.List;
 public class TeamService {
     private final TeamRepository teamRepository;
     private final UserRepository userRepository;
+    private final UserTeamRepository userTeamRepository;
 
-    // Team 생성
-    public CreateTeamResponseDto create(CreateTeamRequestDto dto) {
-        Team team = new Team(dto.getTeamName());
-        teamRepository.save(team);
+    //Team 생성
 
-        return new CreateTeamResponseDto(team.getTeamName(), team.getId());
+
+    //Team 가입
+    public void JoinTeamByTeamId(Long teamId, String role){
+        //현재 로그인한 유저의 이름 가져오기
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        //유저 엔티티 가져오기
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        //팀 엔티티 가져오기.
+        Team team = teamRepository.findById(teamId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        //이미 가입된 유저인지 아닌지 확인하기
+        if (userTeamRepository.existsByUserIdAndTeamId(user.getId(), team.getId())) throw new ResponseStatusException(HttpStatus.CONFLICT);
+
+        //가입하기
+        UserTeam userTeam = new UserTeam();
+        userTeam.setUserId(user.getId());
+        userTeam.setTeamId(team.getId());
+        userTeam.setRole(role);
+        userTeamRepository.save(userTeam);
     }
 
-    public JoinTeamResponseDto join(JoinTeamRequestDto dto, Long teamId) {  // teamId = PK
-        // teamId 로 team 조회
-        Team team = teamRepository.findById(teamId).orElseThrow(() -> new RuntimeException());
+    //Team 정보 가져오기
+    public TeamInfoDto getTeamInfo(Long teamId){
+        //현재 로그인한 유저의 이름 가져오기
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        //유저 엔티티 가져오기
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        // userId 로 user 조회
-        User user = userRepository.findById(dto.getUserId()).orElseThrow(() -> new RuntimeException());
+        //팀 엔티티 가져오기.
+        Team team = teamRepository.findById(teamId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        // user 의 team 필드에 team 값을 넣는다
-        user.joinTeam(team);
+        //해당 team 정보를 볼 수 있는 사람인지 검증하기
+        if (!userTeamRepository.existsByUserIdAndTeamId(user.getId(), team.getId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 
-        return new JoinTeamResponseDto(team.getTeamName(), user.getUsername());
-    }
+        TeamInfoDto dto = TeamInfoDto.fromEntity(team);
+        String managerUsername = userRepository.findById(team.getTeamMangerId()).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND)).getUsername();
+        dto.setTeamManagerUsername(managerUsername);
 
-    public InfoResponseDto getTeamInfo(Long teamId) {
-        // 1. teamName 으로 조회
-        Team team = teamRepository.findById(teamId).orElseThrow(() -> new RuntimeException());
-
-        // 2. 해당 팀의 모든 유저 조회
-        List<String> memberNames = userRepository.findUserNamesByTeam(team);
-
-        // 3. responseDto 에 담아서 보내기
-        return new InfoResponseDto(team.getTeamName(), memberNames);
-    }
-
-    public ViewTeamResponseDto viewTeam(Long teamId) {
-        Team team = teamRepository.findById(teamId).orElseThrow(() -> new RuntimeException());
-        return new ViewTeamResponseDto(team.getId(), team.getTeamName());
-    }
-
-    public List<SearchTeamResponseDto> searchTeamInfo(String keyword) {
-        if (keyword == null) {  // 키워드 없으면 모든 팀 보여주기
-            List<SearchTeamResponseDto> teams = teamRepository.findAllTeamInfo();
-            return teams;
-        } else {
-            List<SearchTeamResponseDto> teams = teamRepository.findByKeyword("%" + keyword + "%");
-            return teams;
+        List<String> memberNameList = new ArrayList<>();
+        for (UserTeam userTeam : userTeamRepository.findAllByTeamId(team.getId())){
+            String memberUsername = userRepository.findById(userTeam.getUserId()).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND)).getUsername();
+            memberNameList.add(memberUsername);
         }
+
+        dto.setTeamMemberUsername(memberNameList);
+
+        return dto;
     }
+
+    //내가 가입중인 Team 간략 정보 가져오기 (마이페이지에서 현재 참여중인 팀 목록 볼 때)
+    public List<TeamDraftDto> getMyTeamList(){
+        //현재 로그인한 유저의 이름 가져오기
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        //유저 엔티티 가져오기
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        List<UserTeam> myTeamList = userTeamRepository.findAllByUserId(user.getId());
+
+        List<TeamDraftDto> draftList = new ArrayList<>();
+        for (UserTeam userTeam : myTeamList){
+            Team currentTeam = teamRepository.findById(userTeam.getTeamId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            TeamDraftDto dto = new TeamDraftDto();
+            dto.setTeamName(currentTeam.getTeamName());
+            dto.setIsFinished(currentTeam.getIsFinished());
+            draftList.add(dto);
+        }
+        return draftList;
+    }
+
 
     // Team 수정
 
