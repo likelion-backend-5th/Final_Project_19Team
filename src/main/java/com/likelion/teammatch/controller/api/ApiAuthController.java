@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+//이제 더이상 사용하지 않음.
 @RestController
 @Slf4j
 @RequestMapping("/api")
@@ -38,18 +39,19 @@ public class ApiAuthController {
 
 
         JwtTokenDto response = new JwtTokenDto();
-        response.setToken(jwtTokenUtils.generateToken(userDetails));
+        response.setAccessToken(jwtTokenUtils.generateToken(userDetails));
+        response.setRefreshToken(jwtTokenUtils.generateRefreshTokenByUsername(userDetails.getUsername()));
         return response;
     }
 
 
     @PostMapping("/register")
     public String register(@RequestBody RegisterDto dto){
-        dto.setPassword(passwordEncoder.encode(dto.getPassword()));
         userService.createUser(dto);
 
         log.info("{} 가입 완료", dto.getUsername());
         return "가입처리되었습니다!";
     }
+
 
 }
