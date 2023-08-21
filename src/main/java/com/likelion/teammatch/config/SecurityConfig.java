@@ -31,9 +31,9 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authRequest -> authRequest
-                        .requestMatchers("/api/issue", "/api/register", "/login", "/register")
+                        .requestMatchers("/api/issue", "/api/register","/login", "/register")
                         .anonymous()
-                        .requestMatchers("/home", "/css/**", "/js/**")
+                        .requestMatchers( "/css/**", "/js/**")
                         .permitAll()
                         .anyRequest()
                         .authenticated()
@@ -41,12 +41,8 @@ public class SecurityConfig {
                 .authenticationProvider(authenticationProvider())
                 .sessionManagement(manage -> manage
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterAfter(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
-                .logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/home")
-                        .invalidateHttpSession(true)
-                        .deleteCookies("jwtToken"));
+                .addFilterAfter(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
 
 
