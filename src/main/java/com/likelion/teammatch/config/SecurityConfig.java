@@ -40,7 +40,13 @@ public class SecurityConfig {
                 .authenticationProvider(authenticationProvider())
                 .sessionManagement(manage -> manage
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterAfter(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterAfter(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
+                .logout(logout -> logout
+                                .logoutUrl("/logout")
+                                .invalidateHttpSession(true)
+                                .deleteCookies("accessToken", "refreshToken")
+                                .logoutSuccessUrl("/login")
+                );
 
         return http.build();
 
