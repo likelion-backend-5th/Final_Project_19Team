@@ -12,9 +12,8 @@ import lombok.ToString;
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode
 @ToString
-public class Token {
+public class Token extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
