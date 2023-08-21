@@ -1,29 +1,41 @@
 package com.likelion.teammatch.service;
 
+import com.likelion.teammatch.dto.JwtTokenDto;
+import com.likelion.teammatch.dto.LoginDto;
 import com.likelion.teammatch.dto.RegisterDto;
 import com.likelion.teammatch.dto.UserProfileDto;
+import com.likelion.teammatch.entity.Token;
 import com.likelion.teammatch.entity.User;
+import com.likelion.teammatch.repository.TokenRepository;
 import com.likelion.teammatch.repository.UserRepository;
+import com.likelion.teammatch.utils.JwtTokenUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Optional;
+
 
 @Service
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtTokenUtils jwtTokenUtils;
+    private final TokenRepository tokenRepository;
 
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtTokenUtils jwtTokenUtils, TokenRepository tokenRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtTokenUtils = jwtTokenUtils;
+        this.tokenRepository = tokenRepository;
     }
 
     //회원가입
     public void createUser(RegisterDto dto){
+        dto.setPassword(passwordEncoder.encode(dto.getPassword()));//encode 해주기!
         if (userRegisterConflicts(dto)) throw new ResponseStatusException(HttpStatus.CONFLICT);//Username Conflict!
 
         User user = new User();
@@ -57,6 +69,51 @@ public class UserService {
     //phone 중복인지 검사
     public Boolean phoneExists(String phone) {
         return userRepository.existsByPhone(phone);
+    }
+
+    //로그인 시도를 판별하는 메소드
+    //만약 유저네임과 비밀번호가 유효하다면 true.
+    //잘못된 유저네임 혹은 잘못된 비밀번호는 false.
+    public Boolean isLoginAttemptValid(LoginDto loginDto){
+        //입력한 유저네임으로 해당 유저 엔티티 찾기
+        String username = loginDto.getUsername();
+        Optional<User> loginAttemptUser = userRepository.findByUsername(username);
+
+        if (loginAttemptUser.isEmpty()) return false;
+
+        User user = loginAttemptUser.get();
+
+        //입력한 비밀번호 비교하기
+        if (!passwordEncoder.matches(loginDto.getPassword(), user.getPassword())) return false;
+
+        return true;
+    }
+
+
+
+    //로그인 정보를 가지고 token(access, refresh)를 발급하는 메소드
+    //isLoginAttemptValid를 통과해야지만 호출할 수 있는 getLoginToken 메소드
+    public JwtTokenDto getLoginToken(LoginDto loginDto){
+        //입력한 유저네임으로 해당 유저 엔티티 찾기
+        String username = loginDto.getUsername();
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        //입력한 비밀번호 비교하기
+        if (!passwordEncoder.matches(loginDto.getPassword(), user.getPassword())) throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+
+
+        //토큰 생성하기
+        String accessToken = jwtTokenUtils.generateTokenByUsername(username);
+        String refreshToken = jwtTokenUtils.generateRefreshTokenByUsername(username);
+
+        Token token = new Token();
+        token.setAccessToken(accessToken);
+        token.setRefreshToken(refreshToken);
+        tokenRepository.save(token);
+
+        //dto 리턴하기
+        return JwtTokenDto.fromEntity(token);
+
+
     }
 
     //내 프로필 가져오기

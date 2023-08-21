@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+</head>
+<body>
+<div class="login-box">
+    <h2>Login</h2>
+    <form th:action="@{/login}" th:method="post" id="loginForm">
+        <div class="user-box" >
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div class="user-box">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <a type="submit" onclick="submitForm()">
+            Login
+        </a>
+        <br/>
+        <a th:href="@{/register}">
+            회원가입
+        </a>
+    </form>
+</div>
+
+<script>
+    function submitForm() {
+        document.getElementById("loginForm").submit();
+    }
+</script>
+</body>
+</html>

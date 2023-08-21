@@ -6,6 +6,7 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -35,97 +36,142 @@ public class JwtTokenFilters extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (request.getRequestURI().contains("/api")){
-            doRestApiFilterInternal(request, response, filterChain);
+        Cookie[] cookies = request.getCookies();
+        Cookie accessTokenCookie = null;
+        Cookie refreshTokenCookie = null;
+
+        for (Cookie cookie : cookies){
+            if (cookie.getName().equals("accessToken")) accessTokenCookie = cookie;
+            if (cookie.getName().equals("refreshToken")) refreshTokenCookie = cookie;
         }
-        else {
-            doCookieFilterInternal(request, response, filterChain);
+
+        if (accessTokenCookie == null || refreshTokenCookie == null){
+            log.warn("Auth Cookie is null");
+            filterChain.doFilter(request, response);
+            return;
         }
+
+        String accessToken = accessTokenCookie.getValue();
+        String refreshToken = refreshTokenCookie.getValue();
+
+        try {
+            jwtTokenUtils.validate(accessToken);
+            SecurityContext context = SecurityContextHolder.createEmptyContext();
+
+            String username = jwtTokenUtils.parseClaims(accessToken).getSubject();
+            User user = new User();
+            user.setUsername(username);
+
+            AbstractAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                    user,
+                    accessToken,
+                    new ArrayList<>()
+            );
+            context.setAuthentication(authToken);
+
+            SecurityContextHolder.setContext(context);
+
+            log.info("no problem");
+            filterChain.doFilter(request, response);
+        }
+        catch (ExpiredJwtException ex){
+            log.info("access token expired!");
+            //refresh Token 체크
+            if (!jwtTokenUtils.checkAccessAndRefreshToken(accessToken, refreshToken)) {
+                log.warn("refreshToken is not Valid!");
+                filterChain.doFilter(request, response);
+                return;
+            }
+
+            // refreshToken no problem!
+            // 문제가 없다면 accessToken과 refreshToken 업데이트 (Refresh Token Rotation)
+            String username = jwtTokenUtils.parseClaims(refreshToken).getSubject();
+            String generatedAccessToken = jwtTokenUtils.generateTokenByUsername(username);
+            String generatedRefreshToken = jwtTokenUtils.generateRefreshTokenByUsername(username);
+            jwtTokenUtils.updateAccessAndRefreshToken(accessToken, refreshToken, generatedAccessToken, generatedRefreshToken);
+            accessTokenCookie.setValue(generatedAccessToken);
+            refreshTokenCookie.setValue(generatedRefreshToken);
+            accessTokenCookie.setMaxAge(3600 * 10);//10시간
+            refreshTokenCookie.setMaxAge(3600 * 10);
+            accessTokenCookie.setHttpOnly(true);
+            refreshTokenCookie.setHttpOnly(true);
+
+            response.addCookie(accessTokenCookie);
+            response.addCookie(refreshTokenCookie);
+
+            //인증 객체 생성 후 적용. (즉, 업데이트 이후에도 접속 상태를 유지시킴)
+            SecurityContext context = SecurityContextHolder.createEmptyContext();
+
+            User user = new User();
+            user.setUsername(username);
+
+            AbstractAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                    user,
+                    accessToken,
+                    new ArrayList<>()
+            );
+            context.setAuthentication(authToken);
+
+            SecurityContextHolder.setContext(context);
+            filterChain.doFilter(request, response);
+        }
+        catch (Exception ex){
+            filterChain.doFilter(request, response);
+            return;
+        }
+
     }
 
-    private void doCookieFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        final String cookie = request.getHeader("Cookie");
-        final String jwt;
-        final String username;
 
-        // Token이 없다면 다음 필터로 이동
-        if (cookie == null || !cookie.contains("jwtToken=")){
-            log.warn("No Token in Cookie!");
-            log.warn("cookie : {}", cookie);
-            request.setAttribute("Exception", new ResponseStatusException(HttpStatus.NOT_IMPLEMENTED));//AUth header가 없거나 JWT가 존재하지 않음.
-        }
-        else {
-            //토큰 parse하기
-            jwt = cookie.substring(cookie.indexOf("jwtToken=") + 9);
-
-
-            //사용자가 인증이 되었는지만 확인. 해당 요청에 적합한지에 대한 세부 구현적인 내용은 Service에서 검증 과정을 통해 대조하여 exception함.
-            try{
-                jwtTokenUtils.validate(jwt);
-                SecurityContext context = SecurityContextHolder.createEmptyContext();
-
-                username = jwtTokenUtils.parseClaims(jwt).getSubject();
-                User user = new User();
-                user.setUsername(username);
-
-                AbstractAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                        user,
-                        jwt,
-                        new ArrayList<>()
-                );
-                context.setAuthentication(authToken);
-
-                SecurityContextHolder.setContext(context);
-            }
-            catch (ExpiredJwtException ex){
-                request.setAttribute("Exception", new ResponseStatusException(HttpStatus.NOT_IMPLEMENTED)); //JWT 만료
-            }
-            catch (SignatureException | MalformedJwtException ex){
-                request.setAttribute("Exception", new ResponseStatusException(HttpStatus.NOT_IMPLEMENTED)); //jwt 변조 혹은 잘못 서명됨.
-            }
-
-        }
-
-
-        filterChain.doFilter(request, response);
-    }
 
     private void doRestApiFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         //Header로부터 Auth 정보 가져오기
         String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 
         //Header가 비어있거나 Bearer로 시작하지 않는다면 InvalidAuthorizationHeaderException
-        if (authHeader == null || !authHeader.startsWith("Bearer ")){
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             log.warn("Authorization Header is Not Valid");
-            log.warn("auth header : {} " , authHeader);
+            log.warn("auth header : {} ", authHeader);
             request.setAttribute("Exception", new ResponseStatusException(HttpStatus.NOT_IMPLEMENTED));//AUth header가 없거나 JWT가 존재하지 않음.
+            filterChain.doFilter(request, response);
+            return;
         }
-        else {
-            String token = authHeader.split(" ")[1];
-            try{
-                jwtTokenUtils.validate(token);
-                SecurityContext context = SecurityContextHolder.createEmptyContext();
+        String token = authHeader.split(" ")[1];
 
-                String username = jwtTokenUtils.parseClaims(token).getSubject();
-                User user = new User();
-                user.setUsername(username);
+        try {
+            jwtTokenUtils.validate(token);
+            SecurityContext context = SecurityContextHolder.createEmptyContext();
 
-                AbstractAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                        user,
-                        token,
-                        new ArrayList<>()
-                );
-                context.setAuthentication(authToken);
+            String username = jwtTokenUtils.parseClaims(token).getSubject();
+            User user = new User();
+            user.setUsername(username);
 
-                SecurityContextHolder.setContext(context);
+            AbstractAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                    user,
+                    token,
+                    new ArrayList<>()
+            );
+            context.setAuthentication(authToken);
+
+            SecurityContextHolder.setContext(context);
+        } catch (ExpiredJwtException ex) {
+            String refreshHeader = request.getHeader("RefreshToken");
+
+            if (refreshHeader == null || !refreshHeader.startsWith("Bearer ")){
+                log.warn("RefreshToken header is not valid!");
+                log.warn("RefreshToken header : {}", refreshHeader);
+                request.setAttribute("Exception", new ResponseStatusException(HttpStatus.NOT_IMPLEMENTED));
+                filterChain.doFilter(request, response);
+                return;
             }
-            catch (ExpiredJwtException ex){
-                request.setAttribute("Exception", new ResponseStatusException(HttpStatus.NOT_IMPLEMENTED)); //JWT 만료
-            }
-            catch (SignatureException | MalformedJwtException ex){
-                request.setAttribute("Exception", new ResponseStatusException(HttpStatus.NOT_IMPLEMENTED)); //jwt 변조 혹은 잘못 서명됨.
-            }
+
+            String refreshToken = refreshHeader.split(" ")[1];
+            
+        } catch (SignatureException | MalformedJwtException ex) {
+            request.setAttribute("Exception", new ResponseStatusException(HttpStatus.NOT_IMPLEMENTED)); //jwt 변조 혹은 잘못 서명됨.
         }
-        filterChain.doFilter(request, response);
     }
+
+
+
 }

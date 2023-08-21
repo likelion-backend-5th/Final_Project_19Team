@@ -2,7 +2,6 @@ package com.likelion.teammatch.config;
 
 
 import com.likelion.teammatch.service.JpaUserDetailsService;
-import com.likelion.teammatch.service.UserService;
 import com.likelion.teammatch.utils.JwtTokenFilters;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,9 +30,9 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authRequest -> authRequest
-                        .requestMatchers("/api/issue", "/api/register", "/login", "/register")
+                        .requestMatchers("/api/issue", "/api/register","/login", "/register")
                         .anonymous()
-                        .requestMatchers("/home", "/css/**", "/js/**")
+                        .requestMatchers( "/css/**", "/js/**")
                         .permitAll()
                         .anyRequest()
                         .authenticated()
@@ -43,10 +42,12 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterAfter(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/home")
-                        .invalidateHttpSession(true)
-                        .deleteCookies("jwtToken"));
+                                .logoutUrl("/logout")
+                                .invalidateHttpSession(true)
+                                .deleteCookies("accessToken", "refreshToken")
+                                .logoutSuccessUrl("/login")
+                );
+
         return http.build();
 
 
