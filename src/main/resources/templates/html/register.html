@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+<body>
+<div class="register-box">
+  <form  th:action="@{/register}" th:method="post" id="registerForm">
+    <h2>회원가입</h2>
+    <div class="user-box">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" required>
+    </div>
+    <div class="user-box">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required>
+    </div>
+    <div class="user-box">
+      <label for="email">Email</label>
+      <input type="text" id="email" name="email" required>
+    </div>
+    <div class="user-box">
+      <label for="phone">phone</label>
+      <input type="text" id="phone" name="phone" required>
+    </div>
+    <a id="register-btn" type="submit" onclick="submitForm()">
+      회원가입
+    </a>
+    <a id="go-back-btn" th:href="@{/login}">
+      뒤로 가기
+    </a>
+  </form>
+</div>
+
+<script>
+  function submitForm() {
+    document.getElementById("loginForm").submit();
+  }
+</script>
+</body>
+</html>
