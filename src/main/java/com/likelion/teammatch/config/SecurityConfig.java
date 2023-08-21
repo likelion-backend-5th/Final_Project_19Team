@@ -2,7 +2,6 @@ package com.likelion.teammatch.config;
 
 
 import com.likelion.teammatch.service.JpaUserDetailsService;
-import com.likelion.teammatch.service.UserService;
 import com.likelion.teammatch.utils.JwtTokenFilters;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
