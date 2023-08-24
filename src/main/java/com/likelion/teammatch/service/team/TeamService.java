@@ -1,11 +1,14 @@
 package com.likelion.teammatch.service.team;
 
 
+import com.likelion.teammatch.dto.team.TeamCreateDto;
 import com.likelion.teammatch.dto.team.TeamDraftDto;
 import com.likelion.teammatch.dto.team.TeamInfoDto;
+import com.likelion.teammatch.entity.Recruit;
 import com.likelion.teammatch.entity.Team;
 import com.likelion.teammatch.entity.User;
 import com.likelion.teammatch.entity.UserTeam;
+import com.likelion.teammatch.repository.RecruitRepository;
 import com.likelion.teammatch.repository.team.UserTeamRepository;
 import com.likelion.teammatch.repository.team.TeamRepository;
 import com.likelion.teammatch.repository.UserRepository;
@@ -24,23 +27,47 @@ public class TeamService {
     private final TeamRepository teamRepository;
     private final UserRepository userRepository;
     private final UserTeamRepository userTeamRepository;
-
+    private final RecruitRepository recruitRepository;
     //Team 생성
-
-
-    //Team 가입
-    public void JoinTeamByTeamId(Long teamId, String role){
+    //생성 후 teamId 리턴함
+    public Long createTeam(TeamCreateDto dto){
         //현재 로그인한 유저의 이름 가져오기
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         //유저 엔티티 가져오기
         User user = userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
+        Team team = TeamCreateDto.getTeamEntity(dto);
+        Recruit recruit = TeamCreateDto.getRecruitEntity(dto);
+
+        team.setTeamMangerId(user.getId());
+        team = teamRepository.save(team);
+
+
+        if (recruit != null){
+            recruit.setTeamManagerId(user.getId());
+            recruit.setTeamId(team.getId());
+
+            recruitRepository.save(recruit);
+        }
+
+        return team.getId();
+    }
+
+
+    //Team 가입
+    public void JoinTeamByTeamId(Long teamId, String username, String role){
+        //유저 엔티티 가져오기
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
         //팀 엔티티 가져오기.
         Team team = teamRepository.findById(teamId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
+        
         //이미 가입된 유저인지 아닌지 확인하기
         if (userTeamRepository.existsByUserIdAndTeamId(user.getId(), team.getId())) throw new ResponseStatusException(HttpStatus.CONFLICT);
 
+        //팀의 현재 멤버수 증가시키기
+        team.setMemberNum(team.getMemberNum() + 1);
+        teamRepository.save(team);
         //가입하기
         UserTeam userTeam = new UserTeam();
         userTeam.setUserId(user.getId());
@@ -62,16 +89,17 @@ public class TeamService {
         //해당 team 정보를 볼 수 있는 사람인지 검증하기
         if (!userTeamRepository.existsByUserIdAndTeamId(user.getId(), team.getId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 
+        //매니저 이름 추가하기
         TeamInfoDto dto = TeamInfoDto.fromEntity(team);
         String managerUsername = userRepository.findById(team.getTeamMangerId()).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND)).getUsername();
         dto.setTeamManagerUsername(managerUsername);
 
+        //멤버 이름 리스트 추가하기
         List<String> memberNameList = new ArrayList<>();
         for (UserTeam userTeam : userTeamRepository.findAllByTeamId(team.getId())){
             String memberUsername = userRepository.findById(userTeam.getUserId()).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND)).getUsername();
             memberNameList.add(memberUsername);
         }
-
         dto.setTeamMemberUsername(memberNameList);
 
         return dto;
