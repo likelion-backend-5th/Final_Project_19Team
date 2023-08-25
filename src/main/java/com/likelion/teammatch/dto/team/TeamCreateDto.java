@@ -54,24 +54,6 @@ public class TeamCreateDto {
     // (ex: "우리는 XX 공모전에 대비해서 진행할 생각입니다! 백엔드 부분에서 경험 많으신 분을 위주로 모집합니다! 서울에서 진행할 생각입니다!))
     private String teamRecruitDetails;
 
-    //만약 "프로젝트 후기를 작성하시겠습니까?" 란에 체크하면 아래 있는 요소들을 작성할 수 있다.
-    private Boolean publishProjectResult;
-
-    //프로젝트 후기 내용
-    private String teamProjectDetails;
-
-    //깃허브
-    private String teamGithub;
-
-    //만약 "리뷰를 작성하시겠습니까?" 란에 체크하면 아래 있는 요소들을 작성할 수 있다.
-    private Boolean publishReviewResult;
-
-    //리뷰 내용
-    private String reviewDetails;
-
-    //담당한 역할
-    private String role;
-
 
     public static Team getTeamEntity(TeamCreateDto dto){
         Team team = new Team();
@@ -94,26 +76,6 @@ public class TeamCreateDto {
             recruit.setTitle(dto.getTeamRecruitName());
             recruit.setTeamRecruitDetails(dto.getTeamRecruitDetails());
             return recruit;
-        }
-        return null;
-    }
-
-    public static ProjectResult getProjectResultEntity(TeamCreateDto dto) {
-        if (dto.getPublishProjectResult()){
-            ProjectResult projectResult = new ProjectResult();
-            projectResult.setDescription(dto.getTeamProjectDetails());
-            projectResult.setGithub(dto.getTeamGithub());
-            return projectResult;
-        }
-        return null;
-    }
-
-    public static Review getReviewEntity(TeamCreateDto dto) {
-        if (dto.getPublishReviewResult()){
-            Review review = new Review();
-            review.setDescribe(dto.getReviewDetails());
-            review.setRole(dto.getRole());
-            return review;
         }
         return null;
     }

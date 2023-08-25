@@ -1,13 +1,13 @@
 package com.likelion.teammatch.service;
 
 import com.likelion.teammatch.dto.ReviewInfoDto;
-import com.likelion.teammatch.dto.team.TeamCreateDto;
 import com.likelion.teammatch.entity.Review;
 import com.likelion.teammatch.entity.Team;
 import com.likelion.teammatch.entity.User;
 import com.likelion.teammatch.repository.ReviewRepository;
 import com.likelion.teammatch.repository.UserRepository;
 import com.likelion.teammatch.repository.team.TeamRepository;
+import com.likelion.teammatch.repository.team.UserTeamRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,22 +19,13 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final UserRepository userRepository;
     private final TeamRepository teamRepository;
+    private final UserTeamRepository userTeamRepository;
 
-    public ReviewService(ReviewRepository reviewRepository, TeamRepository teamRepository, UserRepository userRepository) {
+    public ReviewService(ReviewRepository reviewRepository, TeamRepository teamRepository, UserRepository userRepository, UserTeamRepository userTeamRepository) {
         this.reviewRepository = reviewRepository;
         this.teamRepository = teamRepository;
         this.userRepository = userRepository;
-    }
-
-    //Team을 만들면서 동시에 리뷰를 생성하는 메소드
-    public Long createReviewBoardWithTeam(TeamCreateDto dto) {
-        Review review = TeamCreateDto.getReviewEntity(dto);
-
-        if (review != null){
-            review = reviewRepository.save(review);
-            return review.getId();
-        }
-        return -1L;
+        this.userTeamRepository = userTeamRepository;
     }
 
     //리뷰를 따로 추가하는 메소드
@@ -49,7 +40,7 @@ public class ReviewService {
         Team team = teamRepository.findById(teamId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         //리뷰 수정 권한 확인하기
-        if (!team.getId().equals(user.getId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        if (!userTeamRepository.existsByUserIdAndTeamId(user.getId(), team.getId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 
         Review review = new Review();
         review.setRole(role);
@@ -72,7 +63,7 @@ public class ReviewService {
         Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         //리뷰 수정 권한 확인하기
-        if (!review.getId().equals(user.getId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        if (!user.getId().equals(review.getUserId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 
         review.setDescribe(reviewDetails);
         review.setRole(role);
@@ -93,8 +84,8 @@ public class ReviewService {
         //projectResultEntity 가져오기
         Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        //리뷰 수정 권한 확인하기
-        if (!review.getId().equals(user.getId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        //리뷰 삭제 권한 확인하기
+        if (!user.getId().equals(review.getUserId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 
         reviewRepository.deleteById(reviewId);
     }

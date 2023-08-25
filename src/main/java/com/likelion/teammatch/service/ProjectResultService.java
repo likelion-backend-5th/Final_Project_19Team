@@ -26,17 +26,6 @@ public class ProjectResultService {
         this.userRepository = userRepository;
     }
 
-    //Team을 만들면서 동시에 ProjectResult 를 생성하는 메소드
-    public Long createProjectResultBoardWithTeam(TeamCreateDto dto) {
-        ProjectResult projectResult = TeamCreateDto.getProjectResultEntity(dto);
-
-        if (projectResult != null){
-            projectResult = projectResultRepository.save(projectResult);
-            return projectResult.getId();
-        }
-        return -1L;
-    }
-
     //ProjectResult 를 따로 추가하는 메소드
     public Long createProjectResult(Long teamId, String github, String projectResultDetails){
         //현재 사용자의 username 가져오기
@@ -56,6 +45,7 @@ public class ProjectResultService {
         projectResult.setGithub(github);
         projectResult.setTeamManagerId(user.getId());
         projectResult.setTeamId(team.getId());
+        projectResult.setOpen(team.getOpen());
         projectResult = projectResultRepository.save(projectResult);
 
         return projectResult.getId();
@@ -106,9 +96,12 @@ public class ProjectResultService {
         //ProjectResult 가져오기
         ProjectResult projectResult = projectResultRepository.findById(projectResultId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        //해당 ProjectResult 에 연결된 Team 가져오기 (?)
+        //해당 ProjectResult 에 연결된 Team 가져오기
         Team team = teamRepository.findById(projectResult.getTeamId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        return ProjectResultInfoDto.fromEntity(team, projectResult);
+        //해당 Review 에 연결된 TeamManager 가져오기
+        User user = userRepository.findById(projectResult.getTeamManagerId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        return ProjectResultInfoDto.fromEntity(team, user, projectResult);
     }
 }
