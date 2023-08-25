@@ -1,7 +1,6 @@
 package com.likelion.teammatch.service;
 
 import com.likelion.teammatch.dto.ProjectResultInfoDto;
-import com.likelion.teammatch.dto.team.TeamCreateDto;
 import com.likelion.teammatch.entity.ProjectResult;
 import com.likelion.teammatch.entity.Team;
 import com.likelion.teammatch.entity.User;
@@ -99,7 +98,7 @@ public class ProjectResultService {
         //해당 ProjectResult 에 연결된 Team 가져오기
         Team team = teamRepository.findById(projectResult.getTeamId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        //해당 Review 에 연결된 TeamManager 가져오기
+        //해당 ProjectResult 에 연결된 TeamManager 가져오기
         User user = userRepository.findById(projectResult.getTeamManagerId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         return ProjectResultInfoDto.fromEntity(team, user, projectResult);

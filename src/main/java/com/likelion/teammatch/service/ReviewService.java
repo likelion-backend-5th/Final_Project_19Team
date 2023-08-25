@@ -29,7 +29,7 @@ public class ReviewService {
     }
 
     //리뷰를 따로 추가하는 메소드
-    private Long createReview(Long teamId, String role, String reviewDetails) {
+    private Long createReview(Long teamId, String reviewDetails, String role) {
         //현재 사용자의 username 가져오기
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
@@ -43,8 +43,8 @@ public class ReviewService {
         if (!userTeamRepository.existsByUserIdAndTeamId(user.getId(), team.getId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 
         Review review = new Review();
-        review.setRole(role);
         review.setDescribe(reviewDetails);
+        review.setRole(role);
         review.setUserId(user.getId());
         review = reviewRepository.save(review);
 
@@ -59,7 +59,7 @@ public class ReviewService {
         //user Entity 가져오기
         User user = userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        //projectResultEntity 가져오기
+        //ReviewEntity 가져오기
         Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         //리뷰 수정 권한 확인하기
@@ -81,7 +81,7 @@ public class ReviewService {
         //user Entity 가져오기
         User user = userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        //projectResultEntity 가져오기
+        //ReviewEntity 가져오기
         Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         //리뷰 삭제 권한 확인하기
@@ -92,7 +92,7 @@ public class ReviewService {
 
     //리뷰 가져오기
     public ReviewInfoDto getReviewInfo(Long reviewId) {
-        //ProjectResult 가져오기
+        //Review 가져오기
         Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         //해당 Review 에 연결된 User 가져오기

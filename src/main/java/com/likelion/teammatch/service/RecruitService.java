@@ -103,7 +103,7 @@ public class RecruitService {
         //recruitEntity 가져오기
         Recruit recruit = recruitRepository.findById(recruitId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        //모집 공고 수정 권한 확인하기
+        //모집 공고 삭제 권한 확인하기
         if (!recruit.getTeamManagerId().equals(user.getId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 
         recruitRepository.deleteById(recruitId);
