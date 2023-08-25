@@ -29,6 +29,7 @@ public class TeamInfoDto {
     private String teamManagerUsername;
 
     private List<String> teamMemberUsername = new ArrayList<>();
+    private List<String> teamTechStackName = new ArrayList<>();
 
     private String createdAt;
     private String finishedAt;
@@ -44,6 +45,7 @@ public class TeamInfoDto {
         dto.setTeamDescribe(team.getTeamDescribe());
         //teamManagerUsername은 나중에 채울 것
         //team member username은 나중에 채울 것
+        //team techStackName은 나중에 채울 것
         dto.setCreatedAt(team.getCreatedAt().toString());
         dto.setFinishedAt(team.getFinishedAt().toString());
         return dto;

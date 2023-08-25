@@ -3,15 +3,13 @@ package com.likelion.teammatch.dto.team;
 import com.likelion.teammatch.entity.Recruit;
 import com.likelion.teammatch.entity.Team;
 import com.likelion.teammatch.entity.type.TeamType;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -51,6 +49,9 @@ public class TeamCreateDto {
     //팀 소개글과는 다르다! 모집 공고에 적고 싶은 특이사항들을 적게 할 생각이다.
     // (ex: "우리는 XX 공모전에 대비해서 진행할 생각입니다! 백엔드 부분에서 경험 많으신 분을 위주로 모집합니다! 서울에서 진행할 생각입니다!))
     private String teamRecruitDetails;
+
+    //팀 테크스택 리스트
+    private List<String> teamTechStackList = new ArrayList<>();
 
 
     public static Team getTeamEntity(TeamCreateDto dto){
