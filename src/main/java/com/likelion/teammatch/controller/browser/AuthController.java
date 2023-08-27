@@ -50,7 +50,7 @@ public class AuthController {
         response.addCookie(refreshCookie);
 
         //테스트 단계에서만 test로 redirect한다!
-        return "redirect:/test";
+        return "redirect:/main";
 
     }
 
