@@ -1,42 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
+    <link rel="stylesheet" href="../styles/register.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons%3A400">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+KR%3A700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%3A400%2C500%2C700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro%3A400%2C500%2C700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans%3A400">
 </head>
-<body>
-<div class="register-box">
-  <form  th:action="@{/register}" th:method="post" id="registerForm">
-    <h2>회원가입</h2>
-    <div class="user-box">
-      <label for="username">Username</label>
-      <input type="text" id="username" name="username" required>
-    </div>
-    <div class="user-box">
-      <label for="password">Password</label>
-      <input type="password" id="password" name="password" required>
-    </div>
-    <div class="user-box">
-      <label for="email">Email</label>
-      <input type="text" id="email" name="email" required>
-    </div>
-    <div class="user-box">
-      <label for="phone">phone</label>
-      <input type="text" id="phone" name="phone" required>
-    </div>
-    <a id="register-btn" type="submit" onclick="submitForm()">
-      회원가입
-    </a>
-    <a id="go-back-btn" th:href="@{/login}">
-      뒤로 가기
-    </a>
-  </form>
-</div>
 
-<script>
-  function submitForm() {
-    document.getElementById("loginForm").submit();
-  }
-</script>
+<body>
+    <div class="item--XW1">
+
+        <div class="image-9-KdT">
+            <img src="../assets/register/logo.png" class="image-9-CWd" alt="logo">
+            </img>
+            <img class="close-PDj" src="../assets/register/close.svg" alt="x">
+        </div>
+
+        <p class="sign-up-page-QZo">Sign-up page</p>
+        <div class="line-12-cLR"></div>
+        <div class="flex">
+            <div class="nameinputcomponent-M37">
+                <div class="idinput-HBf">
+                    <div class="id-PkV">Name</div>
+                </div>
+                <p class="item--QmP">이름을 입력해 주세요.</p>
+            </div>
+            <div class="nameinputcomponent-M37">
+                <div class="idinput-HBf">
+                    <div class="id-PkV">ID</div>
+                    <div class="checkbutton-PTf">Check</div>
+                </div>
+
+                <p class="item--QmP">아이디를 입력해 주세요.</p>
+            </div>
+            <div class="nameinputcomponent-M37">
+                <div class="idinput-HBf">
+                    <div class="id-PkV">Password</div>
+                </div>
+                <p class="item--QmP">비밀번호를 입력해 주세요.</p>
+            </div>
+            <div class="nameinputcomponent-M37">
+                <div class="idinput-HBf">
+                    <div class="id-PkV">Password check</div>
+                </div>
+                <p class="item--QmP">비밀번호가 일치하지 않습니다.</p>
+            </div>
+            <div class="nameinputcomponent-M37">
+                <div class="idinput-HBf">
+                    <div class="id-PkV">Email</div>
+                </div>
+                <p class="item--QmP">이메일을 입력해 주세요.</p>
+            </div>
+            <div class="nameinputcomponent-M37">
+                <div class="idinput-HBf">
+                    <div class="id-PkV">PhoneNumber</div>
+                </div>
+                <p class="item--QmP">핸드폰 번호를 입력해 주세요.</p>
+            </div>
+            <div class="singupbutton-Quo">Join</div>
+
+        </div>
+
+    </div>
 </body>
+
 </html>
