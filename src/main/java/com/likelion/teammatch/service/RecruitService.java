@@ -125,7 +125,7 @@ public class RecruitService {
     //Sort버튼
     public List<RecruitInfoDto> getRecruitInfoList(int page){
         PageRequest pageRequest = PageRequest.of(page, 10);
-        Page<Recruit> pageOfEntity = recruitRepository.findAllByIdOrderByIdDesc(pageRequest);
+        Page<Recruit> pageOfEntity = recruitRepository.findAllByOrderByIdDesc(pageRequest);
 
         List<Recruit> recruitList = pageOfEntity.getContent();
         List<RecruitInfoDto> dtoList = new ArrayList<>();
