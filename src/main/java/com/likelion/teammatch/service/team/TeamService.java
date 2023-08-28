@@ -4,11 +4,10 @@ package com.likelion.teammatch.service.team;
 import com.likelion.teammatch.dto.team.TeamCreateDto;
 import com.likelion.teammatch.dto.team.TeamDraftDto;
 import com.likelion.teammatch.dto.team.TeamInfoDto;
-import com.likelion.teammatch.entity.Recruit;
-import com.likelion.teammatch.entity.Team;
-import com.likelion.teammatch.entity.User;
-import com.likelion.teammatch.entity.UserTeam;
+import com.likelion.teammatch.entity.*;
 import com.likelion.teammatch.repository.RecruitRepository;
+import com.likelion.teammatch.repository.TeamTechStackRepository;
+import com.likelion.teammatch.repository.TechStackRepository;
 import com.likelion.teammatch.repository.team.UserTeamRepository;
 import com.likelion.teammatch.repository.team.TeamRepository;
 import com.likelion.teammatch.repository.UserRepository;
@@ -28,6 +27,8 @@ public class TeamService {
     private final UserRepository userRepository;
     private final UserTeamRepository userTeamRepository;
     private final RecruitRepository recruitRepository;
+    private final TechStackRepository techStackRepository;
+    private final TeamTechStackRepository teamTechStackRepository;
     //Team 생성
     //생성 후 teamId 리턴함
     public Long createTeam(TeamCreateDto dto){
@@ -41,6 +42,15 @@ public class TeamService {
 
         team.setTeamMangerId(user.getId());
         team = teamRepository.save(team);
+
+        for (String techStackName : dto.getTeamTechStackList()){
+            TechStack techStack = techStackRepository.findByName(techStackName).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+            TeamTechStack teamTechStack = new TeamTechStack();
+            teamTechStack.setTechStackId(techStack.getId());
+            teamTechStack.setTeamId(team.getId());
+            teamTechStackRepository.save(teamTechStack);
+        }
 
 
         if (recruit != null){
@@ -101,6 +111,14 @@ public class TeamService {
             memberNameList.add(memberUsername);
         }
         dto.setTeamMemberUsername(memberNameList);
+
+        //techStack이름 가져오기
+        List<String> techStackNameList = new ArrayList<>();
+        for (TeamTechStack teamTechStack : teamTechStackRepository.findAllByTeamId(teamId)){
+            String name = techStackRepository.findById(teamTechStack.getTechStackId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)).getName();
+            techStackNameList.add(name);
+        }
+        dto.setTeamTechStackName(techStackNameList);
 
         return dto;
     }
