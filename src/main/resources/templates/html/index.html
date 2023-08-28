@@ -313,9 +313,10 @@
         const logined = [[${logined}]];
         alert(logined);
         let overlay = document.getElementById("overlay");
-        let loginModal = document.getElementById("modal");
+        let loginModal = document.getElementById("loginModal");
 
         function createTeamRecruit(){
+            alert("clicked");
             if (logined) window.location.href = "/createTeam";
             else {
                 loginModal.style.display='block';
