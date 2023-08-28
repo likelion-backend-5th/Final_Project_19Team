@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" th:href="@{../css/index.css}" href="../../static/css/index.css">
+    <link rel="stylesheet" th:href="@{../css/login.css}" href="../../static/css/login.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons%3A400">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+KR%3A700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%3A400%2C500%2C700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro%3A400%2C500%2C700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans%3A400">
+</head>
+
+<body>
+<div class="top">
+    <div class="nav">
+        <div class="nav_logo">
+            <img class='nav_logo_img' src="../../static/assets/index/logo.png" th:src="@{/assets/index/logo.png}" alt="로고" />
+            <span class='nav_logo_text'>like lion</span></Link>
+        </div>
+        <div class="nav_search">
+            <img class="nav_search_img" src="../../static/assets/index/search.svg" th:src="@{/assets/index/search.svg}" alt="#" />
+            <input type="text" class="nav_search_input" placeholder="Search" />
+        </div>
+        <div class="nav_btn">
+            <Link to="/Alarm" class='router_link'>
+            <button class='nav_btn_list'>
+                <img src="../../static/assets/index/bell.svg" th:src="@{/assets/index/bell.svg}" alt="알람" />
+            </button>
+            </Link>
+            <button class='nav_btn_list'>
+                <img src="../../static/assets/index/star.svg" th:src="@{/assets/index/star.svg}" alt="즐겨찾기" />
+            </button>
+            <button class='nav_btn_list'>
+                <img src="../../static/assets/index/mypage.svg" th:src="@{/assets/index/mypage.svg}" alt="마이페이지" />
+            </button>
+        </div>
+    </div>
+</div>
+    <div class="main" id="overlay">
+        <div class="quick_filter">
+            <div class="quick_filter_body">
+                <div>
+                    <img class='quick_filter_body_img' src="../../static/assets/index/quick_filter.svg" th:src="@{/assets/index/quick_filter.svg}" alt="필터" />
+                    <span class='quick_filter_text'>Quick Filter</span>
+                </div>
+                <div>
+                    <button class="quick_filter_btn">HTML</button>
+                    <button class="quick_filter_btn">CSS</button>
+                    <button class="quick_filter_btn">Javascript</button>
+                    <button class="quick_filter_btn">React</button>
+                    <button class="quick_filter_btn">Vue</button>
+                    <button class="quick_filter_btn">Svelte</button>
+                    <button class="quick_filter_btn">Nextjs</button>
+                    <button class="quick_filter_btn">Nodejs</button>
+                    <button class="quick_filter_btn">Java</button>
+                    <button class="quick_filter_btn selected">Spring</button>
+                    <button class="quick_filter_btn selected">Python</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="match">
+            <div class="match_making">
+                <img class='match_making_img' src="../../static/assets/index/create.svg" th:src="@{/assets/index/create.svg}" alt="" />
+                <span class='match_making_text'>Match Making</span>
+                <button class="match_making_btn" onclick="createTeamRecruit()">+</button>
+            </div>
+            <div class="sort">
+                <img class='sort_img' src="../../static/assets/index/sort.svg" th:src="@{/assets/index/sort.svg}" alt="#" />
+                <span class='sort_text'>Sort</span>
+                <button class="sort_up_btn">▲</button>
+                <button class="sort_down_btn">▼</button>
+            </div>
+        </div>
+
+
+        <div class="grid_report">
+            <div th:each="recruit : ${recruitList}" class="grid_report_item">
+                <img class='grid_report_item_img_img' src="../../static/assets/index/sample_img.png" th:src="@{/assets/index/sample_img.svg}" alt="이미지" />
+                <button class="stars_btn">★</button>
+                <div class="grid_report_item_text">
+                    <p class="title" th:text="${recruit.getRecruitTitle()}">멋사 19 프로젝트 모집</p>
+                    <button th:if="!${recruit.getIsRecruitFinished()}"  class="status">모집중</button>
+                    <button th:if="${recruit.getIsRecruitFinished()}" class="status1">모집 완료</button>
+                </div>
+                <div class="grid_report_item_text_mid">
+                    <div class="stacks">
+                        <button th:each="stack: ${recruit.getTechStackName()}" class='stacks_button' th:text="${stack}">스터디</button>
+                    </div>
+                </div>
+                <div class="grid_report_item_text_low1">
+                    <h5 class="contents" th:text="${recruit.getTeamRecruitDetails()}">모집 글 설명</h5>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!--
+
+        <div class="grid_report">
+            <div class="grid_report_item">
+                <div class="grid_report_item_img">
+                    <img class='grid_report_item_img_img' src="../../static/assets/index/sample_img.png" alt="이미지" />
+                    <button class="stars_btn">★</button>
+                </div>
+                <div class="grid_report_item_text">
+                    <div class="grid_report_item_text_top">
+                        <p class="title">멋사 19 프로젝트 모집</p>
+                        <button class="status">모집중</button>
+                    </div>
+                    <div class="grid_report_item_text_mid">
+                        <div class="stacks">
+                            <button class='stacks_button'>스터디</button>
+                            <button class='stacks_button'>모각코</button>
+                            <button class='stacks_button'>Javascript</button>
+                        </div>
+                    </div>
+                    <div class="grid_report_item_text_low1">
+                        <div class="contents">
+                            <h5 class="content">1.</h5>
+                            <h5 class="content">2.</h5>
+                            <h5 class="content">3.</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid_report_item">
+                <div class="grid_report_item_img">
+                    <img class='grid_report_item_img_img' src="../../static/assets/index/sample_img.png" alt="이미지" />
+                    <button class="stars_btn">★</button>
+                </div>
+                <div class="grid_report_item_text">
+                    <div class="grid_report_item_text_top">
+                        <p class="title">멋사 19 프로젝트 모집</p>
+                        <button class="status1">완료</button>
+                    </div>
+                    <div class="grid_report_item_text_mid">
+                        <div class="stacks">
+                            <button class='stacks_button'>스터디</button>
+                            <button class='stacks_button'>모각코</button>
+                            <button class='stacks_button'>Javascript</button>
+                            <button class='stacks_button'>React</button>
+                        </div>
+                    </div>
+                    <div class="grid_report_item_text_low1">
+                        <div class="contents">
+                            <h5 class="content">1.</h5>
+                            <h5 class="content">2.</h5>
+                            <h5 class="content">3.</h5>
+                        </div>
+                    </div>
+                    <div class="grid_report_item_text_low2">
+                        <button class='grid_report_item_text_low2_button'>
+                            <img class='grid_report_item_text_low2_img' src="../../static/assets/index/heart.svg" alt="heart" />
+                        </button>
+                        <span class='grid_report_item_text_low2_span'>120</span>
+                        <button class='grid_report_item_text_low2_button'>
+                            <img class='grid_report_item_text_low2_img' src="../../static/assets/index/comment.svg"
+                                alt="comment" />
+                        </button>
+                        <span class='grid_report_item_text_low2_span'>5</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="grid_report_item">
+                <div class="grid_report_item_img">
+                    <img class='grid_report_item_img_img' src="../../static/assets/index/sample_img.png" alt="이미지" />
+                    <button class="stars_btn">★</button>
+                </div>
+                <div class="grid_report_item_text">
+                    <div class="grid_report_item_text_top">
+                        <p class="title">멋사 19 프로젝트 모집</p>
+                        <button class="status1">완료</button>
+                    </div>
+                    <div class="grid_report_item_text_mid">
+                        <div class="stacks">
+                            <button class='stacks_button'>스터디</button>
+                            <button class='stacks_button'>모각코</button>
+                            <button class='stacks_button'>Javascript</button>
+                            <button class='stacks_button'>React</button>
+                        </div>
+                    </div>
+                    <div class="grid_report_item_text_low1">
+                        <div class="contents">
+                            <h5 class="content">1.</h5>
+                            <h5 class="content">2.</h5>
+                            <h5 class="content">3.</h5>
+                        </div>
+                    </div>
+                    <div class="grid_report_item_text_low2">
+                        <button class='grid_report_item_text_low2_button'>
+                            <img class='grid_report_item_text_low2_img' src="../../static/assets/index/heart.svg" alt="heart" />
+                        </button>
+                        <span class='grid_report_item_text_low2_span'>120</span>
+                        <button class='grid_report_item_text_low2_button'>
+                            <img class='grid_report_item_text_low2_img' src="../../static/assets/index/comment.svg"
+                                alt="comment" />
+                        </button>
+                        <span class='grid_report_item_text_low2_span'>5</span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="grid_report_item">
+                <div class="grid_report_item_img">
+                    <img class='grid_report_item_img_img' src="../../static/assets/index/sample_img.png" alt="이미지" />
+                    <button class="stars_btn">★</button>
+                </div>
+                <div class="grid_report_item_text">
+                    <div class="grid_report_item_text_top">
+                        <p class="title">멋사 19 프로젝트 모집</p>
+                        <button class="status1">완료</button>
+                    </div>
+                    <div class="grid_report_item_text_mid">
+                        <div class="stacks">
+                            <button class='stacks_button'>스터디</button>
+                            <button class='stacks_button'>모각코</button>
+                            <button class='stacks_button'>Javascript</button>
+                            <button class='stacks_button'>React</button>
+                        </div>
+                    </div>
+                    <div class="grid_report_item_text_low1">
+                        <div class="contents">
+                            <h5 class="content">1.</h5>
+                            <h5 class="content">2.</h5>
+                            <h5 class="content">3.</h5>
+                        </div>
+                    </div>
+                    <div class="grid_report_item_text_low2">
+                        <button class='grid_report_item_text_low2_button'>
+                            <img class='grid_report_item_text_low2_img' src="../../static/assets/index/heart.svg" alt="heart" />
+                        </button>
+                        <span class='grid_report_item_text_low2_span'>120</span>
+                        <button class='grid_report_item_text_low2_button'>
+                            <img class='grid_report_item_text_low2_img' src="../../static/assets/index/comment.svg"
+                                alt="comment" />
+                        </button>
+                        <span class='grid_report_item_text_low2_span'>5</span>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="grid_report_item">
+                <div class="grid_report_item_img">
+                    <img class='grid_report_item_img_img' src="../../static/assets/index/sample_img.png" alt="이미지" />
+                    <button class="stars_btn">★</button>
+                </div>
+                <div class="grid_report_item_text">
+                    <div class="grid_report_item_text_top">
+                        <p class="title">멋사 19 프로젝트 모집</p>
+                        <button class="status1">완료</button>
+                    </div>
+                    <div class="grid_report_item_text_mid">
+                        <div class="stacks">
+                            <button class='stacks_button'>스터디</button>
+                            <button class='stacks_button'>모각코</button>
+                            <button class='stacks_button'>Javascript</button>
+                            <button class='stacks_button'>React</button>
+                        </div>
+                    </div>
+                    <div class="grid_report_item_text_low1">
+                        <div class="contents">
+                            <h5 class="content">1.</h5>
+                            <h5 class="content">2.</h5>
+                            <h5 class="content">3.</h5>
+                        </div>
+                    </div>
+                    <div class="grid_report_item_text_low2">
+                        <button class='grid_report_item_text_low2_button'>
+                            <img class='grid_report_item_text_low2_img' src="../../static/assets/index/heart.svg" alt="heart" />
+                        </button>
+                        <span class='grid_report_item_text_low2_span'>120</span>
+                        <button class='grid_report_item_text_low2_button'>
+                            <img class='grid_report_item_text_low2_img' src="../../static/assets/index/comment.svg"
+                                alt="comment" />
+                        </button>
+                        <span class='grid_report_item_text_low2_span'>5</span>
+                    </div>
+                </div>
+            </div>
+            -->
+    </div>
+    <form class="item--cUZ" id="loginModal" th:action="@{/login}" th:method="post">
+        <img src="../assets/login/logo.png" class="image-9-CWd" alt="logo">
+        <p class="login-page-7AR">Login page</p>
+        <div class="line"></div>
+        <div class="idinputcomponent-9mK">
+            <input class="idinput-gmF" type="text" name="username" id="username" placeholder="username">
+        </div>
+        <p class="item--W81">아이디를 입력해 주세요.</p>
+        <div class="pwinputcomponent-DDT">
+            <input class="pwinput-wfF" type="password" name="password" id="password" placeholder="password">
+        </div>
+        <p class="item--1S9">비밀번호를 입력해 주세요.</p>
+
+        <div class="auto-group-qaqf-WGR">
+            <button class="singupbutton-SA5" type="submit">Login</button>
+            <div class="singupbutton-Jxy">Sign up</div>
+        </div>
+        <img class="close-PDj" src="../assets/login/close.svg" alt="x" onclick="closeLoginPage()">
+    </form>
+
+    <script>
+        const logined = [[${logined}]];
+        alert(logined);
+        let overlay = document.getElementById("overlay");
+        let loginModal = document.getElementById("loginModal");
+
+        function createTeamRecruit(){
+            alert("clicked");
+            if (logined) window.location.href = "/createTeam";
+            else {
+                loginModal.style.display='block';
+                overlay.style.opacity='50%';
+            }
+        }
+
+        function closeLoginPage(){
+            loginModal.style.display='none';
+            overlay.style.opacity='100%';
+        }
+    </script>
+
+</body>
+
+</html>

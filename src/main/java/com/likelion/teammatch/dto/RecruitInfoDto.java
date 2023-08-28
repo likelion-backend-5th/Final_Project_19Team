@@ -31,6 +31,8 @@ public class RecruitInfoDto {
     private Boolean isOnline;
     //정규 모임 시간
     private String regularMeetingTime;
+    //모집 완료된 글인지 아닌지.
+    private Boolean isRecruitFinished;
 
     //팀매니저 이름
     private String teamManagerUsername;
