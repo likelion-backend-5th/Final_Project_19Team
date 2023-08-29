@@ -1,8 +1,6 @@
 package com.likelion.teammatch.dto.team;
 
-import com.likelion.teammatch.entity.ProjectResult;
 import com.likelion.teammatch.entity.Recruit;
-import com.likelion.teammatch.entity.Review;
 import com.likelion.teammatch.entity.Team;
 import com.likelion.teammatch.entity.type.TeamType;
 import lombok.EqualsAndHashCode;
@@ -10,8 +8,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
