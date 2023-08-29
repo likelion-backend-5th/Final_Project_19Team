@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-    <link rel="stylesheet" href="../styles/register.css">
+    <link rel="stylesheet" th:href="@{../css/register.css}" href="../static/css/register.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons%3A400">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+KR%3A700">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%3A400%2C500%2C700">
@@ -14,60 +14,168 @@
 </head>
 
 <body>
-    <div class="item--XW1">
-
+<form class="flexmain" th:action="@{/register}" th:method="post">
+    <div>
         <div class="image-9-KdT">
             <img src="../assets/register/logo.png" class="image-9-CWd" alt="logo">
-            </img>
-            <img class="close-PDj" src="../assets/register/close.svg" alt="x">
+            <a href="http://localhost:8080/main" ><img class="close-PDj" src="../assets/register/close.svg" alt="x"></a>
         </div>
 
         <p class="sign-up-page-QZo">Sign-up page</p>
         <div class="line-12-cLR"></div>
-        <div class="flex">
-            <div class="nameinputcomponent-M37">
-                <div class="idinput-HBf">
-                    <div class="id-PkV">Name</div>
-                </div>
-                <p class="item--QmP">이름을 입력해 주세요.</p>
-            </div>
-            <div class="nameinputcomponent-M37">
-                <div class="idinput-HBf">
-                    <div class="id-PkV">ID</div>
-                    <div class="checkbutton-PTf">Check</div>
+    </div>
+    <div class="flexing1">
+        <div class="item--XW1">
+            <div class="flex">
+                <div class="nameinputcomponent-M37">
+                    <div class="idinput-HBf">
+                        <input type="text" name="username" id="username" class="id-PkV" placeholder="Name"/>
+                    </div>
+                    <p class="item--QmP" id="usernameError">한글로 입력해 주세요.</p>
                 </div>
 
-                <p class="item--QmP">아이디를 입력해 주세요.</p>
-            </div>
-            <div class="nameinputcomponent-M37">
-                <div class="idinput-HBf">
-                    <div class="id-PkV">Password</div>
+                <div class="nameinputcomponent-M37">
+                    <div class="idinput-HBf">
+                        <input type="password" name="password" id="password" class="id-PkV" placeholder="Password"/>
+                    </div>
+                    <p class="item--QmP" id="passwordError">8-15글자 비밀번호를 입력하세요.</p>
                 </div>
-                <p class="item--QmP">비밀번호를 입력해 주세요.</p>
-            </div>
-            <div class="nameinputcomponent-M37">
-                <div class="idinput-HBf">
-                    <div class="id-PkV">Password check</div>
+                <div class="nameinputcomponent-M37">
+                    <div class="idinput-HBf">
+                        <input type="password" id="passwordCheck" class="id-PkV" placeholder="Password check"/>
+                    </div>
+                    <p class="item--QmP" id="passwordCheckError">동일한 비밀번호를 입력하세요.</p>
                 </div>
-                <p class="item--QmP">비밀번호가 일치하지 않습니다.</p>
-            </div>
-            <div class="nameinputcomponent-M37">
-                <div class="idinput-HBf">
-                    <div class="id-PkV">Email</div>
+                <div class="nameinputcomponent-M37">
+                    <div class="idinput-HBf">
+                        <input type="email" name="email" id="email" class="id-PkV" placeholder="Email"/>
+                    </div>
+                    <p class="item--QmP" id="emailError">유효한 이메일을 입력해 주세요(@ 필수).</p>
                 </div>
-                <p class="item--QmP">이메일을 입력해 주세요.</p>
-            </div>
-            <div class="nameinputcomponent-M37">
-                <div class="idinput-HBf">
-                    <div class="id-PkV">PhoneNumber</div>
+                <div class="nameinputcomponent-M37">
+                    <div class="idinput-HBf">
+                        <input type="tel" name="phone" id="phone" class="id-PkV" placeholder="PhoneNumber"/>
+                    </div>
+                    <p class="item--QmP" id="phoneError">- 없이 핸드폰 번호를 입력하세요(최소 10자).</p>
                 </div>
-                <p class="item--QmP">핸드폰 번호를 입력해 주세요.</p>
             </div>
-            <div class="singupbutton-Quo">Join</div>
-
         </div>
 
+        <div class="item--XW2">
+            <div class="flex1">
+                <div class="nameinputcomponent-M37">
+                    <div class="idinput-HBf">
+                        <input class="id-PkV" placeholder="Stacks"/>
+                    </div>
+                    <p class="item--QmP">최소 1개 이상의 기술스택을 선택해주세요</p>
+                </div>
+            </div>
+        </div>
     </div>
+    <input type="submit" class="singupbutton-Quo">Join</input>
+</form>
+<script>
+    // 이름 유효성 검사 (최대 10자, 한글만 입력 가능)
+    document.getElementById("username").addEventListener("input", function(e) {
+        let usernameInput = e.target.value;
+        let namePattern = /^[가-힣]{1,10}$/;
+        let isValid = namePattern.test(usernameInput);
+        let errorElement = document.getElementById("usernameError");
+
+        if (!isValid) {
+            errorElement.style.display = "block";
+        } else {
+            errorElement.style.display = "none";
+        }
+    });
+
+    // 비밀번호 유효성 검사 (공백없이 8~20자의 비밀번호)
+    document.getElementById("password").addEventListener("input", function(e) {
+        let passwordInput = e.target.value;
+        let isValid = passwordInput.replace(/\s/g, '').length >= 8 && passwordInput.replace(/\s/g, '').length <= 20;
+        let errorElement = document.getElementById("passwordError");
+        if (!isValid) {
+            errorElement.style.display = "block";
+        } else {
+            errorElement.style.display = "none";
+        }
+    });
+
+    // 비밀번호 확인 검사(비번과 동일해야함)
+    document.getElementById("passwordCheck").addEventListener("input", function(e) {
+        let passwordCheckInput = e.target.value;
+        let passwordInput = document.getElementById("password").value;
+        let isValid = passwordInput.replace(/\s/g, '').length >= 8 && passwordCheckInput === passwordInput;
+        let errorElement = document.getElementById("passwordCheckError");
+
+        if (!isValid) {
+            errorElement.style.display = "block";
+        } else {
+            errorElement.style.display = "none";
+        }
+    });
+
+    // 이메일 유효성 검사 (@ 포함, 특수문자 안됨, @ 앞뒤로 적어야함)
+    document.getElementById("email").addEventListener("input", function(e) {
+        let emailInput = e.target.value;
+        let emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+        let isValid = emailPattern.test(emailInput);
+        let errorElement = document.getElementById("emailError");
+
+        if (!isValid) {
+            errorElement.style.display = "block";
+        } else {
+            errorElement.style.display = "none";
+        }
+    });
+
+    // 핸드폰 번호 유효성 검사 (공백없이 숫자만 최소 10자 입력)
+    document.getElementById("phone").addEventListener("input", function(e) {
+        let phoneInput = e.target.value;
+        let phonePattern = /^[0-9]{10,12}$/;
+        let isValid = phonePattern.test(phoneInput);
+        let errorElement = document.getElementById("phoneError");
+
+        if (!isValid) {
+            errorElement.style.display = "block";
+        } else {
+            errorElement.style.display = "none";
+        }
+    });
+
+    function createTeamRecruit(){
+        alert("clicked");
+        if (logined) window.location.href = "/createTeam";
+        else {
+            loginModal.style.display='block';
+            overlay.style.opacity='50%';
+        }
+    }
+
+    // 위의 모든 정규식을 통과하면 가입버튼이 보이는 함수 로직을 구현
+    function checkFormValidity() {
+        let usernameValid = document.getElementById("usernameError").style.display === "none";
+        let passwordValid = document.getElementById("passwordError").style.display === "none";
+        let passwordCheckValid = document.getElementById("passwordCheckError").style.display === "none";
+        let emailValid = document.getElementById("emailError").style.display === "none";
+        let phoneValid = document.getElementById("phoneError").style.display === "none";
+        return usernameValid && passwordValid && passwordCheckValid && emailValid && phoneValid;
+    }
+    document.getElementById("username").addEventListener("input", updateButtonState);
+    document.getElementById("password").addEventListener("input", updateButtonState);
+    document.getElementById("passwordCheck").addEventListener("input", updateButtonState);
+    document.getElementById("email").addEventListener("input", updateButtonState);
+    document.getElementById("phone").addEventListener("input", updateButtonState);
+
+    // 정규식 만족시 가입버튼 보임.
+    function updateButtonState() {
+        let btnElement = document.querySelector(".singupbutton-Quo");
+        btnElement.style.visibility = checkFormValidity() ? "visible" : "hidden";
+    }
+
+
+</script>
+
 </body>
 
 </html>
