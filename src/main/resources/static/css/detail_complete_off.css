@@ -104,7 +104,7 @@ body {
 }
 
 
-.auto-group-mbu3-bC5 {
+.teamCreateInputGroup {
     margin-bottom: 1.7rem;
     box-sizing: border-box;
     padding: 2.2rem 1.9rem 1.5rem 2rem;
@@ -117,7 +117,7 @@ body {
     border-radius: 1rem;
 }
 
-.auto-group-fm45-J6V {
+.teamDoubleLineInputGroup {
     height: 7.6rem;
     display: flex;
     align-items: center;
@@ -125,7 +125,7 @@ body {
 }
 
 
-.auto-group-d6xb-3Jy {
+.teamTechLabel {
     margin-right: 2.1rem;
     width: 11.4rem;
     height: 100%;
@@ -232,14 +232,14 @@ body {
 
 
 
-.auto-group-7skv-fRT {
+.teamSingleLineInputGroup {
     height: 3.3rem;
     display: flex;
     align-items: center;
     flex-shrink: 0;
 }
 
-.auto-group-z6fs-DSy {
+.teamTypeLabel {
     margin-right: 2.1rem;
     width: 11.4rem;
     height: 100%;
@@ -258,7 +258,7 @@ body {
     flex-shrink: 0;
 }
 
-.auto-group-8drh-tZ7 {
+.teamTypeButton {
     margin-right: 1.8rem;
     width: 9rem;
     height: 100%;

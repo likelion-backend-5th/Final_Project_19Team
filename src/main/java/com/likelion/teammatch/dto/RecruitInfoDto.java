@@ -29,8 +29,7 @@ public class RecruitInfoDto {
     private Boolean open;
     //온라인으로 진행하는지 아니면 오프라인으로 진행할지.
     private Boolean isOnline;
-    //정규 모임 시간
-    private String regularMeetingTime;
+
     //모집 완료된 글인지 아닌지.
     private Boolean isRecruitFinished;
 
@@ -64,7 +63,6 @@ public class RecruitInfoDto {
         dto.setOpen(team.getOpen());
         dto.setIsOnline(team.getIsOnline());
 
-        dto.setRegularMeetingTime(team.getRegularMeetingTimeInfo());
 
 
         dto.setRecruitId(recruit.getId());
