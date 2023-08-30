@@ -20,9 +20,7 @@ public class TeamInfoDto {
 
     private Integer memberNum;
 
-    private Boolean onRecruit;
-
-    private Boolean open;
+    private Boolean isOnline;
 
     private String teamDescribe;
 
@@ -40,8 +38,7 @@ public class TeamInfoDto {
         dto.setTeamName(team.getTeamName());
         dto.setIsFinished(team.getIsFinished());
         dto.setMemberNum(team.getMemberNum());
-        dto.setOnRecruit(team.getOnRecruit());
-        dto.setOpen(team.getOpen());
+        dto.setIsOnline(team.getIsOnline());
         dto.setTeamDescribe(team.getTeamDescribe());
         //teamManagerUsername은 나중에 채울 것
         //team member username은 나중에 채울 것
