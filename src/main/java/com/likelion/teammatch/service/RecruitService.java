@@ -1,11 +1,11 @@
 package com.likelion.teammatch.service;
 
+import com.likelion.teammatch.dto.RecruitDraftDto;
 import com.likelion.teammatch.dto.RecruitInfoDto;
-import com.likelion.teammatch.dto.team.TeamCreateDto;
-import com.likelion.teammatch.entity.Recruit;
-import com.likelion.teammatch.entity.Team;
-import com.likelion.teammatch.entity.User;
+import com.likelion.teammatch.entity.*;
 import com.likelion.teammatch.repository.RecruitRepository;
+import com.likelion.teammatch.repository.TeamTechStackRepository;
+import com.likelion.teammatch.repository.TechStackRepository;
 import com.likelion.teammatch.repository.UserRepository;
 import com.likelion.teammatch.repository.team.TeamRepository;
 import jakarta.transaction.Transactional;
@@ -26,22 +26,15 @@ public class RecruitService {
     private final RecruitRepository recruitRepository;
     private final UserRepository userRepository;
     private final TeamRepository teamRepository;
+    private final TeamTechStackRepository teamTechStackRepository;
 
-    public RecruitService(RecruitRepository recruitRepository, UserRepository userRepository, TeamRepository teamRepository) {
+    private final TechStackRepository techStackRepository;
+    public RecruitService(RecruitRepository recruitRepository, UserRepository userRepository, TeamRepository teamRepository, TeamTechStackRepository teamTechStackRepository, TechStackRepository techStackRepository) {
         this.recruitRepository = recruitRepository;
         this.userRepository = userRepository;
         this.teamRepository = teamRepository;
-    }
-
-    //Team을 만들면서 동시에 모집 공고를 만드는 메소드
-    public Long createRecruitBoardWithTeam(TeamCreateDto dto){
-        Recruit recruit = TeamCreateDto.getRecruitEntity(dto);
-
-        if (recruit != null){
-            recruit = recruitRepository.save(recruit);
-            return recruit.getId();
-        }
-        return -1L;
+        this.teamTechStackRepository = teamTechStackRepository;
+        this.techStackRepository = techStackRepository;
     }
     
     //모집 공고를 따로 추가하는 메소드
@@ -64,6 +57,7 @@ public class RecruitService {
         recruit.setTeamRecruitDetails(recruitDetails);
         recruit.setTeamManagerId(user.getId());
         recruit.setTeamId(team.getId());
+        recruit.setIsFinished(false);
         recruit = recruitRepository.save(recruit);
 
         return recruit.getId();//이 모집 공고 상세보기를 하고 싶다.
@@ -91,6 +85,24 @@ public class RecruitService {
         return recruit.getId();
     }
 
+    //모집 공고 해제
+    public void recruitFinish(Long recruitId){
+        //현재 사용자의 username 가져오기
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        //user Entity 가져오기
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        //recruitEntity 가져오기
+        Recruit recruit = recruitRepository.findById(recruitId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        //모집 공고 수정 권한 확인하기
+        if (!recruit.getTeamManagerId().equals(user.getId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+
+        recruit.setIsFinished(true);
+        recruitRepository.save(recruit);
+    }
+
     //모집 공고 삭제
     @Transactional
     public void deleteRecruit(Long recruitId){
@@ -115,30 +127,52 @@ public class RecruitService {
         Recruit recruit = recruitRepository.findById(recruitId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         //해당 Recruit에 연결된 Team 가져오기
         Team team = teamRepository.findById(recruit.getTeamId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        //fromEntity로 infoDto 만들기
+        RecruitInfoDto recruitInfoDto = RecruitInfoDto.fromEntity(team, recruit);
         
+        //TechStack 채우기
+        List<String> techStackNameList = new ArrayList<>();
+        List<TeamTechStack> techStackList = teamTechStackRepository.findAllByTeamId(team.getId());
+        for (TeamTechStack teamTechStack : techStackList){
+            String techStackName = techStackRepository.findById(teamTechStack.getTechStackId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)).getName();
+            techStackNameList.add(techStackName);
+        }
+        recruitInfoDto.setTechStackName(techStackNameList);
+
+        //teamManagerUsername 채우기
+        String teamManagerUsername = userRepository.findById(recruit.getTeamManagerId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)).getUsername();
+        recruitInfoDto.setTeamManagerUsername(teamManagerUsername);
         //Recruit 정보를 담은 RecruitInfoDto 가져오기
-        return RecruitInfoDto.fromEntity(team, recruit);
+        return recruitInfoDto;
     }
     
     
     //가장 최근에 만들어진 10개의 모집공고 가져오기
     //Sort버튼
-    public List<RecruitInfoDto> getRecruitInfoList(int page){
+    public List<RecruitDraftDto> getRecruitDraftList(int page){
         PageRequest pageRequest = PageRequest.of(page, 10);
         Page<Recruit> pageOfEntity = recruitRepository.findAllByOrderByIdDesc(pageRequest);
 
         List<Recruit> recruitList = pageOfEntity.getContent();
-        List<RecruitInfoDto> dtoList = new ArrayList<>();
+        List<RecruitDraftDto> dtoList = new ArrayList<>();
         for (Recruit recruit : recruitList){
             Long teamId = recruit.getTeamId();
             Team team = teamRepository.findById(teamId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-            RecruitInfoDto dto = RecruitInfoDto.fromEntity(team, recruit);
-            String teamManagerName = userRepository.findById(recruit.getTeamManagerId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)).getUsername();
-            dto.setTeamManagerUsername(teamManagerName);
-            
-            //기술 스택 부분은 미구현. 그냥 빈 기술 스택 올림.
-            dto.setTechStackName(new ArrayList<String>());
+            RecruitDraftDto dto = RecruitDraftDto.fromEntity(team, recruit);
+
+            //TechStack 채우기
+            List<String> techStackNameList = new ArrayList<>();
+            List<TeamTechStack> techStackList = teamTechStackRepository.findAllByTeamId(team.getId());
+            for (TeamTechStack teamTechStack : techStackList){
+                String techStackName = techStackRepository.findById(teamTechStack.getTechStackId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)).getName();
+                techStackNameList.add(techStackName);
+            }
+            dto.setTechStackList(techStackNameList);
+
+            //comment 채우기 미구현
+            dto.setCommentNum(0);
             dtoList.add(dto);
         }
 

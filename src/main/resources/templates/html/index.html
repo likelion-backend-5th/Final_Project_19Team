@@ -80,214 +80,191 @@
 
 
         <div class="grid_report">
-            <div th:each="recruit : ${recruitList}" class="grid_report_item">
-                <img class='grid_report_item_img_img' src="../../static/assets/index/sample_img.png" th:src="@{/assets/index/sample_img.svg}" alt="이미지" />
+            <div th:each="recruit : ${recruitList}" class="grid_report_item" th:attr="data-recruitId=${recruit.getRecruitId()}" onclick="getRecruitDetails(this)">
+                <img class='grid_report_item_img_img' src="../../static/assets/index/sample_img.png" th:src="@{/assets/index/sample_img.png}" alt="이미지" />
                 <button class="stars_btn">★</button>
                 <div class="grid_report_item_text">
-                    <p class="title" th:text="${recruit.getRecruitTitle()}">멋사 19 프로젝트 모집</p>
-                    <button th:if="!${recruit.getIsRecruitFinished()}"  class="status">모집중</button>
-                    <button th:if="${recruit.getIsRecruitFinished()}" class="status1">모집 완료</button>
+                    <div class="title" th:text="${recruit.getRecruitTitle()}">멋사 19 프로젝트 모집</div>
+                    <button th:if="!${recruit.getIsFinished()}"  class="status">모집중</button>
+                    <button th:if="${recruit.getIsFinished()}" class="status1">모집 완료</button>
                 </div>
                 <div class="grid_report_item_text_mid">
                     <div class="stacks">
-                        <button th:each="stack: ${recruit.getTechStackName()}" class='stacks_button' th:text="${stack}">스터디</button>
+                        <button class="stacks_button" th:text="${recruit.getTeamType()}">스터디</button>
+                        <button th:each="stack: ${recruit.getTechStackList()}" class='stacks_button' th:text="${stack}">java</button>
                     </div>
                 </div>
                 <div class="grid_report_item_text_low1">
-                    <h5 class="contents" th:text="${recruit.getTeamRecruitDetails()}">모집 글 설명</h5>
+                    <div class="contents" th:text="${recruit.getRecruitDetails()}">asdfghkjsdjfalsdfasdfasdfasdfasdfasdfasdfasdfasdfsadfsadfsadfsadfsadfsadfsadfsdafsdafasdfsdaf</div>
                 </div>
             </div>
         </div>
+        <script>
+            function getRecruitDetails(element){
+                let recruitId = element.getAttribute("data-recruitId");
+                window.location.href = '/recruit/' + recruitId;
+            }
+        </script>
+
+            <!--
+           <div class="grid_report_item">
+               <div class="grid_report_item_img">
+                   <img class='grid_report_item_img_img' src="../../static/assets/index/sample_img.png" alt="이미지" />
+                   <button class="stars_btn">★</button>
+               </div>
+               <div class="grid_report_item_text">
+                   <div class="grid_report_item_text_top">
+                       <p class="title">멋사 19 프로젝트 모집</p>
+                       <button class="status1">완료</button>
+                   </div>
+                   <div class="grid_report_item_text_mid">
+                       <div class="stacks">
+                           <button class='stacks_button'>스터디</button>
+                           <button class='stacks_button'>모각코</button>
+                           <button class='stacks_button'>Javascript</button>
+                           <button class='stacks_button'>React</button>
+                       </div>
+                   </div>
+                   <div class="grid_report_item_text_low1">
+                       <div class="contents">
+                           <h5 class="content">1.</h5>
+                           <h5 class="content">2.</h5>
+                           <h5 class="content">3.</h5>
+                       </div>
+                   </div>
+                   <div class="grid_report_item_text_low2">
+                       <button class='grid_report_item_text_low2_button'>
+                           <img class='grid_report_item_text_low2_img' src="../../static/assets/index/heart.svg" alt="heart" />
+                       </button>
+                       <span class='grid_report_item_text_low2_span'>120</span>
+                       <button class='grid_report_item_text_low2_button'>
+                           <img class='grid_report_item_text_low2_img' src="../../static/assets/index/comment.svg"
+                               alt="comment" />
+                       </button>
+                       <span class='grid_report_item_text_low2_span'>5</span>
+                   </div>
+               </div>
+
+           </div>
+
+           <div class="grid_report_item">
+               <div class="grid_report_item_img">
+                   <img class='grid_report_item_img_img' src="../../static/assets/index/sample_img.png" alt="이미지" />
+                   <button class="stars_btn">★</button>
+               </div>
+               <div class="grid_report_item_text">
+                   <div class="grid_report_item_text_top">
+                       <p class="title">멋사 19 프로젝트 모집</p>
+                       <button class="status1">완료</button>
+                   </div>
+                   <div class="grid_report_item_text_mid">
+                       <div class="stacks">
+                           <button class='stacks_button'>스터디</button>
+                           <button class='stacks_button'>모각코</button>
+                           <button class='stacks_button'>Javascript</button>
+                           <button class='stacks_button'>React</button>
+                       </div>
+                   </div>
+                   <div class="grid_report_item_text_low1">
+                       <div class="contents">
+                           <h5 class="content">1.</h5>
+                           <h5 class="content">2.</h5>
+                           <h5 class="content">3.</h5>
+                       </div>
+                   </div>
+                   <div class="grid_report_item_text_low2">
+                       <button class='grid_report_item_text_low2_button'>
+                           <img class='grid_report_item_text_low2_img' src="../../static/assets/index/heart.svg" alt="heart" />
+                       </button>
+                       <span class='grid_report_item_text_low2_span'>120</span>
+                       <button class='grid_report_item_text_low2_button'>
+                           <img class='grid_report_item_text_low2_img' src="../../static/assets/index/comment.svg"
+                               alt="comment" />
+                       </button>
+                       <span class='grid_report_item_text_low2_span'>5</span>
+                   </div>
+               </div>
+
+           </div>
+           <div class="grid_report_item">
+               <div class="grid_report_item_img">
+                   <img class='grid_report_item_img_img' src="../../static/assets/index/sample_img.png" alt="이미지" />
+                   <button class="stars_btn">★</button>
+               </div>
+               <div class="grid_report_item_text">
+                   <div class="grid_report_item_text_top">
+                       <p class="title">멋사 19 프로젝트 모집</p>
+                       <button class="status1">완료</button>
+                   </div>
+                   <div class="grid_report_item_text_mid">
+                       <div class="stacks">
+                           <button class='stacks_button'>스터디</button>
+                           <button class='stacks_button'>모각코</button>
+                           <button class='stacks_button'>Javascript</button>
+                           <button class='stacks_button'>React</button>
+                       </div>
+                   </div>
+                   <div class="grid_report_item_text_low1">
+                       <div class="contents">
+                           <h5 class="content">1.</h5>
+                           <h5 class="content">2.</h5>
+                           <h5 class="content">3.</h5>
+                       </div>
+                   </div>
+                   <div class="grid_report_item_text_low2">
+                       <button class='grid_report_item_text_low2_button'>
+                           <img class='grid_report_item_text_low2_img' src="../../static/assets/index/heart.svg" alt="heart" />
+                       </button>
+                       <span class='grid_report_item_text_low2_span'>120</span>
+                       <button class='grid_report_item_text_low2_button'>
+                           <img class='grid_report_item_text_low2_img' src="../../static/assets/index/comment.svg"
+                               alt="comment" />
+                       </button>
+                       <span class='grid_report_item_text_low2_span'>5</span>
+                   </div>
+               </div>
 
 
-        <!--
-
-        <div class="grid_report">
-            <div class="grid_report_item">
-                <div class="grid_report_item_img">
-                    <img class='grid_report_item_img_img' src="../../static/assets/index/sample_img.png" alt="이미지" />
-                    <button class="stars_btn">★</button>
-                </div>
-                <div class="grid_report_item_text">
-                    <div class="grid_report_item_text_top">
-                        <p class="title">멋사 19 프로젝트 모집</p>
-                        <button class="status">모집중</button>
-                    </div>
-                    <div class="grid_report_item_text_mid">
-                        <div class="stacks">
-                            <button class='stacks_button'>스터디</button>
-                            <button class='stacks_button'>모각코</button>
-                            <button class='stacks_button'>Javascript</button>
-                        </div>
-                    </div>
-                    <div class="grid_report_item_text_low1">
-                        <div class="contents">
-                            <h5 class="content">1.</h5>
-                            <h5 class="content">2.</h5>
-                            <h5 class="content">3.</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid_report_item">
-                <div class="grid_report_item_img">
-                    <img class='grid_report_item_img_img' src="../../static/assets/index/sample_img.png" alt="이미지" />
-                    <button class="stars_btn">★</button>
-                </div>
-                <div class="grid_report_item_text">
-                    <div class="grid_report_item_text_top">
-                        <p class="title">멋사 19 프로젝트 모집</p>
-                        <button class="status1">완료</button>
-                    </div>
-                    <div class="grid_report_item_text_mid">
-                        <div class="stacks">
-                            <button class='stacks_button'>스터디</button>
-                            <button class='stacks_button'>모각코</button>
-                            <button class='stacks_button'>Javascript</button>
-                            <button class='stacks_button'>React</button>
-                        </div>
-                    </div>
-                    <div class="grid_report_item_text_low1">
-                        <div class="contents">
-                            <h5 class="content">1.</h5>
-                            <h5 class="content">2.</h5>
-                            <h5 class="content">3.</h5>
-                        </div>
-                    </div>
-                    <div class="grid_report_item_text_low2">
-                        <button class='grid_report_item_text_low2_button'>
-                            <img class='grid_report_item_text_low2_img' src="../../static/assets/index/heart.svg" alt="heart" />
-                        </button>
-                        <span class='grid_report_item_text_low2_span'>120</span>
-                        <button class='grid_report_item_text_low2_button'>
-                            <img class='grid_report_item_text_low2_img' src="../../static/assets/index/comment.svg"
-                                alt="comment" />
-                        </button>
-                        <span class='grid_report_item_text_low2_span'>5</span>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="grid_report_item">
-                <div class="grid_report_item_img">
-                    <img class='grid_report_item_img_img' src="../../static/assets/index/sample_img.png" alt="이미지" />
-                    <button class="stars_btn">★</button>
-                </div>
-                <div class="grid_report_item_text">
-                    <div class="grid_report_item_text_top">
-                        <p class="title">멋사 19 프로젝트 모집</p>
-                        <button class="status1">완료</button>
-                    </div>
-                    <div class="grid_report_item_text_mid">
-                        <div class="stacks">
-                            <button class='stacks_button'>스터디</button>
-                            <button class='stacks_button'>모각코</button>
-                            <button class='stacks_button'>Javascript</button>
-                            <button class='stacks_button'>React</button>
-                        </div>
-                    </div>
-                    <div class="grid_report_item_text_low1">
-                        <div class="contents">
-                            <h5 class="content">1.</h5>
-                            <h5 class="content">2.</h5>
-                            <h5 class="content">3.</h5>
-                        </div>
-                    </div>
-                    <div class="grid_report_item_text_low2">
-                        <button class='grid_report_item_text_low2_button'>
-                            <img class='grid_report_item_text_low2_img' src="../../static/assets/index/heart.svg" alt="heart" />
-                        </button>
-                        <span class='grid_report_item_text_low2_span'>120</span>
-                        <button class='grid_report_item_text_low2_button'>
-                            <img class='grid_report_item_text_low2_img' src="../../static/assets/index/comment.svg"
-                                alt="comment" />
-                        </button>
-                        <span class='grid_report_item_text_low2_span'>5</span>
-                    </div>
-                </div>
-
-            </div>
-            <div class="grid_report_item">
-                <div class="grid_report_item_img">
-                    <img class='grid_report_item_img_img' src="../../static/assets/index/sample_img.png" alt="이미지" />
-                    <button class="stars_btn">★</button>
-                </div>
-                <div class="grid_report_item_text">
-                    <div class="grid_report_item_text_top">
-                        <p class="title">멋사 19 프로젝트 모집</p>
-                        <button class="status1">완료</button>
-                    </div>
-                    <div class="grid_report_item_text_mid">
-                        <div class="stacks">
-                            <button class='stacks_button'>스터디</button>
-                            <button class='stacks_button'>모각코</button>
-                            <button class='stacks_button'>Javascript</button>
-                            <button class='stacks_button'>React</button>
-                        </div>
-                    </div>
-                    <div class="grid_report_item_text_low1">
-                        <div class="contents">
-                            <h5 class="content">1.</h5>
-                            <h5 class="content">2.</h5>
-                            <h5 class="content">3.</h5>
-                        </div>
-                    </div>
-                    <div class="grid_report_item_text_low2">
-                        <button class='grid_report_item_text_low2_button'>
-                            <img class='grid_report_item_text_low2_img' src="../../static/assets/index/heart.svg" alt="heart" />
-                        </button>
-                        <span class='grid_report_item_text_low2_span'>120</span>
-                        <button class='grid_report_item_text_low2_button'>
-                            <img class='grid_report_item_text_low2_img' src="../../static/assets/index/comment.svg"
-                                alt="comment" />
-                        </button>
-                        <span class='grid_report_item_text_low2_span'>5</span>
-                    </div>
-                </div>
-
-
-            </div>
-            <div class="grid_report_item">
-                <div class="grid_report_item_img">
-                    <img class='grid_report_item_img_img' src="../../static/assets/index/sample_img.png" alt="이미지" />
-                    <button class="stars_btn">★</button>
-                </div>
-                <div class="grid_report_item_text">
-                    <div class="grid_report_item_text_top">
-                        <p class="title">멋사 19 프로젝트 모집</p>
-                        <button class="status1">완료</button>
-                    </div>
-                    <div class="grid_report_item_text_mid">
-                        <div class="stacks">
-                            <button class='stacks_button'>스터디</button>
-                            <button class='stacks_button'>모각코</button>
-                            <button class='stacks_button'>Javascript</button>
-                            <button class='stacks_button'>React</button>
-                        </div>
-                    </div>
-                    <div class="grid_report_item_text_low1">
-                        <div class="contents">
-                            <h5 class="content">1.</h5>
-                            <h5 class="content">2.</h5>
-                            <h5 class="content">3.</h5>
-                        </div>
-                    </div>
-                    <div class="grid_report_item_text_low2">
-                        <button class='grid_report_item_text_low2_button'>
-                            <img class='grid_report_item_text_low2_img' src="../../static/assets/index/heart.svg" alt="heart" />
-                        </button>
-                        <span class='grid_report_item_text_low2_span'>120</span>
-                        <button class='grid_report_item_text_low2_button'>
-                            <img class='grid_report_item_text_low2_img' src="../../static/assets/index/comment.svg"
-                                alt="comment" />
-                        </button>
-                        <span class='grid_report_item_text_low2_span'>5</span>
-                    </div>
-                </div>
-            </div>
-            -->
+           </div>
+           <div class="grid_report_item">
+               <div class="grid_report_item_img">
+                   <img class='grid_report_item_img_img' src="../../static/assets/index/sample_img.png" alt="이미지" />
+                   <button class="stars_btn">★</button>
+               </div>
+               <div class="grid_report_item_text">
+                   <div class="grid_report_item_text_top">
+                       <p class="title">멋사 19 프로젝트 모집</p>
+                       <button class="status1">완료</button>
+                   </div>
+                   <div class="grid_report_item_text_mid">
+                       <div class="stacks">
+                           <button class='stacks_button'>스터디</button>
+                           <button class='stacks_button'>모각코</button>
+                           <button class='stacks_button'>Javascript</button>
+                           <button class='stacks_button'>React</button>
+                       </div>
+                   </div>
+                   <div class="grid_report_item_text_low1">
+                       <div class="contents">
+                           <h5 class="content">1.</h5>
+                           <h5 class="content">2.</h5>
+                           <h5 class="content">3.</h5>
+                       </div>
+                   </div>
+                   <div class="grid_report_item_text_low2">
+                       <button class='grid_report_item_text_low2_button'>
+                           <img class='grid_report_item_text_low2_img' src="../../static/assets/index/heart.svg" alt="heart" />
+                       </button>
+                       <span class='grid_report_item_text_low2_span'>120</span>
+                       <button class='grid_report_item_text_low2_button'>
+                           <img class='grid_report_item_text_low2_img' src="../../static/assets/index/comment.svg"
+                               alt="comment" />
+                       </button>
+                       <span class='grid_report_item_text_low2_span'>5</span>
+                   </div>
+               </div>
+           </div>
+           -->
     </div>
     <form class="item--cUZ" id="loginModal" th:action="@{/login}" th:method="post">
         <img src="../assets/login/logo.png" class="image-9-CWd" alt="logo">

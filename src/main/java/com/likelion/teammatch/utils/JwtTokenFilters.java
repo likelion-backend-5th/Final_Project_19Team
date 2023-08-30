@@ -46,7 +46,6 @@ public class JwtTokenFilters extends OncePerRequestFilter {
         }
 
         if (accessTokenCookie == null || refreshTokenCookie == null){
-            log.warn("Auth Cookie is null");
             filterChain.doFilter(request, response);
             return;
         }
@@ -71,7 +70,7 @@ public class JwtTokenFilters extends OncePerRequestFilter {
 
             SecurityContextHolder.setContext(context);
 
-            log.info("no problem");
+
             filterChain.doFilter(request, response);
         }
         catch (ExpiredJwtException ex){
