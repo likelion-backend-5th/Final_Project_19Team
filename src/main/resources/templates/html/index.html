@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" th:href="@{../css/index.css}" href="../../static/css/index.css">
+    <link rel="stylesheet" th:href="@{../css/alarm.css}" href="../../static/css/alarm.css">
     <link rel="stylesheet" th:href="@{../css/login.css}" href="../../static/css/login.css">
+    <link rel="stylesheet" th:href="@{../css/index.css}" href="../../static/css/index.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons%3A400">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+KR%3A700">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%3A400%2C500%2C700">
@@ -19,7 +20,7 @@
     <div class="nav">
         <div class="nav_logo">
             <img class='nav_logo_img' src="../../static/assets/index/logo.png" th:src="@{/assets/index/logo.png}" alt="로고" />
-            <span class='nav_logo_text'>like lion</span></Link>
+            <span class='nav_logo_text'>like lion</span>
         </div>
         <div class="nav_search">
             <img class="nav_search_img" src="../../static/assets/index/search.svg" th:src="@{/assets/index/search.svg}" alt="#" />
@@ -28,9 +29,9 @@
         <div class="nav_btn">
             <Link to="/Alarm" class='router_link'>
             <button class='nav_btn_list'>
-                <img src="../../static/assets/index/bell.svg" th:src="@{/assets/index/bell.svg}" alt="알람" />
+                <img id="alarmBtn" src="../../static/assets/index/bell.svg" th:src="@{/assets/index/bell.svg}" alt="알람" />
             </button>
-            </Link>
+
             <button class='nav_btn_list'>
                 <img src="../../static/assets/index/star.svg" th:src="@{/assets/index/star.svg}" alt="즐겨찾기" />
             </button>
@@ -96,7 +97,6 @@
                     <h5 class="contents" th:text="${recruit.getTeamRecruitDetails()}">모집 글 설명</h5>
                 </div>
             </div>
-
         </div>
 
 
@@ -293,43 +293,332 @@
         <img src="../assets/login/logo.png" class="image-9-CWd" alt="logo">
         <p class="login-page-7AR">Login page</p>
         <div class="line"></div>
+
         <div class="idinputcomponent-9mK">
-            <input class="idinput-gmF" type="text" name="username" id="username" placeholder="username">
+            <input class="idinput-gmF" type="text" name="Email" id="Email" placeholder="Email">
         </div>
-        <p class="item--W81">아이디를 입력해 주세요.</p>
-        <div class="pwinputcomponent-DDT">
-            <input class="pwinput-wfF" type="password" name="password" id="password" placeholder="password">
+        <p class="item--W81">이메일을 입력해주세요.</p>
+
+        <div class="idinputcomponent-9mK">
+            <input class="idinput-gmF" type="text" name="Password" id="password" placeholder="password">
         </div>
-        <p class="item--1S9">비밀번호를 입력해 주세요.</p>
+        <p class="item--W81">비밀번호를 입력해주세요.</p>
+
 
         <div class="auto-group-qaqf-WGR">
             <button class="singupbutton-SA5" type="submit">Login</button>
-            <div class="singupbutton-Jxy">Sign up</div>
+            <button class="singupbutton-Jxy" >Sign up</button>
         </div>
         <img class="close-PDj" src="../assets/login/close.svg" alt="x" onclick="closeLoginPage()">
     </form>
 
-    <script>
-        const logined = [[${logined}]];
-        alert(logined);
-        let overlay = document.getElementById("overlay");
-        let loginModal = document.getElementById("loginModal");
 
-        function createTeamRecruit(){
-            alert("clicked");
-            if (logined) window.location.href = "/createTeam";
-            else {
-                loginModal.style.display='block';
-                overlay.style.opacity='50%';
-            }
-        }
+    <div id="alarmPage" class="item--tFK">
+        <div class="alarm-6k1">
+            <div class="alarmdetail-bgm">
+                <div class="teamreader-x1X">
 
-        function closeLoginPage(){
-            loginModal.style.display='none';
-            overlay.style.opacity='100%';
-        }
-    </script>
+                    <div class="auto-group-ptnd-fwX">
+                        <div class="alarm-oH3">Alarm</div>
+                        <img id="alarmClose" class="close-uqs" src="../assets/alarm/close.svg" alt="X" />
+                    </div>
+
+                    <!-- Team Reader -->
+                    <div class="title-E7T">Team Reader</div>
+                    <div class="project-a-SzD">Project A</div>
+                    <!-- List -->
+                    <div class="readerlist-Zow">
+                        <!-- 1.신규등록 알림 -->
+                        <div class="item--GyF">
+                            <div class="item--UT3">
+                                <div class="classss">
+                                    <div class="group-226-dKw">상세보기</div>
+                                    <div class="group-227-6jK">
+                                        <div class="rectangle-344-f1j">
+                                        </div>
+                                        <div class="item--jGV">글 삭제</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="group-236-BqK">
+                                <div class="item--wpV">
+                                    <p class="item--6Bb">신규등록 알림</p>
+                                    <p class="a--ZL5">
+                                        프로젝트 A
+                                        <br />
+                                        모집글 등록
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- 2.참여신청 알림 -->
+                        <div class="group-239-3wP">
+                            <div class="group-234-t4q">
+                                <div class="group-237-EuP">
+                                    <div class="group-231-bzq">회원정보 확인</div>
+                                    <div class="auto-group-gipb-DFX">
+                                        <div class="group-232-ZKP">수락</div>
+                                        <div class="group-233-QL1">거절</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="group-238-AFK">
+                                <div class="item--wpV">
+                                    <p class="item--fhs">참여신청 알림</p>
+                                    <p class="a--ZL5">
+                                        프로젝트 A
+                                        <br />
+                                        회원 P 참여요청
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3.모집마감/프로젝트 시작 알림 -->
+                        <div class="group-257-p1f">
+                            <div class="group-256-fef">미팅룸 이동</div>
+
+                            <div class="group-256-7mT">
+                                <div class="group-255-gJm">
+                                    <p class="item--Rn9">모집마감/프로젝트 시작 알림</p>
+                                    <p class="a--ZL5">
+                                        프로젝트 A
+                                        <br />
+                                        총원 3명 진행
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 4.탈퇴신청알림 -->
+                        <div class="group-239-3wP">
+                            <div class="group-234-t4q">
+                                <div class="group-237-EuP">
+                                    <div class="group-231-bzq">회원정보 확인</div>
+                                    <div class="auto-group-gipb-DFX">
+                                        <div class="group-232-ZKP">수락</div>
+                                        <div class="group-233-QL1">거절</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="group-238-AFK">
+                                <div class="item--wpV">
+                                    <p class="item--fhs">참여신청 알림</p>
+                                    <p class="a--ZL5">
+                                        프로젝트 A
+                                        <br />
+                                        회원 P 참여요청
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- 5.완료 알림 -->
+                        <div class="group-257-p1f">
+                            <div class="group-254-fgV">리뷰쓰기</div>
+
+                            <div class="group-256-7mT">
+                                <div class="group-255-gJm">
+                                    <p class="item--Rn9">완료 알림</p>
+                                    <p class="a--ZL5">
+                                        프로젝트 A
+                                        <br />
+                                        완료
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Team Member -->
+                    <div class="title-Efd3">Team Member</div>
+                    <div class="project-a-SzD">Project B</div>
+                    <!-- List -->
+                    <div class="readerlist-Zow">
+
+                        <!-- 1.거절 알림 -->
+                        <div class="group-257-p1f">
+                            <div class="group-299-sdf">닫기</div>
+
+                            <div class="group-256-7mT">
+                                <div class="group-255-gJm">
+                                    <p class="item--Rn9">거절 알림</p>
+                                    <p class="a--ZL5">
+                                        프로젝트 B
+                                        <br />
+                                        반려
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2.수락 알림 -->
+                        <div class="group-257-p1f">
+                            <div class="group-299-sdf">닫기</div>
+
+                            <div class="group-256-7mT">
+                                <div class="group-255-gJm">
+                                    <p class="item--Rn9">수락 알림</p>
+                                    <p class="a--ZL5">
+                                        프로젝트 B
+                                        <br />
+                                        수락
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- 3.모집마감/프로젝트 시작 알림 -->
+                        <div class="item--GyF">
+                            <div class="item--UT3">
+                                <div class="classss">
+                                    <div class="group-226-dKw">미팅룸 이동</div>
+                                    <div class="group-227-6jK">
+                                        <div class="rectangle-344-f1j">
+                                        </div>
+                                        <div class="item--jGV">탈퇴하기</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="group-236-BqK">
+                                <div class="item--wpV">
+                                    <p class="item--6Bb">신규등록 알림</p>
+                                    <p class="a--ZL5">
+                                        프로젝트 B
+                                        <br />
+                                        총원 3명 참여
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 4.탈퇴거절 알림 -->
+                        <div class="group-257-p1f">
+                            <div class="group-299-sdf">닫기</div>
+
+                            <div class="group-256-7mT">
+                                <div class="group-255-gJm">
+                                    <p class="item--Rn9">탈퇴거절 알림</p>
+                                    <p class="a--ZL5">
+                                        프로젝트 B
+                                        <br />
+                                        반려
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 5.탈퇴수락 알림 -->
+                        <div class="group-257-p1f">
+                            <div class="group-299-sdf">닫기</div>
+
+                            <div class="group-256-7mT">
+                                <div class="group-255-gJm">
+                                    <p class="item--Rn9">탈퇴수락 알림</p>
+                                    <p class="a--ZL5">
+                                        프로젝트 B
+                                        <br />
+                                        수락
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 5.완료 알림 -->
+                        <div class="group-257-p1f">
+                            <div class="group-254-fgV">리뷰쓰기</div>
+
+                            <div class="group-256-7mT">
+                                <div class="group-255-gJm">
+                                    <p class="item--Rn9">완료 알림</p>
+                                    <p class="a--ZL5">
+                                        프로젝트 B
+                                        <br />
+                                        완료
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 탈퇴확인 창 -->
+
+        <div class="outcheck-zJM">
+            <div class="group-288-SZf">
+                <p class="item-100-1--bSZ">
+                <span class="item-100-1--bSZ-sub-2">
+                  프로젝트 중도 탈퇴시,
+                  <br />
+                </span>
+                    <span class="item-100-1--bSZ-sub-3">회원점수 -100점</span>
+                    <span class="item-100-1--bSZ-sub-2">차감,<br/>
+                </span>
+                    <span class="item-100-1--bSZ-sub-3">중도포기 1회</span>
+                    <span class="item-100-1--bSZ-sub-2">가 <br/>
+                  회원정보에 반영됩니다.
+                </span>
+                </p>
+                <div class="group-287-vob">
+                    <div class="group-285-siq">취소</div>
+                    <div class="group-286-XYV">탈퇴하기</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+
 
 </body>
+
+<script>
+    const logined = [[${logined}]];
+    alert(logined);
+    let overlay = document.getElementById("overlay");
+    let loginModal = document.getElementById("loginModal");
+
+    function createTeamRecruit(){
+        alert("clicked");
+        if (logined) window.location.href = "/createTeam";
+        else {
+            loginModal.style.display='block';
+            overlay.style.opacity='50%';
+        }
+    }
+
+    function closeLoginPage(){
+        loginModal.style.display='none';
+        overlay.style.opacity='100%';
+    }
+
+    // 알람창 관련(희철)
+    let alarmClose = document.getElementById("alarmClose");
+    let alarmPage = document.getElementById("alarmPage");
+    let alarmBtn = document.getElementById("alarmBtn");
+
+    // 알람버튼 - 토글
+    alarmBtn.addEventListener('click', function () {
+        if (alarmPage.style.visibility == 'visible') {
+            alarmPage.style.visibility = 'hidden';
+        } else {
+            alarmPage.style.visibility = 'visible';
+        }
+    });
+
+    // 알람 닫기
+    alarmClose.addEventListener('click', function () {
+        alarmPage.style.visibility = 'hidden';
+    });
+
+
+
+</script>
 
 </html>
