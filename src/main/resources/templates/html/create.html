@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create</title>
-    <!--<link rel="stylesheet" th:href="@{../css/index.css}" href="../../static/css/index.css"> -->
+
     <link rel="stylesheet" th:href="@{../css/create.css}" href="../../static/css/create.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons%3A400">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+KR%3A700">
@@ -16,135 +16,148 @@
 
 <body>
 <div class="main">
-    <div class="top">
-        <div class="nav">
-            <div class="nav_logo">
-                <img class='nav_logo_img' src="../../static/assets/index/logo.png" th:src="@{/assets/index/logo.png}" alt="로고" />
-                <span class='nav_logo_text'>like lion</span></Link>
-            </div>
-            <div class="nav_search">
-                <img class="nav_search_img" src="../../static/assets/index/search.svg" th:src="@{/assets/index/search.svg}" alt="#" />
-                <input type="text" class="nav_search_input" placeholder="Search" />
-            </div>
-            <div class="nav_btn">
-                <Link to="/Alarm" class='router_link'>
-                <button class='nav_btn_list'>
-                    <img src="../../static/assets/index/bell.svg" th:src="@{/assets/index/bell.svg}" alt="알람" />
-                </button>
-                </Link>
-                <button class='nav_btn_list'>
-                    <img src="../../static/assets/index/star.svg" th:src="@{/assets/index/star.svg}" alt="즐겨찾기" />
-                </button>
-                <button class='nav_btn_list'>
-                    <img src="../../static/assets/index/mypage.svg" th:src="@{/assets/index/mypage.svg}" alt="마이페이지" />
-                </button>
-            </div>
+
+    <form class="createForm" th:action="@{/createTeam}" th:method="post">
+        <div class="createFormLogo">
+            <div class="createFormLogoText">Create Team </div>
+            <img class="createFormLogoImg" src="../assets/create/close.svg" alt="#">
         </div>
-    </div>
-    <div class="group-73-HfF">
-        <div class="auto-group-y3v9-Nwb">
-            <div class="new-create-hU5">New create </div>
-            <img class="close-cL9" src="../assets/create/close.svg" alt="#">
+        <input class="createTeamName" name="teamName" id="teamName" placeholder="팀 이름을 입력하세요">
+        <div class="teamCreateInputGroup">
+            <div class="teamSingleLineInputGroup">
+                <div class="teamTypeLabel" title="해당 팀의 목적은 무엇인가요?">Type</div>
+                <div class="teamTypeButton" onclick="clickTeamType('project')" id="project">프로젝트</div>
+                <div class="teamTypeButton" onclick="clickTeamType('study')" id="study">스터디</div>
+                <div class="teamTypeButton" onclick="clickTeamType('employment')" id="employment">취준</div>
+                <div class="teamTypeButton" onclick="clickTeamType('others')" id="others">기타</div>
+            </div>
+            <input type="text" hidden="hidden" name="teamType" id="teamType">
+            <script>
+
+                function clickTeamType(type){
+                    let selectedType = document.getElementById(type);
+                    if (selectedType.classList.contains('selected')){
+                        selectedType.classList.remove('selected');
+                        document.getElementById("teamType").value="";
+                    }
+                    else {
+                        document.getElementById('project').classList.remove('selected');
+                        document.getElementById('study').classList.remove('selected');
+                        document.getElementById('employment').classList.remove('selected');
+                        document.getElementById('others').classList.remove('selected');
+                        selectedType.classList.add('selected');
+                        document.getElementById("teamType").value = type;
+                    }
+
+                }
+            </script>
+
+            <div class="teamSingleLineInputGroup">
+                <div class="teamOpenLabel" title="해당 팀은 온라인으로 활동을 진행하나요? 아니면 오프라인 위주로 진행하나요?">Where</div>
+                <div class="teamOpenButton" id="online" onclick="changeTeamOpen('online')">온라인</div>
+                <div class="teamOpenButton" id="offline" onclick="changeTeamOpen('offline')">오프라인</div>
+                <input type="text" hidden="hidden" name="open" id="open">
+            </div>
+            <script>
+                function changeTeamOpen(type){
+                    let selectedOpen = document.getElementById(type);
+                    if (selectedOpen.classList.contains('selected')){
+                        selectedOpen.classList.remove('selected');
+                        document.getElementById("open").value="";
+                    }
+                    else {
+                        document.getElementById('online').classList.remove('selected');
+                        document.getElementById('offline').classList.remove('selected');
+                        selectedOpen.classList.add('selected');
+                        document.getElementById("open").value = type;
+                    }
+
+                }
+            </script>
+            <div class="teamDoubleLineInputGroup">
+                <div class="teamTechLabel" title="해당 팀의 핵심 기술 스택을 최대 4가지까지 골라주세요!">Tech</div>
+                <div class="teamTechStackInputGroup">
+                    <input class="teamTechStackInput" id="teamTechStackInput">
+                    <div class="teamTechStackLabelGroup" id="teamTechStackLabelGroup"></div>
+                    <input hidden="hidden" type="text" id="techStackList" name="techStackList">
+
+                    <script>
+                        let techStackNum = 0;
+                        let teamTechStackInput = document.getElementById("teamTechStackInput");
+                        teamTechStackInput.addEventListener("keyup", event => techStackInputEntered(event));
+                        let techStackLabelGroup = document.getElementById("teamTechStackLabelGroup");
+                        let techStackForm = document.getElementById('techStackList');
+                        async function techStackInputEntered(e){
+                            if (e.key === 'Enter'){
+                                let techStackValue = teamTechStackInput.value;
+                                let response = await fetch('/api/techStackExists', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: techStackValue,
+                                    credentials: 'include' // 인증정보를 포함하는 옵션
+                                });
+
+                                if (await response.text() === 'true'){
+                                    let techStackName = techStackValue.toLowerCase();
+                                    if (checkTechStackAlreadyIncluded(techStackName)){
+                                        alert('이미 포함된 techStack 이름입니다.');
+                                    }
+                                    else if (techStackNum >= 4) {
+                                        alert('최대 4개까지 기술 스택을 고를 수 있습니다!');
+                                    }
+                                    else {
+                                        let newDiv = document.createElement('div');
+                                        newDiv.classList.add("teamTechStackLabel");
+                                        newDiv.innerText = techStackName;
+                                        techStackLabelGroup.appendChild(newDiv);
+                                        techStackForm.value = techStackName + "/" + techStackForm.value ;
+                                        techStackNum = techStackNum + 1;
+                                    }
+                                }
+                                else {
+                                    alert('서버에서 관리하지 않는 techStack 이름입니다.');
+                                }
+                            }
+                        }
+
+                        function checkTechStackAlreadyIncluded(name){
+                            let divList = document.getElementsByClassName('teamTechStackLabel');
+                            // 가져온 div 요소들을 순회하면서 조건을 확인합니다.
+                            for (let i = 0; i < divList.length; i++){
+                                if (divList[i].innerText === name){
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+                    </script>
+                </div>
+            </div>
+
+            <div class="teamDoubleLineInputGroup">
+                <div class="teamTechLabel" title="팀에 대한 설명을 적어주세요!">Team Info</div>
+                <textarea class="teamCreateTextarea" name="teamDescribe" id="teamDescribe"></textarea>
+            </div>
+
+            <div class="teamDoubleLineInputGroup">
+                <div class="teamTechLabel" title="모집 공고글에 적히게 될 설명을 적어주세요!">Recruit Info</div>
+                <textarea class="teamCreateTextarea" name="teamRecruitDetails" id="teamRecruitDetails"></textarea>
+            </div>
+
+            <div class="teamSingleLineInputGroup">
+                <div class="teamTypeLabel" title="몇명의 팀원들을 모집하실 생각인가요?">Many</div>
+                <input class="teamNumberInput" id="memberNum" name="memberNum">
+                <label class="teamNumberInputLabel" for="memberNum">명</label>
+            </div>
+
+
         </div>
-        <div class="singupbutton-jvZ">Title : </div>
-        <div class="auto-group-mbu3-bC5">
-            <div class="auto-group-7skv-fRT">
-                <div class="auto-group-z6fs-DSy">Type</div>
-                <div class="auto-group-8drh-tZ7">프로젝트</div>
-                <div class="auto-group-8drh-tZ7">스터디</div>
-                <div class="auto-group-8drh-tZ7">취준</div>
-                <div class="auto-group-8drh-tZ7">기타</div>
-            </div>
-
-            <div class="auto-group-fm45-J6V">
-                <div class="auto-group-d6xb-3Jy">When</div>
-                <div class="auto-group-s8jb-62M">
-                    <div class="auto-group-mpfb-bUD">
-                        <div class="auto-group-w4vd-jaR">월</div>
-                        <div class="auto-group-w4vd-jaR">화</div>
-                        <div class="auto-group-w4vd-jaR">수</div>
-                        <div class="auto-group-w4vd-jaR">목</div>
-                        <div class="auto-group-w4vd-jaR">금</div>
-                        <div class="auto-group-w4vd-jaR">토</div>
-                        <div class="auto-group-w4vd-jaR">일</div>
-                    </div>
-                    <div>
-                        <div class="auto-group-nkpy-eUR">19 : 00 ~ 20 : 00</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="auto-group-7skv-fRT">
-                <div class="auto-group-z6fs-DSy">Where</div>
-                <div class="auto-group-8drh-tZ7">온라인</div>
-                <div class="auto-group-8drh-tZ7">오프라인</div>
-            </div>
-
-            <!-- <div class="auto-group-7skv-fRT">
-                <div class="auto-group-z6fs-DSy">What</div>
-                <div class="auto-group-8drh-tZ7">기획</div>
-                <div class="auto-group-8drh-tZ7">디자인</div>
-                <div class="auto-group-8drh-tZ7">프론트</div>
-                <div class="auto-group-8drh-tZ7">백엔드</div>
-            </div> -->
-            <div class="auto-group-fm45-J6V">
-                <div class="auto-group-d6xb-3Jy">Want</div>
-                <div class="auto-group-s8jb-62M">
-                    <div class="auto-group-bzjh-Dsf">HTML</div>
-                    <div class="auto-group-bzjh-Dsf">Java</div>
-                </div>
-                <div class="auto-group-s8jb-62M">
-                    <div class="auto-group-bzjh-Dsf">CSS</div>
-                    <div class="auto-group-bzjh-Dsf">Spring</div>
-                </div>
-                <div class="auto-group-s8jb-62M">
-                    <div class="auto-group-bzjh-Dsf">JS</div>
-                    <div class="auto-group-bzjh-Dsf">Python</div>
-                </div>
-                <div class="auto-group-s8jb-62M">
-                    <div class="auto-group-bzjh-Dsf">React</div>
-                    <div class="auto-group-bzjh-Dsf">Vue</div>
-                </div>
-            </div>
-
-            <div class="auto-group-7skv-fRT">
-                <div class="auto-group-z6fs-DSy">Many</div>
-                <div class="auto-group-8drh-tZ7 selected">3명</div>
-            </div>
-
-            <div class="auto-group-wnkq-7dT">
-                <div class="auto-group-d6xb-3Jy">
-                    <p class="how-detail-nUh">
-                        How?
-                    </p>
-                </div>
-                <div class="auto-group-8nj3-5Cu">
-                    <div class="singupbutton-RXf">
-                        <p class="item-3-5--8S5">
-                            3회 이상 지각시 강제퇴출
-                        </p>
-                        <p class="item-3-5--8S5">
-                            3회 이상 지각시 강제퇴출
-                        </p>
-                        <p class="item-3-5--8S5">
-                            3회 이상 지각시 강제퇴출
-                        </p>
-                    </div>
-                    <div class="group-91-kCZ">
-                        <div class="singupbutton-HCV">
-                            <div class="rectangle-132-SLH">
-                            </div>
-                            <p class="upload-9Vb">Upload</p>
-                            <img class="icons-fileupload-TFP" src="../assets/create/file_upload.svg" alt="#" />
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="singUpButtonGroup">
+            <div class="singUpButton">등록</div>
         </div>
-        <div class="singupbutton-Vhs">
-            <div class="singupbutton-wJy">등록</div>
-        </div>
-    </div>
+    </form>
 </div>
 </body>
 

@@ -8,8 +8,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -17,9 +15,6 @@ import java.util.List;
 @EqualsAndHashCode
 public class TeamCreateDto {
     private String teamName;
-
-    //종료 여부
-    private Boolean isFinished;
 
     //총 인원 수
     private Integer memberNum;
@@ -33,14 +28,8 @@ public class TeamCreateDto {
 
     private String teamType;
 
-    //정규 모임 시간 정보를 String으로 저장한다. (ex : 월수금 19:00~21:00)
-    private String regularMeetingTimeInfo;
-
     //온라인으로 진행하는지 아니면 오프라인으로 진행할지.
     private Boolean isOnline;
-
-    //만약 "모집 공고를 작성하시겠습니까?" 란에 체크하면 아래 있는 요소들을 작성할 수 있다.
-    private Boolean publishRecruit;
 
     //모집 공고 이름
     private String teamRecruitName;
@@ -51,7 +40,7 @@ public class TeamCreateDto {
     private String teamRecruitDetails;
 
     //팀 테크스택 리스트
-    private List<String> teamTechStackList = new ArrayList<>();
+    private String teamTechStackList;
 
 
     public static Team getTeamEntity(TeamCreateDto dto){
@@ -65,17 +54,13 @@ public class TeamCreateDto {
         team.setOnRecruit(true);
         team.setIsOnline(dto.getIsOnline());
         team.setMemberNum(1);//본인 포함
-        team.setRegularMeetingTimeInfo(dto.getRegularMeetingTimeInfo());
         return team;
     }
 
     public static Recruit getRecruitEntity(TeamCreateDto dto){
-        if (dto.getPublishRecruit()){
-            Recruit recruit = new Recruit();
-            recruit.setTitle(dto.getTeamRecruitName());
-            recruit.setTeamRecruitDetails(dto.getTeamRecruitDetails());
-            return recruit;
-        }
-        return null;
+        Recruit recruit = new Recruit();
+        recruit.setTitle(dto.getTeamRecruitName());
+        recruit.setTeamRecruitDetails(dto.getTeamRecruitDetails());
+        return recruit;
     }
 }

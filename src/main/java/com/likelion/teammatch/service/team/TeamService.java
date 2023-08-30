@@ -43,7 +43,8 @@ public class TeamService {
         team.setTeamMangerId(user.getId());
         team = teamRepository.save(team);
 
-        for (String techStackName : dto.getTeamTechStackList()){
+        String[] techList = dto.getTeamTechStackList().split("/");
+        for (String techStackName : techList){
             TechStack techStack = techStackRepository.findByName(techStackName).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
             TeamTechStack teamTechStack = new TeamTechStack();

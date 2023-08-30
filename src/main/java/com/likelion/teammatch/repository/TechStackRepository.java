@@ -9,4 +9,6 @@ public interface TechStackRepository extends JpaRepository<TechStack, Long> {
 
     //기술 이름으로 TechStack을 찾도록 하는 메소드
     Optional<TechStack> findByName(String name);
+
+    Boolean existsByName(String name);
 }

@@ -45,8 +45,6 @@ public class Team extends BaseTimeEntity{
     @Enumerated(EnumType.STRING)
     private TeamType type;
 
-    //정규 모임 시간 정보를 String으로 저장한다. (ex : 월수금 19:00~21:00)
-    private String regularMeetingTimeInfo;
 
     //온라인으로 진행하는지 아니면 오프라인으로 진행할지.
     private Boolean isOnline;
