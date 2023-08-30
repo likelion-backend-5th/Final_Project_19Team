@@ -17,12 +17,12 @@
 <body>
 <div class="main">
 
-    <form class="createForm" th:action="@{/createTeam}" th:method="post">
+    <form class="createForm slide-in-top" th:action="@{/createTeam}" th:method="post" id="createForm">
         <div class="createFormLogo">
             <div class="createFormLogoText">Create Team </div>
             <img class="createFormLogoImg" src="../assets/create/close.svg" alt="#">
         </div>
-        <input class="createTeamName" name="teamName" id="teamName" placeholder="팀 이름을 입력하세요">
+        <input class="createTeamName" name="teamName" id="teamName" placeholder="팀 이름을 입력하세요" required>
         <div class="teamCreateInputGroup">
             <div class="teamSingleLineInputGroup">
                 <div class="teamTypeLabel" title="해당 팀의 목적은 무엇인가요?">Type</div>
@@ -31,7 +31,7 @@
                 <div class="teamTypeButton" onclick="clickTeamType('employment')" id="employment">취준</div>
                 <div class="teamTypeButton" onclick="clickTeamType('others')" id="others">기타</div>
             </div>
-            <input type="text" hidden="hidden" name="teamType" id="teamType">
+            <input type="text" hidden="hidden" name="teamType" id="teamType" required>
             <script>
 
                 function clickTeamType(type){
@@ -53,23 +53,23 @@
             </script>
 
             <div class="teamSingleLineInputGroup">
-                <div class="teamOpenLabel" title="해당 팀은 온라인으로 활동을 진행하나요? 아니면 오프라인 위주로 진행하나요?">Where</div>
-                <div class="teamOpenButton" id="online" onclick="changeTeamOpen('online')">온라인</div>
-                <div class="teamOpenButton" id="offline" onclick="changeTeamOpen('offline')">오프라인</div>
-                <input type="text" hidden="hidden" name="open" id="open">
+                <div class="teamIsOnlineLabel" title="해당 팀은 온라인으로 활동을 진행하나요? 아니면 오프라인 위주로 진행하나요?">Where</div>
+                <div class="teamIsOnlineButton" id="online" onclick="changeTeamIsOnline('online')">온라인</div>
+                <div class="teamIsOnlineButton" id="offline" onclick="changeTeamIsOnline('offline')">오프라인</div>
+                <input type="checkbox" hidden="hidden" name="isOnline" id="isOnline" required>
             </div>
             <script>
-                function changeTeamOpen(type){
-                    let selectedOpen = document.getElementById(type);
-                    if (selectedOpen.classList.contains('selected')){
-                        selectedOpen.classList.remove('selected');
-                        document.getElementById("open").value="";
+                function changeTeamIsOnline(type){
+                    let selectedIsOnline = document.getElementById(type);
+                    if (selectedIsOnline.classList.contains('selected')){
+                        selectedIsOnline.classList.remove('selected');
+                        document.getElementById("isOnline").checked=false;
                     }
                     else {
                         document.getElementById('online').classList.remove('selected');
                         document.getElementById('offline').classList.remove('selected');
-                        selectedOpen.classList.add('selected');
-                        document.getElementById("open").value = type;
+                        selectedIsOnline.classList.add('selected');
+                        document.getElementById("isOnline").checked=true;
                     }
 
                 }
@@ -77,48 +77,50 @@
             <div class="teamDoubleLineInputGroup">
                 <div class="teamTechLabel" title="해당 팀의 핵심 기술 스택을 최대 4가지까지 골라주세요!">Tech</div>
                 <div class="teamTechStackInputGroup">
-                    <input class="teamTechStackInput" id="teamTechStackInput">
+                    <div class="teamTechStackInputWithSearchGroup" id="teamTechStackInputWithSearchGroup">
+                        <input class="teamTechStackInput" id="teamTechStackInput">
+                        <div class="teamTechStackInputSearch"  onclick="techStackInputEntered()">Search</div>
+                    </div>
+
                     <div class="teamTechStackLabelGroup" id="teamTechStackLabelGroup"></div>
                     <input hidden="hidden" type="text" id="techStackList" name="techStackList">
 
                     <script>
                         let techStackNum = 0;
                         let teamTechStackInput = document.getElementById("teamTechStackInput");
-                        teamTechStackInput.addEventListener("keyup", event => techStackInputEntered(event));
+
                         let techStackLabelGroup = document.getElementById("teamTechStackLabelGroup");
                         let techStackForm = document.getElementById('techStackList');
-                        async function techStackInputEntered(e){
-                            if (e.key === 'Enter'){
-                                let techStackValue = teamTechStackInput.value;
-                                let response = await fetch('/api/techStackExists', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: techStackValue,
-                                    credentials: 'include' // 인증정보를 포함하는 옵션
-                                });
+                        async function techStackInputEntered(){
+                            let techStackValue = teamTechStackInput.value;
+                            let response = await fetch('/api/techStackExists', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: techStackValue,
+                                credentials: 'include' // 인증정보를 포함하는 옵션
+                            });
 
-                                if (await response.text() === 'true'){
-                                    let techStackName = techStackValue.toLowerCase();
-                                    if (checkTechStackAlreadyIncluded(techStackName)){
-                                        alert('이미 포함된 techStack 이름입니다.');
-                                    }
-                                    else if (techStackNum >= 4) {
-                                        alert('최대 4개까지 기술 스택을 고를 수 있습니다!');
-                                    }
-                                    else {
-                                        let newDiv = document.createElement('div');
-                                        newDiv.classList.add("teamTechStackLabel");
-                                        newDiv.innerText = techStackName;
-                                        techStackLabelGroup.appendChild(newDiv);
-                                        techStackForm.value = techStackName + "/" + techStackForm.value ;
-                                        techStackNum = techStackNum + 1;
-                                    }
+                            if (await response.text() === 'true'){
+                                let techStackName = techStackValue.toLowerCase();
+                                if (checkTechStackAlreadyIncluded(techStackName)){
+                                    alert('이미 포함된 techStack 이름입니다.');
+                                }
+                                else if (techStackNum >= 4) {
+                                    alert('최대 4개까지 기술 스택을 고를 수 있습니다!');
                                 }
                                 else {
-                                    alert('서버에서 관리하지 않는 techStack 이름입니다.');
+                                    let newDiv = document.createElement('div');
+                                    newDiv.classList.add("teamTechStackLabel");
+                                    newDiv.innerText = techStackName;
+                                    techStackLabelGroup.appendChild(newDiv);
+                                    techStackForm.value = techStackName + "/" + techStackForm.value ;
+                                    techStackNum = techStackNum + 1;
                                 }
+                            }
+                            else {
+                                alert('서버에서 관리하지 않는 techStack 이름입니다.');
                             }
                         }
 
@@ -132,6 +134,7 @@
                             }
                             return false;
                         }
+
                     </script>
                 </div>
             </div>
@@ -141,22 +144,65 @@
                 <textarea class="teamCreateTextarea" name="teamDescribe" id="teamDescribe"></textarea>
             </div>
 
-            <div class="teamDoubleLineInputGroup">
+            <div class="teamSingleLineInputGroup">
+                <div class="teamTypeLabel" title="몇명의 팀원들을 모집하실 생각인가요?">Many</div>
+                <input class="teamNumberInput" id="memberNum" name="memberNum" required onchange="onlyNumberInput()">
+                <label class="teamNumberInputLabel" for="memberNum" >명</label>
+            </div>
+            <script>
+                function onlyNumberInput(){
+                    let inputValue = document.getElementById('memberNum').value;
+                    if (inputValue !== "" && !isNumeric(inputValue)) {
+                        alert('숫자를 입력하세요.');
+                        document.getElementById('memberNum').value = ''; // 값을 지움
+                    }
+                    function isNumeric(value) {
+                        return /^\d+$/.test(value);
+                    }
+                }
+            </script>
+
+            <div class="teamSingleLineInputGroup">
+                <div class="teamTypeLabel" title="팀을 만들면서 같이 공고글도 작성하실 생각인가요?">Recruit</div>
+                <label class="teamRecruitCheckLabel" for="recruitCheck">팀을 만들면서 같이 공고글도 작성하실 생각인가요? </label>
+                <input class="teamRecruitCheck" type="checkbox" id="recruitCheck" name="recruitCheck" onclick="checkRecruit()">
+            </div>
+
+            <script>
+                let recruitCheckInput = document.getElementById('recruitCheck');
+
+                function checkRecruit() {
+                    if (recruitCheckInput.checked) {
+                        document.getElementById('recruitTitleInfo').style.display = 'flex';
+                        document.getElementById('recruitDetailsInfo').style.display = 'flex';
+                    } else {
+                        document.getElementById('recruitTitleInfo').style.display = 'none';
+                        document.getElementById('recruitDetailsInfo').style.display = 'none';
+                    }
+                }
+            </script>
+
+            <div class="recruitTitleInfo" id="recruitTitleInfo">
+                <div class="teamTechLabel" title="모집 공고글에 적히게 될 설명을 적어주세요!">Recruit Title</div>
+                <input class="recruitTitleInput" type="text" id="teamRecruitName" name="teamRecruitName">
+            </div>
+
+            <div class="recruitDetailsInfo" id="recruitDetailsInfo">
                 <div class="teamTechLabel" title="모집 공고글에 적히게 될 설명을 적어주세요!">Recruit Info</div>
                 <textarea class="teamCreateTextarea" name="teamRecruitDetails" id="teamRecruitDetails"></textarea>
             </div>
 
-            <div class="teamSingleLineInputGroup">
-                <div class="teamTypeLabel" title="몇명의 팀원들을 모집하실 생각인가요?">Many</div>
-                <input class="teamNumberInput" id="memberNum" name="memberNum">
-                <label class="teamNumberInputLabel" for="memberNum">명</label>
-            </div>
+
 
 
         </div>
         <div class="singUpButtonGroup">
-            <div class="singUpButton">등록</div>
+            <button class="singUpButton" id="signUpButton" type="submit">등록</button>
         </div>
+
+        <script>
+
+        </script>
     </form>
 </div>
 </body>

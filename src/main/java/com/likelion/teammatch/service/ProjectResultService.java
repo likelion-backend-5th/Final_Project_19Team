@@ -44,7 +44,7 @@ public class ProjectResultService {
         projectResult.setGithub(github);
         projectResult.setTeamManagerId(user.getId());
         projectResult.setTeamId(team.getId());
-        projectResult.setOpen(team.getOpen());
+        projectResult.setOpen(team.getIsOnline());
         projectResult = projectResultRepository.save(projectResult);
 
         return projectResult.getId();

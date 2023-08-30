@@ -25,6 +25,8 @@ public class Recruit extends BaseTimeEntity {
     private String teamRecruitDetails;
     //모집 목표 인원수
     private Integer recruitMemberNum;
-    //badge 관련 사항은 미구현
+
+    //모집 종료되었는지 여부
+    private Boolean isFinished;
 //    private Boolean badge;
 }

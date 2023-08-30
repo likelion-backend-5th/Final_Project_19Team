@@ -16,17 +16,39 @@ input {
     border: none;
 }
 
-.item--XW1 {
-    width: 41.5rem;
-    height: 67.5rem;
-    position: absolute;
-    left: 51.6rem;
-    top: 10.2rem;
-    border: solid 0.05rem #000000;
+.flexmain {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 50vw;
+    height: 75vh;
+    top: 10vh;
+    border: solid 0.2rem #1e1e1e;
     box-sizing: border-box;
-    background-color: #e6e6e6;
     border-radius: 1rem;
     box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
+}
+
+.flexing1{
+    display: flex;
+    width: 45vw;
+    height: 75vh;
+    position: relative;
+    top: 2vh;
+    box-sizing: border-box;
+    border-radius: 1rem;
+}
+
+.item--XW1 {
+    position: relative;
+    box-sizing: border-box;
+    border-radius: 1rem;
+}
+
+.item--XW2{
+    position: relative;
+    box-sizing: border-box;
+    border-radius: 1rem;
 }
 
 .close-Uem {
@@ -41,7 +63,7 @@ input {
 
 .close-PDj {
     position: relative;
-    right: -19rem;
+    right: -46rem;
     top: -8rem;
 }
 
@@ -74,7 +96,7 @@ input {
 
 
 .line-12-cLR {
-    width: 37rem;
+    width: 80rem;
     height: 0.1rem;
     position: relative;
     top: 5rem;
@@ -88,6 +110,15 @@ input {
     flex-direction: column;
     align-items: center;
 }
+
+.flex1{
+    display: flex;
+    position: relative;
+    top: 7rem;
+    flex-direction: column;
+    align-items: center;
+}
+
 
 .nameinputcomponent-M37 {
     width: 33.9rem;
@@ -148,22 +179,19 @@ input {
 }
 
 .singupbutton-Quo {
-    width: 14.4rem;
-    height: 4.4rem;
+    visibility: hidden;
+    top: -3rem;
+    width: 10.4rem;
+    height: 5.4rem;
     position: relative;
-    top: 1.8rem;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 2rem;
     font-weight: 700;
-    line-height: 1.4475;
     color: #ffffff;
     font-family: Noto Sans KR, 'Source Sans Pro';
-    white-space: nowrap;
     background-color: #b63939;
     border-radius: 1rem;
     box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
 }
-
-
