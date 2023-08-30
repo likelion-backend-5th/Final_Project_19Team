@@ -12,6 +12,7 @@ import com.likelion.teammatch.repository.team.UserTeamRepository;
 import com.likelion.teammatch.repository.team.TeamRepository;
 import com.likelion.teammatch.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class TeamService {
     private final TeamRepository teamRepository;
     private final UserRepository userRepository;
@@ -32,18 +34,19 @@ public class TeamService {
     //Team 생성
     //생성 후 teamId 리턴함
     public Long createTeam(TeamCreateDto dto){
+        log.info("팀 생성");
         //현재 로그인한 유저의 이름 가져오기
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         //유저 엔티티 가져오기
         User user = userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         Team team = TeamCreateDto.getTeamEntity(dto);
-        Recruit recruit = TeamCreateDto.getRecruitEntity(dto);
+
 
         team.setTeamMangerId(user.getId());
         team = teamRepository.save(team);
 
-        String[] techList = dto.getTeamTechStackList().split("/");
+        String[] techList = dto.getTechStackList().split("/");
         for (String techStackName : techList){
             TechStack techStack = techStackRepository.findByName(techStackName).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
@@ -53,13 +56,20 @@ public class TeamService {
             teamTechStackRepository.save(teamTechStack);
         }
 
-
-        if (recruit != null){
+        if (dto.getRecruitCheck()){
+            log.info("모집글 생성 with Team");
+            Recruit recruit = TeamCreateDto.getRecruitEntity(dto);
             recruit.setTeamManagerId(user.getId());
             recruit.setTeamId(team.getId());
 
             recruitRepository.save(recruit);
         }
+
+        UserTeam userTeam = new UserTeam();
+        userTeam.setUserId(user.getId());
+        userTeam.setTeamId(team.getId());
+        userTeam.setRole("manager");
+        userTeamRepository.save(userTeam);
 
         return team.getId();
     }

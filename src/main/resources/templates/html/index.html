@@ -10,6 +10,8 @@
     <link rel="stylesheet" th:href="@{../css/index.css}" href="../../static/css/index.css">
     <link rel="stylesheet" th:href="@{../css/mypage.css}" href="../../static/css/mypage.css">
     <link rel="stylesheet" th:href="@{../css/mypage_pop.css}" href="../../static/css/mypage_pop.css">
+    <link rel="stylesheet" th:href="@{../css/mypage.css}" href="../../static/css/mypage.css">
+    <link rel="stylesheet" th:href="@{../css/mypage_pop.css}" href="../../static/css/mypage_pop.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons%3A400">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+KR%3A700">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%3A400%2C500%2C700">
@@ -84,7 +86,7 @@
             </div>
             <div class="sort">
                 <img class='sort_img' src="../../static/assets/index/sort.svg" th:src="@{/assets/index/sort.svg}"
-                    alt="#" />
+                     alt="#" />
                 <span class='sort_text'>Sort</span>
                 <button class="sort_up_btn">▲</button>
                 <button class="sort_down_btn">▼</button>
@@ -93,23 +95,24 @@
 
 <!-- Mache List -->
         <div class="grid_report">
-            <div th:each="recruit : ${recruitList}" class="grid_report_item">
+            <div th:each="recruit : ${recruitList}" class="grid_report_item" th:attr="data-recruitId=${recruit.getRecruitId()}" onclick="getRecruitDetails(this)">
                 <img class='grid_report_item_img_img' src="../../static/assets/index/sample_img.png"
-                    th:src="@{/assets/index/sample_img.svg}" alt="이미지" />
+                     th:src="@{/assets/index/sample_img.png}" alt="이미지" />
                 <button class="stars_btn">★</button>
                 <div class="grid_report_item_text">
-                    <p class="title" th:text="${recruit.getRecruitTitle()}">멋사 19 프로젝트 모집</p>
-                    <button th:if="!${recruit.getIsRecruitFinished()}" class="status">모집중</button>
-                    <button th:if="${recruit.getIsRecruitFinished()}" class="status1">모집 완료</button>
+                    <div class="title" th:text="${recruit.getRecruitTitle()}">멋사 19 프로젝트 모집</div>
+                    <button th:if="!${recruit.getIsFinished()}"  class="status">모집중</button>
+                    <button th:if="${recruit.getIsFinished()}" class="status1">모집 완료</button>
                 </div>
                 <div class="grid_report_item_text_mid">
                     <div class="stacks">
-                        <button th:each="stack: ${recruit.getTechStackName()}" class='stacks_button'
-                            th:text="${stack}">스터디</button>
+                        <button class="stacks_button" th:text="${recruit.getTeamType()}">스터디</button>
+                        <button th:each="stack: ${recruit.getTechStackList()}" class='stacks_button'
+                            th:text="${stack}">java</button>
                     </div>
                 </div>
                 <div class="grid_report_item_text_low1">
-                    <h5 class="contents" th:text="${recruit.getTeamRecruitDetails()}">모집 글 설명</h5>
+                    <div class="contents" th:text="${recruit.getRecruitDetails()}">asdfghkjsdjfalsdfasdfasdfasdfasdfasdfasdfasdfasdfsadfsadfsadfsadfsadfsadfsadfsdafsdafasdfsdaf</div>
                 </div>
             </div>
         </div>
@@ -342,6 +345,7 @@
                     <!-- Team Reader -->
                     <div class="title-E7T">Team Reader</div>
                     <div class="project-a-SzD">Project A</div>
+                    <!-- List -->
                     <div class="readerlist-Zow">
                         <!-- 1.신규등록 알림 -->
                         <div class="item--GyF">
