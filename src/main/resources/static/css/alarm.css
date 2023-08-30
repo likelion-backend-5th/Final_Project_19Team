@@ -1,50 +1,36 @@
 
-html {
-	font-size:62.5%;
-}
-* {
-	margin: 0;
-	padding: 0;
-}
-ul, li {
-	list-style: none;
-}
-input {
-	border: none;
-}
-body {
-  width: 144rem;
-}
-
 .item--tFK {
+  visibility: hidden;
+  margin: 0;
   box-sizing: border-box;
-  width: 100%;
   overflow: hidden;
-  position: relative;
-  left: 100%;
+  position: absolute;
+  left: 1300px;
+  top: 100px;
   display: flex;
   align-items: center;
-  background-color: #ffffff;
 }
 
+/* 알람창 너비 */
 .alarm-6k1 {
-  margin-bottom: 48.4rem;
+  margin: 0;
   box-sizing: border-box;
-  padding: 1.2rem 0;
-  width: 30.7rem;
-  height: 133.6rem;
+  padding: 17px 0;
+  width: 20.7rem;
+  height: 1340px;
   background-color: #505c68;
   border-radius: 0.5rem;
   flex-shrink: 0;
 }
 .alarmdetail-bgm {
   width: 100%;
-  height: 128.5rem;
   align-items: center;
   display: flex;
   flex-direction: column;
 }
 .teamreader-x1X {
+  position: relative;
+  top: 0px;
   margin-bottom: 3rem;
   width: 100%;
   display: flex;
@@ -52,16 +38,15 @@ body {
   flex-shrink: 0;
 }
 .auto-group-ptnd-fwX {
-  margin: 0rem 2.005rem 1.1rem 2rem;
-  width: calc(100% - 4.0045rem);
+  margin: 0 20px 10px 20px;
   display: flex;
   align-items: center;
   flex-shrink: 0;
 }
 .alarm-oH3 {
-  margin-right: 19rem;
+  margin-right: 200px;
   display: flex;
-  font-size: 2rem;
+  font-size: 20px;
   font-weight: 500;
   line-height: 1.6;
   letter-spacing: 0.025rem;
@@ -76,11 +61,11 @@ body {
   flex-shrink: 0;
 }
 .title-E7T {
-  margin-bottom: 1rem;
+  margin-bottom: 1px;
   width: 100%;
-  height: 3.2rem;
+  height: 32px;
   display: flex;
-  font-size: 1.8rem;
+  font-size: 18px;
   font-weight: 400;
   line-height: 1.7777777778;
   letter-spacing: 0.025rem;
@@ -90,17 +75,17 @@ body {
   align-items: center;
   justify-content: center;
   background-color: #979797;
-  border-radius: 0.5rem;
+  border-radius: 5px;
   flex-shrink: 0;
 }
 
 .title-Efd3 {
-  margin-top: 2.5rem;
-  margin-bottom: 1rem;
+  margin-top: 25px;
+  margin-bottom: 1px;
   width: 100%;
-  height: 3.2rem;
+  height: 32px;
   display: flex;
-  font-size: 1.8rem;
+  font-size: 18px;
   font-weight: 400;
   line-height: 1.7777777778;
   letter-spacing: 0.025rem;
@@ -110,14 +95,14 @@ body {
   align-items: center;
   justify-content: center;
   background-color: #979797;
-  border-radius: 0.5rem;
+  border-radius: 5px;
   flex-shrink: 0;
 }
 
 .project-a-SzD {
   margin-left: 2rem;
   display: flex;
-  font-size: 1.6rem;
+  font-size: 16px;
   font-weight: 400;
   line-height: 2;
   letter-spacing: 0.025rem;
@@ -139,47 +124,47 @@ body {
   box-sizing: border-box;
   padding: 1.3rem 0.7rem 0.8rem 1.1rem;
   width: 100%;
-  height: 9rem;
+  height: 90px;
   box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
   background-color: #e5e5e5;
   border-radius: 0.5rem;
   flex-shrink: 0;
 }
 
-/* 버튼 */
+
 .item--UT3 {
   position: relative;
-  top: 4.9rem;
-  left: 14rem;
+  top: 40px;
+  left: 40px;
 }
+
 
 .classss {
   display: flex;
 }
 
-/*  */
+
 .group-226-dKw {
   position: relative;
   margin-right: 4px;
-  width: 5.6rem;
-  height: 2.3rem;
+  width: 55px;
+  height: 23px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  font-size: 10px;
   font-weight: 700;
-  line-height: 1.2125;
   color: #ffffff;
   font-family: Inter, 'Source Sans Pro';
   white-space: nowrap;
-  box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
   background-color: #b63939;
-  border-radius: 0.4rem;
+  border-radius: 4px;
   flex-shrink: 0;
 }
 
 .group-227-6jK {
   width: 5.9rem;
+  margin: 0px;
   height: 100%;
   position: relative;
   border-radius: 0.4rem;
@@ -187,28 +172,26 @@ body {
 }
 
 .rectangle-344-f1j {
-  width: 5.6rem;
-  height: 2.3rem;
+  width: 56px;
+  height: 23px;
   position: absolute;
   left: 0.2rem;
   top: 0;
-  box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
   background-color: #979797;
-  border-radius: 0.4rem;
+  border-radius: 4px;
 }
 
 .item--jGV {
-  width: 5.5rem;
-  height: 1.3rem;
-  position: absolute;
-  left: 0.2rem;
-  top: 0.55rem;
+  position: relative;
+  right: 30px;
+  margin-right: 4px;
+  width: 56px;
+  height: 23px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  font-size: 10px;
   font-weight: 700;
-  line-height: 1.2125;
   color: #ffffff;
   font-family: Inter, 'Source Sans Pro';
   white-space: nowrap;
@@ -217,19 +200,23 @@ body {
 
 .group-236-BqK {
   position: relative;
-  top: -2rem;
+  top:-35px;
 }
 
 .item--wpV {
+  margin: 0;
   height: 100%;
+  align-items: left;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
 }
 
+/* 신규등록 알림 */
 .item--6Bb {
+  margin: 0;
   margin-bottom: 1.5rem;
-  font-size: 1.6rem;
+  font-size: 16px;
   font-weight: 700;
   line-height: 1.2125;
   color: #000000;
@@ -238,28 +225,30 @@ body {
   flex-shrink: 0;
 }
 
-
 .group-239-3wP {
+
   box-sizing: border-box;
   padding: 1.3rem 0.8rem 0.8rem 1.1rem;
   width: 100%;
-  height: 9rem;
+  height: 90px;
   box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
   background-color: #e5e5e5;
   border-radius: 0.5rem;
   flex-shrink: 0;
 }
 
+/* 참여신청 알림 버튼 */
 .group-234-t4q {
   position: relative;
-  top: 2rem;
-  left: 14rem;
-  width: 11.8rem;
-  height: 5.2rem;
+  top: 10px;
+  left: 43px;
+  width: 56px;
+  height: 23px;
+  display: flex;
+  font-size: 10px;
   border-radius: 0.4rem;
   flex-shrink: 0;
 }
-
 
 .group-237-EuP {
   width: 100%;
@@ -271,21 +260,18 @@ body {
 }
 
 .group-231-bzq {
-  margin-bottom: 0.6rem;
-  width: 100%;
-  height: 2.3rem;
+  width: 118px;
+  height: 23px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  font-size: 10px;
   font-weight: 700;
-  line-height: 1.2125;
   color: #ffffff;
   font-family: Inter, 'Source Sans Pro';
   white-space: nowrap;
-  box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
   background-color: #3f51b5;
-  border-radius: 0.4rem;
+  border-radius: 4px;
   flex-shrink: 0;
 }
 
@@ -298,50 +284,48 @@ body {
 }
 
 .group-232-ZKP {
-  margin-right: 0.6rem;
-  width: 5.6rem;
-  height: 100%;
+  margin-right: 6px;
+  width: 56px;
+  height: 23px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  font-size: 10px;
   font-weight: 700;
-  line-height: 1.2125;
   color: #ffffff;
   font-family: Inter, 'Source Sans Pro';
   white-space: nowrap;
-  box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
   background-color: #b63939;
-  border-radius: 0.4rem;
+  border-radius: 4px;
   flex-shrink: 0;
 }
 
 .group-233-QL1 {
-  width: 5.6rem;
-  height: 100%;
+  width: 56px;
+  height: 23px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  font-size: 10px;
   font-weight: 700;
-  line-height: 1.2125;
   color: #ffffff;
   font-family: Inter, 'Source Sans Pro';
   white-space: nowrap;
-  box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
   background-color: #979797;
-  border-radius: 0.4rem;
+  border-radius: 4px;
   flex-shrink: 0;
 }
 
 .group-238-AFK {
   position: relative;
-  top: -5rem;
+  top: -35px;
 }
 
+/* 참여신청 알림 텍스트 */
 .item--fhs {
+  margin: 0;
   margin-bottom: 1.5rem;
-  font-size: 1.6rem;
+  font-size: 16px;
   font-weight: 700;
   line-height: 1.2125;
   color: #000000;
@@ -350,8 +334,10 @@ body {
   flex-shrink: 0;
 }
 
+/* 참여신청 알림 텍스트 */
 .a--ZL5 {
-  font-size: 1.4rem;
+  margin: 0;
+  font-size: 14px;
   font-weight: 400;
   line-height: 1.2125;
   color: #000000;
@@ -363,7 +349,7 @@ body {
   box-sizing: border-box;
   padding: 1.3rem 0.8rem 0.8rem 1.133rem;
   width: 100%;
-  height: 9rem;
+  height: 90px;
   box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
   background-color: #e5e5e5;
   border-radius: 0.5rem;
@@ -372,78 +358,73 @@ body {
 
 .group-254-fgV {
   position: relative;
-  top: 4.8rem;
-  left: 20.1rem;
-  width: 5.6rem;
-  height: 2.3rem;
+  top: 40px;
+  left: 105px;
+  width: 56px;
+  height: 23px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  font-size: 10px;
   font-weight: 700;
-  line-height: 1.2125;
   color: #ffffff;
   font-family: Inter, 'Source Sans Pro';
   white-space: nowrap;
-  box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
   background-color: #78ae65;
-  border-radius: 0.4rem;
+  border-radius: 4px;
   flex-shrink: 0;
 }
 
 .group-299-sdf {
   position: relative;
-  top: 4.8rem;
-  left: 20.1rem;
-  width: 5.6rem;
-  height: 2.3rem;
+  top: 40px;
+  left: 105px;
+  width: 56px;
+  height: 23px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  font-size: 10px;
   font-weight: 700;
-  line-height: 1.2125;
   color: #ffffff;
   font-family: Inter, 'Source Sans Pro';
   white-space: nowrap;
-  box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
   background-color: #979797;
-  border-radius: 0.4rem;
+  border-radius: 4px;
   flex-shrink: 0;
 }
 
 
 .group-256-fef {
   position: relative;
-  top: 4.8rem;
-  left: 20.1rem;
-  width: 5.6rem;
-  height: 2.3rem;
+  top: 40px;
+  left: 105px;
+  width: 56px;
+  height: 23px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  font-size: 10px;
   font-weight: 700;
-  line-height: 1.2125;
   color: #ffffff;
   font-family: Inter, 'Source Sans Pro';
   white-space: nowrap;
-  box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
   background-color: #b63939;
-  border-radius: 0.4rem;
+  border-radius: 4px;
   flex-shrink: 0;
 }
 
 .group-256-7mT {
+
   position: relative;
-  top: -2rem;
+  top: -35px;
   display: flex;
   align-items: flex-end;
   border-radius: 0.4rem;
 }
 
 .group-255-gJm {
-  margin-right: 12.65;
+  margin: 0;
   height: 100%;
   align-items: left;
   display: flex;
@@ -453,9 +434,8 @@ body {
 
 .item--Rn9 {
   margin: 0rem 0rem 1.5rem 0rem;
-  font-size: 1.6rem;
+  font-size: 16px;
   font-weight: 700;
-  line-height: 1.2125;
   color: #000000;
   font-family: Inter, 'Source Sans Pro';
   white-space: nowrap;
@@ -464,12 +444,11 @@ body {
 
 .outcheck-zJM {
   position: relative;
-  top: -150rem;
-  left: 100rem;
+  top: 300px;
+  left: 0px;
   box-sizing: border-box;
-  padding: 1rem 2.4rem 1.1rem 2.5rem;
-  width: 20.7rem;
-  height: 11.6rem;
+  width: 13.7rem;
+  height: 9rem;
   box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
   background-color: #e5e5e5;
   border-radius: 0.5rem;
@@ -486,35 +465,34 @@ body {
 }
 
 .item-100-1--bSZ {
-  margin-bottom: 1.3rem;
+  margin-bottom: 0.5rem;
   text-align: center;
   font-size: 1.2rem;
   font-weight: 400;
-  line-height: 1.2125;
   color: #000000;
   font-family: Inter, 'Source Sans Pro';
   flex-shrink: 0;
 }
 
-.item-100-1--bSZ-sub-1 {
-  font-size: 1.2rem;
+.item-100-1--bSZ-sub-3 {
+  line-height :10px;
+  font-size: 12px;
   font-weight: 700;
-  line-height: 1.2125;
   color: #b63939;
   font-family: Inter, 'Source Sans Pro';
 }
 
-.item-100-1--bSZ-sub-3 {
-  font-size: 1.2rem;
+.item-100-1--bSZ-sub-2 {
+  line-height :10px;
+  font-size: 12px;
   font-weight: 700;
-  line-height: 1.2125;
-  color: #b63939;
+  color: #000000;
   font-family: Inter, 'Source Sans Pro';
 }
 
 .group-287-vob {
   position: relative;
-  left: 2rem;
+  left: 34px;
   width: 100%;
   height: 2.3rem;
   display: flex;
@@ -525,42 +503,36 @@ body {
 
 .group-285-siq {
   margin-right: 0.6rem;
-  width: 5.6rem;
-  height: 100%;
+  width: 56px;
+  height: 72%;
+  margin: 0 5px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  font-size: 10px;
   font-weight: 700;
-  line-height: 1.2125;
   color: #ffffff;
   font-family: Inter, 'Source Sans Pro';
   white-space: nowrap;
-  box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
   background-color: #b63939;
-  border-radius: 0.4rem;
+  border-radius: 4px;
   flex-shrink: 0;
 }
 
 .group-286-XYV {
-  width: 5.6rem;
-  height: 100%;
+  width: 56px;
+  height: 72%;
+  margin: 0 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  font-size: 10px;
   font-weight: 700;
-  line-height: 1.2125;
   color: #ffffff;
   font-family: Inter, 'Source Sans Pro';
   white-space: nowrap;
-  box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
   background-color: #979797;
-  border-radius: 0.4rem;
+  border-radius: 4px;
   flex-shrink: 0;
 }
-
-
-
-
 
