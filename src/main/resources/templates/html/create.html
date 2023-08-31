@@ -25,11 +25,11 @@
         <input class="createTeamName" name="teamName" id="teamName" placeholder="팀 이름을 입력하세요" required>
         <div class="teamCreateInputGroup">
             <div class="teamSingleLineInputGroup">
-                <div class="teamTypeLabel" title="해당 팀의 목적은 무엇인가요?">Type</div>
-                <div class="teamTypeButton" onclick="clickTeamType('project')" id="project">프로젝트</div>
-                <div class="teamTypeButton" onclick="clickTeamType('study')" id="study">스터디</div>
-                <div class="teamTypeButton" onclick="clickTeamType('employment')" id="employment">취준</div>
-                <div class="teamTypeButton" onclick="clickTeamType('others')" id="others">기타</div>
+                <div class="teamTagLabel" title="해당 팀의 목적은 무엇인가요?">Type</div>
+                <div class="teamTagButton" onclick="clickTeamType('project')" id="project">프로젝트</div>
+                <div class="teamTagButton" onclick="clickTeamType('study')" id="study">스터디</div>
+                <div class="teamTagButton" onclick="clickTeamType('employment')" id="employment">취준</div>
+                <div class="teamTagButton" onclick="clickTeamType('others')" id="others">기타</div>
             </div>
             <input type="text" hidden="hidden" name="teamType" id="teamType" required>
             <script>
@@ -145,7 +145,7 @@
             </div>
 
             <div class="teamSingleLineInputGroup">
-                <div class="teamTypeLabel" title="몇명의 팀원들을 모집하실 생각인가요?">Many</div>
+                <div class="teamTagLabel" title="몇명의 팀원들을 모집하실 생각인가요?">Many</div>
                 <input class="teamNumberInput" id="memberNum" name="memberNum" required onchange="onlyNumberInput()">
                 <label class="teamNumberInputLabel" for="memberNum" >명</label>
             </div>
@@ -163,7 +163,7 @@
             </script>
 
             <div class="teamSingleLineInputGroup">
-                <div class="teamTypeLabel" title="팀을 만들면서 같이 공고글도 작성하실 생각인가요?">Recruit</div>
+                <div class="teamTagLabel" title="팀을 만들면서 같이 공고글도 작성하실 생각인가요?">Recruit</div>
                 <label class="teamRecruitCheckLabel" for="recruitCheck">팀을 만들면서 같이 공고글도 작성하실 생각인가요? </label>
                 <input class="teamRecruitCheck" type="checkbox" id="recruitCheck" name="recruitCheck" onclick="checkRecruit()">
             </div>

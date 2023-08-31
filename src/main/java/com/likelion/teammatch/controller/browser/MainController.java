@@ -3,6 +3,7 @@ package com.likelion.teammatch.controller.browser;
 import com.likelion.teammatch.dto.RecruitDraftDto;
 import com.likelion.teammatch.dto.RecruitInfoDto;
 import com.likelion.teammatch.dto.team.TeamCreateDto;
+import com.likelion.teammatch.service.CommentService;
 import com.likelion.teammatch.service.RecruitService;
 import com.likelion.teammatch.service.team.TeamService;
 import lombok.extern.slf4j.Slf4j;
@@ -19,10 +20,12 @@ public class MainController {
 
     private final TeamService teamService;
     private final RecruitService recruitService;
+    private final CommentService commentService;
 
-    public MainController(TeamService teamService, RecruitService recruitService) {
+    public MainController(TeamService teamService, RecruitService recruitService, CommentService commentService) {
         this.teamService = teamService;
         this.recruitService = recruitService;
+        this.commentService = commentService;
     }
 
     @GetMapping("/main")
@@ -54,6 +57,28 @@ public class MainController {
     public String getTeamInfo(@PathVariable("teamId") Long teamId){
         return "redirect:/main";//todo 임시로 main으로 보냄.
     }
+
+    @GetMapping("/recruit/{recruitId}")
+    public String getRecruitInfo(@PathVariable("recruitId") Long recruitId, Model model){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        RecruitInfoDto recruitDto = recruitService.getRecruitInfo(recruitId);
+
+        model.addAttribute("recruit", recruitDto);
+        model.addAttribute("comments", commentService.getCommentsForRecruit(recruitId));
+        model.addAttribute("isManager", username.equals(recruitDto.getTeamManagerUsername()));
+        model.addAttribute("isFinished", recruitDto.getIsRecruitFinished());
+        model.addAttribute("alreadyApplied", false);
+        return "/html/detail_recruiting";
+    }
+
+    @PostMapping("/recruit/{recruitId}/comment")
+    public String createCommentForRecruit(@PathVariable("recruitId") Long recruitId, @RequestParam String commentInput){
+        log.info("reached here");
+        commentService.createComment(recruitId, commentInput, true);
+
+        return "redirect:/recruit/" + recruitId;
+    }
+
 
 
 }

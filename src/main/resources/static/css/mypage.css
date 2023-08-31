@@ -1,24 +1,27 @@
-html {
-	font-size:62.5%;
-}
-* {
-	margin: 0;
-	padding: 0;
-}
-ul, li {
-	list-style: none;
-}
-input {
-	border: none;
-}
-body {
-  width: 144rem;
-}.item--Fa1 {
+/*html {*/
+/*	font-size:62.5%;*/
+/*}*/
+/** {*/
+/*	margin: 0;*/
+/*	padding: 0;*/
+/*}*/
+/*ul, li {*/
+/*	list-style: none;*/
+/*}*/
+/*input {*/
+/*	border: none;*/
+/*}*/
+/*body {*/
+/*  width: 144rem;*/
+/*}*/
+.item--Fa1 {
+  visibility: hidden;
   position: absolute;
+  left: 1150px;
+  top: 100px;
   display: flex;
   cursor: pointer;
   overflow: hidden;
-  background-color: #ffffff;
 }
 
 .item--Fa2 {
@@ -33,9 +36,9 @@ body {
 
 .profile-gQR {
   position: relative;
-  left: 8rem;
-  top: 1.5rem;
-  font-size: 2rem;
+  left: 90px;
+  top: 10px;
+  font-size: 20px;
   font-weight: 500;
   line-height: 1.6;
   letter-spacing: 0.025rem;
@@ -47,20 +50,19 @@ body {
   position: relative;
   width: 22px;
   height: 22px;
-  left: 42rem;
+  left: 32rem;
   top: 1rem;
 }
 .group-372-UbB {
   box-sizing: border-box;
-  padding: 5rem 1.5rem 0rem 1.5rem;
-  width: 36.9rem;
-  height: 63.6rem;
+  padding: 3rem 1.5rem 0rem 1.5rem;
+  width: 28.9rem;
+  height: 53.6rem;
   background-color: #505c68;
   border-radius: 0.5rem;
 }
 .group-371-PCM {
   box-sizing: border-box;
-  padding: 1.3rem 1.3rem 2.4rem 2.2rem;
   width: 100%;
   height: 97%;
   box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
@@ -76,22 +78,22 @@ body {
 }
 
 .group-347-ETs {
-  margin: 0rem 0rem 2.5rem 10.2rem;
-  width: calc(100% - 10.2rem);
+  margin: 0 auto;
+  width: 100px;
   display: flex;
   align-items: flex-start;
   flex-shrink: 0;
 }
 .mat-avatar-wt5 {
-  margin: 1.2rem 9rem 0rem 0rem;
-  width: 9.2rem;
-  height: 9.2rem;
+  margin: 20px 0 0 0;
+  width: 100px;
+  height: 100px;
   overflow: hidden;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 5.5rem;
+  font-size: 60px;
   font-weight: 400;
   line-height: 1;
   color: #ffffff;
@@ -104,6 +106,8 @@ body {
 .help-B1j {
   width: 2rem;
   height: 2rem;
+  left: 100px;
+  top: 20px;
   cursor: pointer;
   position: relative;
   object-fit: contain;
@@ -112,14 +116,17 @@ body {
 }
 
 .group-368-HHj{
-  margin: 0 auto;
+  margin: 0;
+  width: 100px;
 }
 
 .group-359-KNq {
-  margin: 0rem 0rem  3rem 0rem;
+  position: relative;
+  left: -140px;
   box-sizing: border-box;
-  padding: 1.167rem 3.9rem 1.3rem 4rem;
-  width: 29.5rem;
+  margin: 20px auto;
+  padding: 10px;
+  width: 380px;
   height: 14.9rem;
   box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
   background-color: #ffffff;
@@ -127,16 +134,24 @@ body {
   flex-shrink: 0;
 }
 
+
+
+
+/* 회원점수/등급(show) */
 .group-366-dsf {
-  margin: 0rem 0rem 3rem 0rem;
-    box-sizing: border-box;
-    padding: 1.167rem 3.9rem 1.3rem 4rem;
-    width: 29.5rem;
-    height: 37rem;
-    box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
-    background-color: #ffffff;
-    border-radius: 0.5rem;
-    flex-shrink: 0;
+  visibility: hidden;
+  margin: 20px auto;
+  position: relative;
+  top: -591px;
+  right: 140px;
+  box-sizing: border-box;
+  padding: 10px;
+  width: 380px;
+  height: 560px;
+  box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  flex-shrink: 0;
 }
 
 .group-358-p4h {
@@ -156,19 +171,13 @@ body {
 }
 .auto-group-esqh-TtM {
   box-sizing: border-box;
-  padding: 0.083rem 3.3rem 0rem 0rem;
   height: 100%;
   display: flex;
-  align-items: flex-end;
   flex-shrink: 0;
 }
 
-
-
-
 .group-354-Pn1 {
-  margin: 0.083rem 3.3rem 0rem 0rem;
-  width: 5rem;
+  margin: 10px 15px;
   height: calc(100% - 0.0833rem);
   align-items: center;
   display: flex;
@@ -194,7 +203,7 @@ body {
 }
 .item--mGm {
   text-align: center;
-  font-size: 1.4rem;
+  font-size: 16px;
   font-weight: 700;
   line-height: 1.2125;
   color: #1e1e1e;
@@ -249,7 +258,6 @@ body {
   width: 3.8rem;
   height: 1.5rem;
   position: relative;
-  left: 0.5rem;
   top: 1.8rem;
   text-align: center;
   font-size: 1.2rem;
@@ -277,13 +285,15 @@ body {
 
 .chevron-right-M7o {
   position: relative;
-  top: -0.3rem;
+  top: 10px;
   width: 2rem;
   height: 2rem;
 }
 .group-367-cpR {
-  margin: 0rem 5.1rem 0rem 2.1rem;
-  width: calc(100% - 7.2rem);
+  margin: 0 auto;
+  width: 100%;
+  position: relative;
+  left: -120px;
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -311,18 +321,19 @@ body {
 }
 
 .item--Pih {
-  font-size: 1.4rem;
+  font-size: 20px;
   font-weight: 700;
   color: #1e1e1e;
   font-family: Inter, 'Source Sans Pro';
   white-space: nowrap;
 }
 .fdsdf{
-    width: 3rem;
+  width: 3rem;
 }
 
 .gmlcjf0000-7eh {
-  font-size: 1.4rem;
+  font-size: 20px;
+  width: 200px;
   font-weight: 400;
   color: #1e1e1e;
   font-family: Inter, 'Source Sans Pro';
@@ -330,15 +341,16 @@ body {
 }
 
 .group-369-PCD {
-  margin: 0rem 12.8rem 0rem 12rem;
-  width: calc(100% - 24.8rem);
+  margin: 0 auto;
+  position: relative;
+  top: 10px;
+  width: 80px;
   height: 2.3rem;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1rem;
   font-weight: 700;
-  line-height: 1.2125;
   color: #ffffff;
   font-family: Inter, 'Source Sans Pro';
   white-space: nowrap;
@@ -354,13 +366,9 @@ body {
 
 
 
-
-
-
-
 .line-75-4P3 {
   margin-top: 1.3rem;
-  width: 27rem;
+  width: 100%;
   height: 0.1rem;
   background-color: #1e1e1e;
   flex-shrink: 0;
@@ -374,10 +382,11 @@ body {
   flex-shrink: 0;
 }
 
+
 .auto-group-3btm-wxd {
   position: relative;
-  top: -19rem;
-  left: -2.8rem;
+  top: -300px;
+  left: -2.4rem;
   box-sizing: border-box;
   width: 27rem;
   align-items: center;
@@ -388,10 +397,10 @@ body {
 
 .item--Uhf {
   position: relative;
-  top: -20rem;
-  margin: 0rem 0rem 1.2rem 0.4rem;
+  top: -330px;
+  margin: 10px 0rem 5px 0;
   text-align: center;
-  font-size: 1.6rem;
+  font-size: 20px;
   font-weight: 700;
   line-height: 1.2125;
   color: #1e1e1e;
@@ -399,6 +408,7 @@ body {
   white-space: nowrap;
   flex-shrink: 0;
 }
+
 
 .group-323-Bry {
   width: 100%;
@@ -429,7 +439,7 @@ body {
 
 .item--CGH {
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 16px;
   font-weight: 700;
   line-height: 1.2125;
   color: #1e1e1e;
@@ -451,15 +461,15 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: 2rem;
-  margin-left: 1rem;
+  margin-right: 20px;
+  margin-left: 20px;
 }
-
 
 .group-334-2wT {
   box-sizing: border-box;
-  padding: 0.5rem 0rem 0.65rem 0rem;
-  width: 100%;
+  padding: 5px 0rem 0.65rem 0rem;
+
+  width: 80%;
   display: flex;
   flex-direction: column;
   border-top: solid 0.05rem #1e1e1e;
@@ -528,8 +538,10 @@ body {
 }
 
 .group-141-Lz5 {
-  width: 2.8rem;
-  height: 1.4rem;
+  position: relative;
+  left: -15px;
+  width: 40px;
+  height: 20px;
   text-align: center;
   display: flex;
   justify-content: center;
@@ -542,7 +554,7 @@ body {
   align-items: center;
   box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
   background-color: #b63939;
-  border-radius: 0.3rem;
+  border-radius: 4px;
 }
 
 .line-73-oMs {
