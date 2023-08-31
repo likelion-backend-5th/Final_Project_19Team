@@ -31,7 +31,7 @@ public class RecruitDraftDto {
         dto.setTeamType(team.getTeamType().name());
         //techstackList는 알아서 채워라
         dto.setIsFinished(recruit.getIsFinished());
-        dto.setRecruitDetails(recruit.getTeamRecruitDetails());
+        dto.setRecruitDetails(recruit.getTeamRecruitDetails().substring(0, Math.min(recruit.getTeamRecruitDetails().length(), 30)) + "...");
         //commnetNum은 알아서 채워라
         return dto;
     }
