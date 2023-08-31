@@ -8,6 +8,10 @@
     <link rel="stylesheet" th:href="@{../css/alarm.css}" href="../../static/css/alarm.css">
     <link rel="stylesheet" th:href="@{../css/login.css}" href="../../static/css/login.css">
     <link rel="stylesheet" th:href="@{../css/index.css}" href="../../static/css/index.css">
+    <link rel="stylesheet" th:href="@{../css/mypage.css}" href="../../static/css/mypage.css">
+    <link rel="stylesheet" th:href="@{../css/mypage_pop.css}" href="../../static/css/mypage_pop.css">
+    <link rel="stylesheet" th:href="@{../css/mypage.css}" href="../../static/css/mypage.css">
+    <link rel="stylesheet" th:href="@{../css/mypage_pop.css}" href="../../static/css/mypage_pop.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons%3A400">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+KR%3A700">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%3A400%2C500%2C700">
@@ -16,36 +20,44 @@
 </head>
 
 <body>
-<div class="top">
-    <div class="nav">
-        <div class="nav_logo">
-            <img class='nav_logo_img' src="../../static/assets/index/logo.png" th:src="@{/assets/index/logo.png}" alt="로고" />
-            <span class='nav_logo_text'>like lion</span>
-        </div>
-        <div class="nav_search">
-            <img class="nav_search_img" src="../../static/assets/index/search.svg" th:src="@{/assets/index/search.svg}" alt="#" />
-            <input type="text" class="nav_search_input" placeholder="Search" />
-        </div>
-        <div class="nav_btn">
-            <Link to="/Alarm" class='router_link'>
-            <button class='nav_btn_list'>
-                <img id="alarmBtn" src="../../static/assets/index/bell.svg" th:src="@{/assets/index/bell.svg}" alt="알람" />
-            </button>
-
-            <button class='nav_btn_list'>
-                <img src="../../static/assets/index/star.svg" th:src="@{/assets/index/star.svg}" alt="즐겨찾기" />
-            </button>
-            <button class='nav_btn_list'>
-                <img src="../../static/assets/index/mypage.svg" th:src="@{/assets/index/mypage.svg}" alt="마이페이지" />
-            </button>
+<!-- header -->
+    <div class="top">
+        <div class="nav">
+            <div class="nav_logo">
+                <img class='nav_logo_img' src="../../static/assets/index/logo.png" th:src="@{/assets/index/logo.png}"
+                    alt="로고" />
+                <span class='nav_logo_text'>like lion</span>
+            </div>
+            <div class="nav_search">
+                <img class="nav_search_img" src="../../static/assets/index/search.svg"
+                    th:src="@{/assets/index/search.svg}" alt="#" />
+                <input type="text" class="nav_search_input" placeholder="Search" />
+            </div>
+            <div class="nav_btn">
+                <Link to="/Alarm" class='router_link'>
+                <button id="alarmBtn" class='nav_btn_list'>
+                    <img src="../../static/assets/index/bell.svg" th:src="@{/assets/index/bell.svg}" alt="알람" />
+                </button>
+                <button id="starBtn" class='nav_btn_list'>
+                    <img src="../../static/assets/index/star.svg" th:src="@{/assets/index/star.svg}" alt="즐겨찾기" />
+                </button>
+                <button id="mypageBtn" class='nav_btn_list'>
+                    <img src="../../static/assets/index/mypage.svg" th:src="@{/assets/index/mypage.svg}" alt="마이페이지" />
+                </button>
+                <button id="sinrenBtn" class='nav_btn_list'>
+                    <img src="../../static/assets/index/siren.svg" th:src="@{/assets/index/siren.svg}" alt="신고" />
+                </button>
+            </div>
         </div>
     </div>
-</div>
+
+<!-- quick_filter -->
     <div class="main" id="overlay">
         <div class="quick_filter">
             <div class="quick_filter_body">
                 <div>
-                    <img class='quick_filter_body_img' src="../../static/assets/index/quick_filter.svg" th:src="@{/assets/index/quick_filter.svg}" alt="필터" />
+                    <img class='quick_filter_body_img' src="../../static/assets/index/quick_filter.svg"
+                        th:src="@{/assets/index/quick_filter.svg}" alt="필터" />
                     <span class='quick_filter_text'>Quick Filter</span>
                 </div>
                 <div>
@@ -64,24 +76,28 @@
             </div>
         </div>
 
+<!-- Create / Sort -->
         <div class="match">
             <div class="match_making">
-                <img class='match_making_img' src="../../static/assets/index/create.svg" th:src="@{/assets/index/create.svg}" alt="" />
+                <img class='match_making_img' src="../../static/assets/index/create.svg"
+                    th:src="@{/assets/index/create.svg}" alt="" />
                 <span class='match_making_text'>Match Making</span>
                 <button class="match_making_btn" onclick="createTeamRecruit()">+</button>
             </div>
             <div class="sort">
-                <img class='sort_img' src="../../static/assets/index/sort.svg" th:src="@{/assets/index/sort.svg}" alt="#" />
+                <img class='sort_img' src="../../static/assets/index/sort.svg" th:src="@{/assets/index/sort.svg}"
+                     alt="#" />
                 <span class='sort_text'>Sort</span>
                 <button class="sort_up_btn">▲</button>
                 <button class="sort_down_btn">▼</button>
             </div>
         </div>
 
-
+<!-- Mache List -->
         <div class="grid_report">
             <div th:each="recruit : ${recruitList}" class="grid_report_item" th:attr="data-recruitId=${recruit.getRecruitId()}" onclick="getRecruitDetails(this)">
-                <img class='grid_report_item_img_img' src="../../static/assets/index/sample_img.png" th:src="@{/assets/index/sample_img.png}" alt="이미지" />
+                <img class='grid_report_item_img_img' src="../../static/assets/index/sample_img.png"
+                     th:src="@{/assets/index/sample_img.png}" alt="이미지" />
                 <button class="stars_btn">★</button>
                 <div class="grid_report_item_text">
                     <div class="title" th:text="${recruit.getRecruitTitle()}">멋사 19 프로젝트 모집</div>
@@ -91,7 +107,8 @@
                 <div class="grid_report_item_text_mid">
                     <div class="stacks">
                         <button class="stacks_button" th:text="${recruit.getTeamType()}">스터디</button>
-                        <button th:each="stack: ${recruit.getTechStackList()}" class='stacks_button' th:text="${stack}">java</button>
+                        <button th:each="stack: ${recruit.getTechStackList()}" class='stacks_button'
+                            th:text="${stack}">java</button>
                     </div>
                 </div>
                 <div class="grid_report_item_text_low1">
@@ -99,172 +116,197 @@
                 </div>
             </div>
         </div>
-        <script>
-            function getRecruitDetails(element){
-                let recruitId = element.getAttribute("data-recruitId");
-                window.location.href = '/recruit/' + recruitId;
-            }
-        </script>
 
-            <!--
-           <div class="grid_report_item">
-               <div class="grid_report_item_img">
-                   <img class='grid_report_item_img_img' src="../../static/assets/index/sample_img.png" alt="이미지" />
-                   <button class="stars_btn">★</button>
-               </div>
-               <div class="grid_report_item_text">
-                   <div class="grid_report_item_text_top">
-                       <p class="title">멋사 19 프로젝트 모집</p>
-                       <button class="status1">완료</button>
-                   </div>
-                   <div class="grid_report_item_text_mid">
-                       <div class="stacks">
-                           <button class='stacks_button'>스터디</button>
-                           <button class='stacks_button'>모각코</button>
-                           <button class='stacks_button'>Javascript</button>
-                           <button class='stacks_button'>React</button>
-                       </div>
-                   </div>
-                   <div class="grid_report_item_text_low1">
-                       <div class="contents">
-                           <h5 class="content">1.</h5>
-                           <h5 class="content">2.</h5>
-                           <h5 class="content">3.</h5>
-                       </div>
-                   </div>
-                   <div class="grid_report_item_text_low2">
-                       <button class='grid_report_item_text_low2_button'>
-                           <img class='grid_report_item_text_low2_img' src="../../static/assets/index/heart.svg" alt="heart" />
-                       </button>
-                       <span class='grid_report_item_text_low2_span'>120</span>
-                       <button class='grid_report_item_text_low2_button'>
-                           <img class='grid_report_item_text_low2_img' src="../../static/assets/index/comment.svg"
-                               alt="comment" />
-                       </button>
-                       <span class='grid_report_item_text_low2_span'>5</span>
-                   </div>
-               </div>
+        <!--
 
-           </div>
+            <div class="grid_report">
+                <div class="grid_report_item">
+                    <div class="grid_report_item_img">
+                        <img class='grid_report_item_img_img' src="../../static/assets/index/sample_img.png" alt="이미지" />
+                        <button class="stars_btn">★</button>
+                    </div>
+                    <div class="grid_report_item_text">
+                        <div class="grid_report_item_text_top">
+                            <p class="title">멋사 19 프로젝트 모집</p>
+                            <button class="status">모집중</button>
+                        </div>
+                        <div class="grid_report_item_text_mid">
+                            <div class="stacks">
+                                <button class='stacks_button'>스터디</button>
+                                <button class='stacks_button'>모각코</button>
+                                <button class='stacks_button'>Javascript</button>
+                            </div>
+                        </div>
+                        <div class="grid_report_item_text_low1">
+                            <div class="contents">
+                                <h5 class="content">1.</h5>
+                                <h5 class="content">2.</h5>
+                                <h5 class="content">3.</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-           <div class="grid_report_item">
-               <div class="grid_report_item_img">
-                   <img class='grid_report_item_img_img' src="../../static/assets/index/sample_img.png" alt="이미지" />
-                   <button class="stars_btn">★</button>
-               </div>
-               <div class="grid_report_item_text">
-                   <div class="grid_report_item_text_top">
-                       <p class="title">멋사 19 프로젝트 모집</p>
-                       <button class="status1">완료</button>
-                   </div>
-                   <div class="grid_report_item_text_mid">
-                       <div class="stacks">
-                           <button class='stacks_button'>스터디</button>
-                           <button class='stacks_button'>모각코</button>
-                           <button class='stacks_button'>Javascript</button>
-                           <button class='stacks_button'>React</button>
-                       </div>
-                   </div>
-                   <div class="grid_report_item_text_low1">
-                       <div class="contents">
-                           <h5 class="content">1.</h5>
-                           <h5 class="content">2.</h5>
-                           <h5 class="content">3.</h5>
-                       </div>
-                   </div>
-                   <div class="grid_report_item_text_low2">
-                       <button class='grid_report_item_text_low2_button'>
-                           <img class='grid_report_item_text_low2_img' src="../../static/assets/index/heart.svg" alt="heart" />
-                       </button>
-                       <span class='grid_report_item_text_low2_span'>120</span>
-                       <button class='grid_report_item_text_low2_button'>
-                           <img class='grid_report_item_text_low2_img' src="../../static/assets/index/comment.svg"
-                               alt="comment" />
-                       </button>
-                       <span class='grid_report_item_text_low2_span'>5</span>
-                   </div>
-               </div>
+                <div class="grid_report_item">
+                    <div class="grid_report_item_img">
+                        <img class='grid_report_item_img_img' src="../../static/assets/index/sample_img.png" alt="이미지" />
+                        <button class="stars_btn">★</button>
+                    </div>
+                    <div class="grid_report_item_text">
+                        <div class="grid_report_item_text_top">
+                            <p class="title">멋사 19 프로젝트 모집</p>
+                            <button class="status1">완료</button>
+                        </div>
+                        <div class="grid_report_item_text_mid">
+                            <div class="stacks">
+                                <button class='stacks_button'>스터디</button>
+                                <button class='stacks_button'>모각코</button>
+                                <button class='stacks_button'>Javascript</button>
+                                <button class='stacks_button'>React</button>
+                            </div>
+                        </div>
+                        <div class="grid_report_item_text_low1">
+                            <div class="contents">
+                                <h5 class="content">1.</h5>
+                                <h5 class="content">2.</h5>
+                                <h5 class="content">3.</h5>
+                            </div>
+                        </div>
+                        <div class="grid_report_item_text_low2">
+                            <button class='grid_report_item_text_low2_button'>
+                                <img class='grid_report_item_text_low2_img' src="../../static/assets/index/heart.svg" alt="heart" />
+                            </button>
+                            <span class='grid_report_item_text_low2_span'>120</span>
+                            <button class='grid_report_item_text_low2_button'>
+                                <img class='grid_report_item_text_low2_img' src="../../static/assets/index/comment.svg"
+                                    alt="comment" />
+                            </button>
+                            <span class='grid_report_item_text_low2_span'>5</span>
+                        </div>
+                    </div>
 
-           </div>
-           <div class="grid_report_item">
-               <div class="grid_report_item_img">
-                   <img class='grid_report_item_img_img' src="../../static/assets/index/sample_img.png" alt="이미지" />
-                   <button class="stars_btn">★</button>
-               </div>
-               <div class="grid_report_item_text">
-                   <div class="grid_report_item_text_top">
-                       <p class="title">멋사 19 프로젝트 모집</p>
-                       <button class="status1">완료</button>
-                   </div>
-                   <div class="grid_report_item_text_mid">
-                       <div class="stacks">
-                           <button class='stacks_button'>스터디</button>
-                           <button class='stacks_button'>모각코</button>
-                           <button class='stacks_button'>Javascript</button>
-                           <button class='stacks_button'>React</button>
-                       </div>
-                   </div>
-                   <div class="grid_report_item_text_low1">
-                       <div class="contents">
-                           <h5 class="content">1.</h5>
-                           <h5 class="content">2.</h5>
-                           <h5 class="content">3.</h5>
-                       </div>
-                   </div>
-                   <div class="grid_report_item_text_low2">
-                       <button class='grid_report_item_text_low2_button'>
-                           <img class='grid_report_item_text_low2_img' src="../../static/assets/index/heart.svg" alt="heart" />
-                       </button>
-                       <span class='grid_report_item_text_low2_span'>120</span>
-                       <button class='grid_report_item_text_low2_button'>
-                           <img class='grid_report_item_text_low2_img' src="../../static/assets/index/comment.svg"
-                               alt="comment" />
-                       </button>
-                       <span class='grid_report_item_text_low2_span'>5</span>
-                   </div>
-               </div>
+                </div>
+
+                <div class="grid_report_item">
+                    <div class="grid_report_item_img">
+                        <img class='grid_report_item_img_img' src="../../static/assets/index/sample_img.png" alt="이미지" />
+                        <button class="stars_btn">★</button>
+                    </div>
+                    <div class="grid_report_item_text">
+                        <div class="grid_report_item_text_top">
+                            <p class="title">멋사 19 프로젝트 모집</p>
+                            <button class="status1">완료</button>
+                        </div>
+                        <div class="grid_report_item_text_mid">
+                            <div class="stacks">
+                                <button class='stacks_button'>스터디</button>
+                                <button class='stacks_button'>모각코</button>
+                                <button class='stacks_button'>Javascript</button>
+                                <button class='stacks_button'>React</button>
+                            </div>
+                        </div>
+                        <div class="grid_report_item_text_low1">
+                            <div class="contents">
+                                <h5 class="content">1.</h5>
+                                <h5 class="content">2.</h5>
+                                <h5 class="content">3.</h5>
+                            </div>
+                        </div>
+                        <div class="grid_report_item_text_low2">
+                            <button class='grid_report_item_text_low2_button'>
+                                <img class='grid_report_item_text_low2_img' src="../../static/assets/index/heart.svg" alt="heart" />
+                            </button>
+                            <span class='grid_report_item_text_low2_span'>120</span>
+                            <button class='grid_report_item_text_low2_button'>
+                                <img class='grid_report_item_text_low2_img' src="../../static/assets/index/comment.svg"
+                                    alt="comment" />
+                            </button>
+                            <span class='grid_report_item_text_low2_span'>5</span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="grid_report_item">
+                    <div class="grid_report_item_img">
+                        <img class='grid_report_item_img_img' src="../../static/assets/index/sample_img.png" alt="이미지" />
+                        <button class="stars_btn">★</button>
+                    </div>
+                    <div class="grid_report_item_text">
+                        <div class="grid_report_item_text_top">
+                            <p class="title">멋사 19 프로젝트 모집</p>
+                            <button class="status1">완료</button>
+                        </div>
+                        <div class="grid_report_item_text_mid">
+                            <div class="stacks">
+                                <button class='stacks_button'>스터디</button>
+                                <button class='stacks_button'>모각코</button>
+                                <button class='stacks_button'>Javascript</button>
+                                <button class='stacks_button'>React</button>
+                            </div>
+                        </div>
+                        <div class="grid_report_item_text_low1">
+                            <div class="contents">
+                                <h5 class="content">1.</h5>
+                                <h5 class="content">2.</h5>
+                                <h5 class="content">3.</h5>
+                            </div>
+                        </div>
+                        <div class="grid_report_item_text_low2">
+                            <button class='grid_report_item_text_low2_button'>
+                                <img class='grid_report_item_text_low2_img' src="../../static/assets/index/heart.svg" alt="heart" />
+                            </button>
+                            <span class='grid_report_item_text_low2_span'>120</span>
+                            <button class='grid_report_item_text_low2_button'>
+                                <img class='grid_report_item_text_low2_img' src="../../static/assets/index/comment.svg"
+                                    alt="comment" />
+                            </button>
+                            <span class='grid_report_item_text_low2_span'>5</span>
+                        </div>
+                    </div>
 
 
-           </div>
-           <div class="grid_report_item">
-               <div class="grid_report_item_img">
-                   <img class='grid_report_item_img_img' src="../../static/assets/index/sample_img.png" alt="이미지" />
-                   <button class="stars_btn">★</button>
-               </div>
-               <div class="grid_report_item_text">
-                   <div class="grid_report_item_text_top">
-                       <p class="title">멋사 19 프로젝트 모집</p>
-                       <button class="status1">완료</button>
-                   </div>
-                   <div class="grid_report_item_text_mid">
-                       <div class="stacks">
-                           <button class='stacks_button'>스터디</button>
-                           <button class='stacks_button'>모각코</button>
-                           <button class='stacks_button'>Javascript</button>
-                           <button class='stacks_button'>React</button>
-                       </div>
-                   </div>
-                   <div class="grid_report_item_text_low1">
-                       <div class="contents">
-                           <h5 class="content">1.</h5>
-                           <h5 class="content">2.</h5>
-                           <h5 class="content">3.</h5>
-                       </div>
-                   </div>
-                   <div class="grid_report_item_text_low2">
-                       <button class='grid_report_item_text_low2_button'>
-                           <img class='grid_report_item_text_low2_img' src="../../static/assets/index/heart.svg" alt="heart" />
-                       </button>
-                       <span class='grid_report_item_text_low2_span'>120</span>
-                       <button class='grid_report_item_text_low2_button'>
-                           <img class='grid_report_item_text_low2_img' src="../../static/assets/index/comment.svg"
-                               alt="comment" />
-                       </button>
-                       <span class='grid_report_item_text_low2_span'>5</span>
-                   </div>
-               </div>
-           </div>
-           -->
+                </div>
+                <div class="grid_report_item">
+                    <div class="grid_report_item_img">
+                        <img class='grid_report_item_img_img' src="../../static/assets/index/sample_img.png" alt="이미지" />
+                        <button class="stars_btn">★</button>
+                    </div>
+                    <div class="grid_report_item_text">
+                        <div class="grid_report_item_text_top">
+                            <p class="title">멋사 19 프로젝트 모집</p>
+                            <button class="status1">완료</button>
+                        </div>
+                        <div class="grid_report_item_text_mid">
+                            <div class="stacks">
+                                <button class='stacks_button'>스터디</button>
+                                <button class='stacks_button'>모각코</button>
+                                <button class='stacks_button'>Javascript</button>
+                                <button class='stacks_button'>React</button>
+                            </div>
+                        </div>
+                        <div class="grid_report_item_text_low1">
+                            <div class="contents">
+                                <h5 class="content">1.</h5>
+                                <h5 class="content">2.</h5>
+                                <h5 class="content">3.</h5>
+                            </div>
+                        </div>
+                        <div class="grid_report_item_text_low2">
+                            <button class='grid_report_item_text_low2_button'>
+                                <img class='grid_report_item_text_low2_img' src="../../static/assets/index/heart.svg" alt="heart" />
+                            </button>
+                            <span class='grid_report_item_text_low2_span'>120</span>
+                            <button class='grid_report_item_text_low2_button'>
+                                <img class='grid_report_item_text_low2_img' src="../../static/assets/index/comment.svg"
+                                    alt="comment" />
+                            </button>
+                            <span class='grid_report_item_text_low2_span'>5</span>
+                        </div>
+                    </div>
+                </div>
+                -->
+
+<!-- login.html -->
     </div>
     <form class="item--cUZ" id="loginModal" th:action="@{/login}" th:method="post">
         <img src="../assets/login/logo.png" class="image-9-CWd" alt="logo">
@@ -284,12 +326,12 @@
 
         <div class="auto-group-qaqf-WGR">
             <button class="singupbutton-SA5" type="submit">Login</button>
-            <button class="singupbutton-Jxy" >Sign up</button>
+            <button class="singupbutton-Jxy">Sign up</button>
         </div>
         <img class="close-PDj" src="../assets/login/close.svg" alt="x" onclick="closeLoginPage()">
     </form>
 
-
+<!-- alarm.html -->
     <div id="alarmPage" class="item--tFK">
         <div class="alarm-6k1">
             <div class="alarmdetail-bgm">
@@ -328,7 +370,6 @@
                                 </div>
                             </div>
                         </div>
-
 
                         <!-- 2.참여신청 알림 -->
                         <div class="group-239-3wP">
@@ -391,7 +432,6 @@
                                 </div>
                             </div>
                         </div>
-
 
                         <!-- 5.완료 알림 -->
                         <div class="group-257-p1f">
@@ -524,22 +564,21 @@
                 </div>
             </div>
         </div>
-        <!-- 탈퇴확인 창 -->
-
+        <!-- 탈퇴확인 -->
         <div class="outcheck-zJM">
             <div class="group-288-SZf">
                 <p class="item-100-1--bSZ">
-                <span class="item-100-1--bSZ-sub-2">
-                  프로젝트 중도 탈퇴시,
-                  <br />
-                </span>
+                    <span class="item-100-1--bSZ-sub-2">
+                        프로젝트 중도 탈퇴시,
+                        <br />
+                    </span>
                     <span class="item-100-1--bSZ-sub-3">회원점수 -100점</span>
-                    <span class="item-100-1--bSZ-sub-2">차감,<br/>
-                </span>
+                    <span class="item-100-1--bSZ-sub-2">차감,<br />
+                    </span>
                     <span class="item-100-1--bSZ-sub-3">중도포기 1회</span>
-                    <span class="item-100-1--bSZ-sub-2">가 <br/>
-                  회원정보에 반영됩니다.
-                </span>
+                    <span class="item-100-1--bSZ-sub-2">가 <br />
+                        회원정보에 반영됩니다.
+                    </span>
                 </p>
                 <div class="group-287-vob">
                     <div class="group-285-siq">취소</div>
@@ -549,51 +588,440 @@
         </div>
     </div>
 
+<!-- mypage.html -->
+    <div id="mypagePage" class="item--Fa1">
+        <img id="mypageClose" class="close-N2M" src="../assets/mypage/close.svg" alt="X" />
+        <div class="profile-gQR">Profile</div>
+        <div class="group-372-UbB">
+            <div class="group-371-PCM">
+                <div class="group-370-j1K">
+                    <div class="group-368-HHj">
+                        <!-- 프로필 -->
+                        <div class="group-347-ETs">
+                            <div class="mat-avatar-wt5">person</div>
+                            <img id="helpBtn" class="help-B1j" src="../assets/mypage/help.svg" alt="help" />
+                        </div>
+
+                        <!-- 회원점수/등급(Toggle hidden) -->
+                        <div id="pagedetailHide" class="group-359-KNq">
+                            <div class="group-358-p4h">
+                                <div class="group-357-AuF">
+                                    <div class="auto-group-esqh-TtM">
+
+                                        <div class="group-354-Pn1">
+                                            <div class="group-348-6wK">
+                                                <img class="person-add-dwF" src="../assets/mypage/stroke.svg"
+                                                    alt="회원점수" />
+                                                <p class="item--mGm">회원점수</p>
+                                            </div>
+                                            <div class="group-351-Uws">
+                                                <div class="mat-avatar-D8m">
+                                                    <p class="item-900-j77">900점</p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="group-354-Pn1">
+                                            <div class="group-348-6wK">
+                                                <img class="person-add-dwF" src="../assets/mypage/happy-face.svg"
+                                                    alt="회원등급" />
+                                                <p class="item--mGm">회원등급</p>
+                                            </div>
+                                            <div class="group-351-Uws">
+                                                <div class="mat-avatar-ddd">
+                                                    <p class="item-1232">브론즈</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="group-354-Pn1">
+                                            <div class="group-348-6wK">
+                                                <img class="person-add-dwF" src="../assets/mypage/error.svg"
+                                                    alt="중도포기" />
+                                                <p class="item--mGm">중도포기</p>
+                                            </div>
+                                            <div class="group-351-Uws">
+                                                <div class="mat-avatar-D8m">
+                                                    <p class="item-900-j77">1건</p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <img id="pagedetailShowBtn" class="chevron-right-M7o"
+                                    src="../assets/mypage/chevron-down.svg" alt="#" />
+                            </div>
+                        </div>
+                        <!-- 회원정보 -->
+                        <div class="group-367-cpR">
+                            <div class="auto-group-fpey-9ZT">
+                                <div class="group-360-t1F">
+                                    <div class="clatss">
+                                        <p class="item--Pih">아이디</p>
+                                    </div>
+                                    <div class="fdsdf">
+                                        <p class="gmlcjf0000-7eh">gmlcjf0000</p>
+                                    </div>
+                                </div>
+
+                                <div class="group-360-t1F">
+                                    <div class="clatss">
+                                        <p class="item--Pih">연락처</p>
+                                    </div>
+                                    <div class="fdsdf">
+                                        <p class="gmlcjf0000-7eh">010-0000-0000</p>
+                                    </div>
+                                </div>
+
+                                <div class="group-360-t1F">
+                                    <div class="clatss">
+                                        <p class="item--Pih">이메일</p>
+                                    </div>
+                                    <div class="fdsdf">
+                                        <p type="" class="gmlcjf0000-7eh">gmlcjf0000@gmail.com</p>
+                                    </div>
+                                </div>
+
+                                <div class="group-360-t1F">
+                                    <div class="clatss">
+                                        <p class="item--Pih">수상이력</p>
+                                    </div>
+                                    <div class="fdsdf">
+                                        <p class="gmlcjf0000-7eh">미선택</p>
+                                    </div>
+                                </div>
+
+                                <div class="group-360-t1F">
+                                    <div class="clatss">
+                                        <p class="item--Pih">보유기술</p>
+                                    </div>
+                                    <div class="fdsdf">
+                                        <p class="gmlcjf0000-7eh">미선택</p>
+                                    </div>
+                                </div>
+
+                                <div class="group-360-t1F">
+                                    <div class="clatss">
+                                        <p class="item--Pih">자기소개</p>
+                                    </div>
+                                    <div class="fdsdf">
+                                        <p class="gmlcjf0000-7eh">미선택</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="group-369-PCD">편집</div>
+
+                        <!-- 회원점수/등급(Toggle visible) -->
+                        <div id="pagedetailShow" class="group-366-dsf">
+                            <div class="group-358-p4h">
+                                <div class="group-357-AuF">
+                                    <div class="auto-group-esqh-TtM">
+                                        <div class="group-354-Pn1">
+                                            <div class="group-348-6wK">
+                                                <img class="person-add-dwF" src="../assets/mypage/stroke.svg"
+                                                    alt="회원점수" />
+                                                <p class="item--mGm">회원점수</p>
+                                            </div>
+                                            <div class="group-351-Uws">
+                                                <div class="mat-avatar-D8m">
+                                                    <p class="item-900-j77">900점</p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="group-354-Pn1">
+                                            <div class="group-348-6wK">
+                                                <img class="person-add-dwF" src="../assets/mypage/happy-face.svg"
+                                                    alt="회원등급" />
+                                                <p class="item--mGm">회원등급</p>
+                                            </div>
+                                            <div class="group-351-Uws">
+                                                <div class="mat-avatar-ddd">
+                                                    <p class="item-1232">브론즈</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="group-354-Pn1">
+                                            <div class="group-348-6wK">
+                                                <img class="person-add-dwF" src="../assets/mypage/error.svg"
+                                                    alt="중도포기" />
+                                                <p class="item--mGm">중도포기</p>
+                                            </div>
+                                            <div class="group-351-Uws">
+                                                <div class="mat-avatar-D8m">
+                                                    <p class="item-900-j77">1건</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="line-75-4P3"></div>
+                            </div>
+                            <!-- 회원정보 -->
+                            <p class="item--Uhf">회원상세</p>
+                            <div class="auto-group-3btm-wxd">
+                                <div class="group-323-Bry">
+                                    <div class="group-319-YBj">
+                                        <div class="auto-group-fvdt-j1K">
+                                            <div class="group-320-Eim">
+                                                <img class="calendar-sE1" src="../assets/mypage/calendar.svg" alt="#">
+                                                <p class="item--CGH">날짜</p>
+                                            </div>
+                                            <div class="group-320-Eim">
+                                                <img class="calendar-sE1" src="../assets/mypage/people.svg" alt="#">
+                                                <p class="item--CGH">활동내역</p>
+                                            </div>
+                                            <div class="group-320-Eim">
+                                                <img class="calendar-sE1" src="../assets/mypage/heart.svg" alt="#">
+                                                <p class="item--CGH">추천수</p>
+                                            </div>
+                                            <div class="group-320-Eim">
+                                                <img class="calendar-sE1" src="../assets/mypage/search.svg" alt="#">
+                                                <p class="item--CGH">상세보기</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="group-334-2wT">
+                                    <div class="group-325-8jb">
+                                        <div class="auto-group-dg4y-fUd">
+                                            <p class="item-230817-QBK">230817</p>
+                                            <p class="a--uds">프로젝트A 완료</p>
+                                            <p class="item-100-2yP">100회</p>
+                                            <div class="group-141-Lz5">확인</div>
+                                        </div>
+                                    </div>
+                                    <div class="line-73-oMs">
+                                    </div>
+                                    <div class="group-325-8jb">
+                                        <div class="auto-group-dg4y-fUd">
+                                            <p class="item-230817-QBK">230817</p>
+                                            <p class="a--uds">프로젝트A 완료</p>
+                                            <p class="item-100-2yP">100회</p>
+                                            <div class="group-141-Lz5">확인</div>
+                                        </div>
+                                    </div>
+                                    <div class="line-73-oMs">
+                                    </div>
+
+                                    <div class="group-325-8jb">
+                                        <div class="auto-group-dg4y-fUd">
+                                            <p class="item-230817-QBK">230817</p>
+                                            <p class="a--uds">프로젝트A 완료</p>
+                                            <p class="item-100-2yP">100회</p>
+                                            <div class="group-141-Lz5">확인</div>
+                                        </div>
+                                    </div>
+                                    <div class="line-73-oMs">
+                                    </div>
+
+                                    <div class="group-325-8jb">
+                                        <div class="auto-group-dg4y-fUd">
+                                            <p class="item-230817-QBK">230817</p>
+                                            <p class="a--uds">프로젝트A 완료</p>
+                                            <p class="item-100-2yP">100회</p>
+                                            <div class="group-141-Lz5">확인</div>
+                                        </div>
+                                    </div>
+                                    <div class="line-73-oMs">
+                                    </div>
+
+                                    <div class="group-325-8jb">
+                                        <div class="auto-group-dg4y-fUd">
+                                            <p class="item-230817-QBK">230817</p>
+                                            <p class="a--uds">프로젝트A 완료</p>
+                                            <p class="item-100-2yP">100회</p>
+                                            <div class="group-141-Lz5">확인</div>
+                                        </div>
+                                    </div>
+                                    <div class="line-73-oMs">
+                                    </div>
+
+                                </div>
+                                <img id="pagedetailHideBtn" class="chevron-right-M7o"
+                                    src="../assets/mypage/chevron-up.svg" alt="up" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
+<!-- mypage_pop.html 회원등급 / 점수 안내-->
+    <div id="tooltipPop" class="group-421-cgR">
+        <div class="group-419-aW5">
+            <p class="item--wLd">회원등급</p>
+            <div class="group-416-fnR">
+                <div class="group-411-nMF">
+                    <div class="mat-avatar-0">
+                    </div>
+                    <p class="item-21315">브론즈</p>
+                </div>
+                <div class="group-411-nMF">
+                    <div class="mat-avatar-1">
+                    </div>
+                    <p class="item-21315">실버</p>
+                </div>
+                <div class="group-411-nMF">
+                    <div class="mat-avatar-2">
+                    </div>
+                    <p class="item-21315">골드</p>
+                </div>
+                <div class="group-411-nMF">
+                    <div class="mat-avatar-3">
+                    </div>
+                    <p class="item-21315">플레티넘</p>
+                </div>
+                <div class="group-411-nMF">
+                    <div class="mat-avatar-4">
+                    </div>
+                    <p class="item-21315">다이아</p>
+                </div>
+            </div>
+        </div>
 
+        <div class="group-419-aW5">
+            <p class="item--wLd">회원점수</p>
+            <div class="group-416-fnR">
+                <div class="group-411-nMF">
+                    <div class="mat-avatar-X3w">
+                    </div>
+                    <p class="item-1000-2mP">1000점</p>
+                </div>
+                <div class="group-411-nMF">
+                    <div class="mat-avatar-X3w">
+                    </div>
+                    <p class="item-1000-2mP">2000점</p>
+                </div>
+                <div class="group-411-nMF">
+                    <div class="mat-avatar-X3w">
+                    </div>
+                    <p class="item-1000-2mP">3000점</p>
+                </div>
+                <div class="group-411-nMF">
+                    <div class="mat-avatar-X3w">
+                    </div>
+                    <p class="item-1000-2mP">4000점</p>
+                </div>
+                <div class="group-411-nMF">
+                    <div class="mat-avatar-X3w">
+                    </div>
+                    <p class="item-1000-2mP">5000점</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 </body>
 
 <script>
-    const logined = [[${logined}]];
+    const logined = [[${ logined }]];
     alert(logined);
     let overlay = document.getElementById("overlay");
     let loginModal = document.getElementById("loginModal");
 
-    function createTeamRecruit(){
+    function createTeamRecruit() {
         alert("clicked");
         if (logined) window.location.href = "/createTeam";
         else {
-            loginModal.style.display='block';
-            overlay.style.opacity='50%';
+            loginModal.style.display = 'block';
+            overlay.style.opacity = '50%';
         }
     }
 
-    function closeLoginPage(){
-        loginModal.style.display='none';
-        overlay.style.opacity='100%';
+    function closeLoginPage() {
+        loginModal.style.display = 'none';
+        overlay.style.opacity = '100%';
     }
 
-    // 알람창 관련(희철)
+    // 알람창 관련변수
     let alarmClose = document.getElementById("alarmClose");
     let alarmPage = document.getElementById("alarmPage");
     let alarmBtn = document.getElementById("alarmBtn");
 
-    // 알람버튼 - 토글
+    // 메인 알람 버튼 - 토글
     alarmBtn.addEventListener('click', function () {
         if (alarmPage.style.visibility == 'visible') {
             alarmPage.style.visibility = 'hidden';
+            alarmBtn.classList.remove('nav_btn_list_selected');
         } else {
             alarmPage.style.visibility = 'visible';
+            alarmBtn.classList.add('nav_btn_list_selected');
         }
     });
-
     // 알람 닫기
     alarmClose.addEventListener('click', function () {
         alarmPage.style.visibility = 'hidden';
+        alarmBtn.classList.remove('nav_btn_list_selected');
     });
 
+
+    // 마이페이지 관련변수
+    let mypageClose = document.getElementById("mypageClose");
+    let mypageBtn = document.getElementById("mypageBtn");
+    let mypagePage = document.getElementById("mypagePage");
+    let pagedetailHide = document.getElementById("pagedetailHide");
+    let pagedetailShow = document.getElementById("pagedetailShow");
+    let pagedetailHideBtn = document.getElementById("pagedetailHideBtn");
+    let pagedetailShowBtn = document.getElementById("pagedetailShowBtn");
+
+    // 메인 마이페이지 버튼 - 토글
+    mypageBtn.addEventListener('click', function () {
+        pagedetailHide.style.visibility = 'hidden';
+        pagedetailShow.style.visibility = 'hidden';
+        if (mypagePage.style.visibility == 'visible') {
+            mypagePage.style.visibility = 'hidden';
+            mypageBtn.classList.remove('nav_btn_list_selected');
+        } else {
+            mypagePage.style.visibility = 'visible';
+            pagedetailHide.style.visibility = 'visible';
+            mypageBtn.classList.add('nav_btn_list_selected');
+        }
+    });
+
+    // 마이페이지 닫기 클릭시, 팝업창 닫기
+    mypageClose.addEventListener('click', function () {
+        mypagePage.style.visibility = 'hidden';
+        mypageBtn.classList.remove('nav_btn_list_selected');
+        pagedetailHide.style.visibility = 'hidden';
+        pagedetailShow.style.visibility = 'hidden';
+    });
+
+    // 마이페이지 닫기 클릭시, 버튼 색상 제거
+    mypageClose.addEventListener('click', function () {
+        mypagePage.style.visibility = 'hidden';
+        mypageBtn.classList.remove('nav_btn_list_selected');
+    });
+
+    // 마이페이지의 ▼ ▲ 토글버튼 클릭시 팝업
+    pagedetailShowBtn.addEventListener('click', function () {
+        pagedetailHide.style.visibility = 'hidden';
+        pagedetailShow.style.visibility = 'visible';
+    });
+    pagedetailHideBtn.addEventListener('click', function () {
+        pagedetailHide.style.visibility = 'visible';
+        pagedetailShow.style.visibility = 'hidden';
+    });
+
+    // 마우스 mouseenter 시 팝업, mouseleave 팝업 닫기
+    let helpBtn = document.getElementById('helpBtn');
+    let tooltipPop = document.getElementById('tooltipPop');
+    helpBtn.addEventListener('mouseenter', function() {
+        tooltipPop.style.visibility = 'visible';
+    });
+    helpBtn.addEventListener('mouseleave', function() {
+        tooltipPop.style.visibility = 'hidden';
+    });
+
+
+    // let sinrenBtn = document.getElementById("sinrenBtn");
+    // let starBtn = document.getElementById("starBtn");
 
 
 </script>
