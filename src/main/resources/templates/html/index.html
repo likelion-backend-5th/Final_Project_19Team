@@ -550,7 +550,73 @@
     </div>
 
     </div>
+    <script>
+        // JSON 데이터 예시
+        const jsonData = [
+            {
+                "alarmType": "신규등록 알림",
+                "projectName": "프로젝트 A",
+                "action": "모집글 등록"
+            },
+            {
+                "alarmType": "참여신청 알림",
+                "projectName": "프로젝트 A",
+                "action": "회원 P 참여요청"
+            },
+            {
+                "alarmType": "모집마감/프로젝트 시작 알림",
+                "projectName": "프로젝트 A",
+                "action": "총원 3명 진행"
+            }
+            // ... 추가적인 알람 데이터 예시들을 나열할 수 있습니다.
+        ];
 
+        // 알람 데이터 가져오는 함수
+        function fetchAlarms(userId) {
+            fetch(`/api/alarms/${userId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const alarmList = document.getElementById('alarm-list');
+                    alarmList.innerHTML = ''; // 기존 데이터 초기화
+
+                    data.forEach(alarm => {
+                        const alarmDiv = document.createElement('div');
+                        alarmDiv.className = 'item--GyF'; // 수정된 클래스명
+                        alarmDiv.innerHTML = `
+                    <div class="item--UT3">
+                        <div class="classss">
+                            <div class="group-226-dKw">${alarm.action}</div>
+                            <div class="group-227-6jK">
+                                <div class="rectangle-344-f1j"></div>
+                                <div class="item--jGV">${alarm.buttonText}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group-236-BqK">
+                        <div class="item--wpV">
+                            <p class="item--6Bb">${alarm.alarmType}</p>
+                            <p class="a--ZL5">
+                                ${alarm.projectName}
+                                <br />
+                                ${alarm.description}
+                            </p>
+                        </div>
+                    </div>
+                `;
+                        alarmList.appendChild(alarmDiv);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching alarms:', error);
+                });
+        }
+
+        // 페이지 로드 시 알람 데이터 가져오기
+        document.addEventListener('DOMContentLoaded', () => {
+            const userId = 123; // 사용자 ID를 적절히 지정
+            fetchAlarms(userId);
+        });
+    </script>
 
 
 </body>
