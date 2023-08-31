@@ -20,7 +20,7 @@ body {
     width: 144rem;
 }
 
-.group-73-HfF {
+.mainContainer {
     box-sizing: border-box;
     padding: 1.3rem 2rem 1.7rem 2rem;
     width: 63.2rem;
@@ -191,7 +191,7 @@ body {
     flex-shrink: 0;
 }
 
-.teamTypeLabel {
+.teamTagLabel {
     margin-right: 2.1rem;
     width: 11.4rem;
     height: 100%;
@@ -210,7 +210,7 @@ body {
     flex-shrink: 0;
 }
 
-.teamTypeButton {
+.teamTagButton {
     margin-right: 1.8rem;
     width: 9rem;
     height: 100%;
@@ -229,7 +229,7 @@ body {
     flex-shrink: 0;
 }
 
-.singupbutton-wJy {
+.redButton {
     width: 9.8rem;
     height: 3.9rem;
     position: absolute;
@@ -249,7 +249,7 @@ body {
     border-radius: 1rem;
 }
 
-.singupbutton-Vhs {
+.buttonGroup {
     margin: 0 21.6rem;
     height: 4.6rem;
     position: relative;

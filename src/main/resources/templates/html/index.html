@@ -116,7 +116,18 @@
                 </div>
             </div>
         </div>
-
+        <script>
+            function getRecruitDetails(element){
+                if (!logined){
+                    loginModal.style.display = 'block';
+                    overlay.style.opacity = '50%';
+                }
+                else {
+                    let recruitId = element.getAttribute("data-recruitId");
+                    window.location.href = "/recruit/" + recruitId;
+                }
+            }
+        </script>
         <!--
 
             <div class="grid_report">
@@ -314,12 +325,12 @@
         <div class="line"></div>
 
         <div class="idinputcomponent-9mK">
-            <input class="idinput-gmF" type="text" name="Email" id="Email" placeholder="Email">
+            <input class="idinput-gmF" type="text" name="username" id="username" placeholder="username">
         </div>
-        <p class="item--W81">이메일을 입력해주세요.</p>
+        <p class="item--W81">유저네임을 입력해주세요.</p>
 
         <div class="idinputcomponent-9mK">
-            <input class="idinput-gmF" type="text" name="Password" id="password" placeholder="password">
+            <input class="idinput-gmF" type="password" name="password" id="password" placeholder="password">
         </div>
         <p class="item--W81">비밀번호를 입력해주세요.</p>
 
@@ -922,14 +933,19 @@
 
 <script>
     const logined = [[${ logined }]];
-    alert(logined);
     let overlay = document.getElementById("overlay");
     let loginModal = document.getElementById("loginModal");
 
     function createTeamRecruit() {
-        alert("clicked");
         if (logined) window.location.href = "/createTeam";
         else {
+            loginModal.style.display = 'block';
+            overlay.style.opacity = '50%';
+        }
+    }
+
+    function loginNeeded() {
+        if (!logined) {
             loginModal.style.display = 'block';
             overlay.style.opacity = '50%';
         }

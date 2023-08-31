@@ -102,7 +102,7 @@ span {
     gap: 10px; /* Add spacing between items */
 }
 
-.teamTypeLabel,
+.teamTagLabel,
 .teamIsOnlineLabel {
     width: 11.4rem;
     height: 3.4rem;
@@ -142,7 +142,7 @@ span {
     flex-shrink: 0;
 }
 
-.teamTypeButton,
+.teamTagButton,
 .teamIsOnlineButton {
     width: 11.4rem;
     height: 3.4rem;
