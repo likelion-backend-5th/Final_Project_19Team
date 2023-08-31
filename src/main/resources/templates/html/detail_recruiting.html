@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>detail_recruiting</title>
-    <link rel="stylesheet" href="../../static/css/detail_recruiting.css">
+    <link rel="stylesheet" th:href="@{../css/detail_recruiting.css}" href="../../static/css/detail_recruiting.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons%3A400">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+KR%3A700">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%3A400%2C500%2C700">
@@ -14,109 +14,143 @@
 </head>
 
 <body>
-    <div class="group-73-HfF">
+<div class="mainContainer">
+    <div class="recruitContainer">
         <div class="auto-group-y3v9-Nwb">
-            <div class="new-create-hU5">Detail</div>
+            <div class="new-create-hU5">모집공고</div>
             <img class="close-cL9" src="../assets/detail_recruiting/close.svg" alt="#">
         </div>
-        <div class="singupbutton-jvZ">Title : </div>
+        <div class="singupbutton-jvZ" th:text="${recruit.getRecruitTitle()}">Title : </div>
+
         <div class="teamCreateInputGroup">
-            <div class="teamSingleLineInputGroup">
-                <div class="teamTypeLabel">Type</div>
-                <div class="teamTypeButton">프로젝트</div>
-                <div class="teamTypeButton">스터디</div>
-                <div class="teamTypeButton">취준</div>
-                <div class="teamTypeButton">기타</div>
+            <div class="recruitContainerLeft">
+
+                <div class="teamSingleLineInputGroup">
+                    <div class="teamTagLabel">팀 이름</div>
+                    <div class="teamTagButton" th:text="${recruit.getTeamName()}">name</div>
+                </div>
+
+                <div class="teamSingleLineInputGroup">
+                    <div class="teamTagLabel">Type</div>
+                    <div class="teamTagButton" th:text="${recruit.getTeamType()}">프로젝트</div>
+                </div>
+
+
+                <div class="teamSingleLineInputGroup">
+                    <div class="teamTagLabel">Where</div>
+                    <div class="teamTagButton" th:if="${recruit.getIsOnline()}">온라인</div>
+                    <div class="teamTagButton" th:if="!${recruit.getIsOnline()}">오프라인</div>
+                </div>
+                <div class="teamSingleLineInputGroup">
+                    <div class="teamTagLabel">Tech</div>
+                    <div class="teamTagButton" th:each="tech : ${recruit.getTechStackName()}" th:text="${tech}">HTML</div>
+                </div>
+
+                <div class="teamSingleLineInputGroup">
+                    <div class="teamTagLabel">모집인원</div>
+                    <div class="teamTagButton" th:text="${recruit.getRecruitMemberNum()}">3</div>
+                </div>
+
+                <div class="teamSingleLineInputGroup">
+                    <div class="teamTagLabel">작성일자</div>
+                    <div class="teamTagButton" th:utext="${#temporals.format(recruit.getCreatedAt(), 'yyyy.MM.dd')}">2022.08.31</div>
+                </div>
+
+                <div class="teamSingleLineInputGroup">
+                    <div class="teamTagLabel">매니저</div>
+                    <div class="teamTagButton" th:text="${recruit.getTeamManagerUsername()}">Moon</div>
+                </div>
+
             </div>
 
-            <div class="teamDoubleLineInputGroup">
-                <div class="teamTechLabel">When</div>
-                <div class="auto-group-s8jb-62M">
-                    <div class="auto-group-mpfb-bUD">
-                        <div class="auto-group-w4vd-jaR">월</div>
-                        <div class="auto-group-w4vd-jaR">화</div>
-                        <div class="auto-group-w4vd-jaR">수</div>
-                        <div class="auto-group-w4vd-jaR">목</div>
-                        <div class="auto-group-w4vd-jaR">금</div>
-                        <div class="auto-group-w4vd-jaR">토</div>
-                        <div class="auto-group-w4vd-jaR">일</div>
-                    </div>
-                    <div>
-                        <div class="auto-group-nkpy-eUR">19 : 00 ~ 20 : 00</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="teamSingleLineInputGroup">
-                <div class="teamTypeLabel">Where</div>
-                <div class="teamTypeButton">온라인</div>
-                <div class="teamTypeButton">오프라인</div>
-            </div>
-            <div class="teamDoubleLineInputGroup">
-                <div class="teamTechLabel">Want</div>
-                <div class="auto-group-s8jb-62M">
-                    <div class="auto-group-bzjh-Dsf">HTML</div>
-                    <div class="auto-group-bzjh-Dsf">Java</div>
-                </div>
-                <div class="auto-group-s8jb-62M">
-                    <div class="auto-group-bzjh-Dsf">CSS</div>
-                    <div class="auto-group-bzjh-Dsf">Spring</div>
-                </div>
-                <div class="auto-group-s8jb-62M">
-                    <div class="auto-group-bzjh-Dsf">JS</div>
-                    <div class="auto-group-bzjh-Dsf">Python</div>
-                </div>
-                <div class="auto-group-s8jb-62M">
-                    <div class="auto-group-bzjh-Dsf">React</div>
-                    <div class="auto-group-bzjh-Dsf">Vue</div>
-                </div>
-            </div>
-
-            <div class="teamSingleLineInputGroup">
-                <div class="teamTypeLabel">Many</div>
-                <div class="teamTypeButton selected">3명</div>
-            </div>
-
-            <div class="auto-group-wnkq-7dT">
-                <div class="teamTechLabel">
-                    <p class="how-detail-nUh">
-                        How?
-                    </p>
-                </div>
-                <div class="auto-group-8nj3-5Cu">
-                    <div class="singupbutton-RXf">
-                        <p class="item-3-5--8S5">
-                            3회 이상 지각시 강제퇴출
-                        </p>
-                        <p class="item-3-5--8S5">
-                            3회 이상 지각시 강제퇴출
-                        </p>
-                        <p class="item-3-5--8S5">
-                            3회 이상 지각시 강제퇴출
-                        </p>
-                    </div>
-                    <div class="group-91-kCZ">
-                        <div class="singupbutton-HCV">
-                            <div class="rectangle-132-SLH">
-                            </div>
-                            <p class="upload-9Vb">Down</p>
-                            <img class="icons-fileupload-TFP" src="../assets/detail_recruiting/file_download.svg"
-                                alt="#" />
+            <div class="recruitContainerRight">
+                <div class="recruitRecruitDescribeGroup">
+                    <div class="recruitRightTagLabel">모집 정보</div>
+                    <div class="recruitRightRecruitDescribe">
+                        <div class="recruitRightRecruitDescribeBox" th:text="${recruit.getTeamRecruitDetails()}">
+                            안녕하세요!
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="singupbutton-Vhs">
+        <div class="teamDescribeContainer">
+            <div class="teamDescribeLabel">팀 정보</div>
+            <div class="teamDescribeBox" th:text="${recruit.getTeamDescribe()}">팀 설명 와다다다</div>
+        </div>
+        <div class="buttonGroup">
 
             <!-- 1. 모집중/등록자 View-->
-            <div class="singupbutton-wyy">수정</div>
-            <div class="singupbutton-wJy">모집마감</div>
+            <div class="grayButton neon-soda-button" th:if="${isManager}">수정</div>
+            <div class="redButton neon-red-button" th:if="!${isFinished} and ${isManager}">모집마감</div>
 
             <!-- 2. 모집중/참여자 View-->
-            <!-- <div class="singupbutton-wJy">참여신청</div> -->
+            <div class="grayButton neon-soda-button" th:if="!${isManager} and !${alreadyApplied} and !${isFinished}">참여신청</div>
         </div>
     </div>
+
+    <div class="commentContainer">
+        <form class="commentForm" th:action="@{'/recruit/' + ${recruitId} + '/comment'}" method="post">
+            <label class="commentFormLabel" >댓글 작성:</label>
+            <div class="commentFormInputWithButton">
+                <textarea class="commentInput" id="commentInput" name="commentInput" required></textarea>
+                <button class="commentButton neon-gray-button" type="submit">작성</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="commentContainer">
+        <div class="commentSection">
+            <div class="commentEach" th:each="comment : ${comments}">
+                <div class="commentTop">
+                    <div class="commentUsername" th:text="${comment.getUsername()}">username</div>
+                    <div class="commentButtonGroup">
+                        <button class="commentEditButton" th:attr="comment-id=${comment.getCommentId()}" onclick="editComment(this)">수정</button>
+                        <button class="commentDeleteButton" th:attr="comment-id=${comment.getCommentId()}" onclick="deleteComment(this)">삭제</button>
+                    </div>
+                </div>
+                <div class="commentContent" th:text="${comment.getContent()}">
+                    질문있습니다! 왜 이렇게 타임리프가 어려운거죠??
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function editComment(element) {
+            let editedComment = window.prompt("수정된 댓글을 입력해주세요!");
+
+            let commentId = element.getAttribute("comment-id");
+            let recruitId = [[${ recruitId }]];
+            await fetch('/api/recruit/' + recruitId + '/comment/' + commentId, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: editedComment,
+                credentials: 'include' // 인증정보를 포함하는 옵션
+            });
+
+            window.location.reload();
+        }
+
+        function deleteComment(element){
+            let commentId = element.getAttribute("comment-id");
+            let recruitId = [[${ recruitId }]];
+            fetch('/api/recruit/' + recruitId + '/comment/' + commentId, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include' // 인증정보를 포함하는 옵션
+            });
+
+            window.location.reload();
+        }
+    </script>
+
+
+</div>
 </body>
 
 </html>
