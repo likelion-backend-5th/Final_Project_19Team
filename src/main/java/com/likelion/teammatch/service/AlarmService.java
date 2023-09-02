@@ -55,7 +55,7 @@ public class AlarmService {
 
             // 팀 멤버 중 본인을 제외한 모든 멤버를 수신자로 추가
             List<User> receivers = team.getMembers().stream()
-                    .filter(member -> !member.getId().equals(currentUsername))
+                    .filter(member -> !member.getId().equals(currentUser.getId()))
                     .collect(Collectors.toList());
 
             // 알람 생성 및 수신자 설정
