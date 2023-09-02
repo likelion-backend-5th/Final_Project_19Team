@@ -1,5 +1,6 @@
 package com.likelion.teammatch.controller.browser;
 
+import com.likelion.teammatch.dto.CreateRecruitDto;
 import com.likelion.teammatch.dto.RecruitDraftDto;
 import com.likelion.teammatch.dto.RecruitInfoDto;
 import com.likelion.teammatch.dto.team.TeamCreateDto;
@@ -7,10 +8,12 @@ import com.likelion.teammatch.service.CommentService;
 import com.likelion.teammatch.service.RecruitService;
 import com.likelion.teammatch.service.team.TeamService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -79,6 +82,28 @@ public class MainController {
         return "redirect:/recruit/" + recruitId;
     }
 
+    @GetMapping("/recruit/{recruitId}/edit")
+    public String getUpdateRecruit(@PathVariable("recruitId") Long recruitId, Model model){
+        RecruitInfoDto dto = recruitService.getRecruitInfo(recruitId);
+
+        model.addAttribute("teamName", dto.getTeamName());
+        model.addAttribute("teamRecruitName", dto.getRecruitTitle());
+        model.addAttribute("teamRecruitDetails", dto.getTeamRecruitDetails());
+
+        return "/html/create_recruit";
+    }
+
+    @PostMapping("/recruit/{recruitId}/edit")
+    public String updateRecruit(@PathVariable("recruitId") Long recruitId, CreateRecruitDto dto){
+        recruitService.updateRecruit(recruitId, dto.getTeamRecruitName(), dto.getMemberNum(),dto.getTeamRecruitDetails());
+
+        return "redirect:/recruit/" + recruitId;
+    }
+
+    @PostMapping("/team/{teamId}/recruit")
+    public String createRecruit(@PathVariable("teamId") Long teamId){
+        throw new ResponseStatusException(HttpStatus.NOT_IMPLEMENTED);
+    }
 
 
 }
