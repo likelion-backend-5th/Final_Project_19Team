@@ -61,49 +61,7 @@ public class MainController {
         return "redirect:/main";//todo 임시로 main으로 보냄.
     }
 
-    @GetMapping("/recruit/{recruitId}")
-    public String getRecruitInfo(@PathVariable("recruitId") Long recruitId, Model model){
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        RecruitInfoDto recruitDto = recruitService.getRecruitInfo(recruitId);
 
-        model.addAttribute("recruit", recruitDto);
-        model.addAttribute("comments", commentService.getCommentsForRecruit(recruitId));
-        model.addAttribute("isManager", username.equals(recruitDto.getTeamManagerUsername()));
-        model.addAttribute("isFinished", recruitDto.getIsRecruitFinished());
-        model.addAttribute("alreadyApplied", false);
-        return "/html/detail_recruiting";
-    }
-
-    @PostMapping("/recruit/{recruitId}/comment")
-    public String createCommentForRecruit(@PathVariable("recruitId") Long recruitId, @RequestParam String commentInput){
-        log.info("reached here");
-        commentService.createComment(recruitId, commentInput, true);
-
-        return "redirect:/recruit/" + recruitId;
-    }
-
-    @GetMapping("/recruit/{recruitId}/edit")
-    public String getUpdateRecruit(@PathVariable("recruitId") Long recruitId, Model model){
-        RecruitInfoDto dto = recruitService.getRecruitInfo(recruitId);
-
-        model.addAttribute("teamName", dto.getTeamName());
-        model.addAttribute("teamRecruitName", dto.getRecruitTitle());
-        model.addAttribute("teamRecruitDetails", dto.getTeamRecruitDetails());
-
-        return "/html/create_recruit";
-    }
-
-    @PostMapping("/recruit/{recruitId}/edit")
-    public String updateRecruit(@PathVariable("recruitId") Long recruitId, CreateRecruitDto dto){
-        recruitService.updateRecruit(recruitId, dto.getTeamRecruitName(), dto.getMemberNum(),dto.getTeamRecruitDetails());
-
-        return "redirect:/recruit/" + recruitId;
-    }
-
-    @PostMapping("/team/{teamId}/recruit")
-    public String createRecruit(@PathVariable("teamId") Long teamId){
-        throw new ResponseStatusException(HttpStatus.NOT_IMPLEMENTED);
-    }
 
 
 }
