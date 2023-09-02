@@ -81,7 +81,7 @@
         <div class="buttonGroup">
 
             <!-- 1. 모집중/등록자 View-->
-            <div class="grayButton neon-soda-button" th:if="${isManager}">수정</div>
+            <a class="grayButton neon-soda-button" th:if="${isManager}" th:href="@{'/recruit/' + ${recruitId} + '/edit'}">수정</a>
             <div class="redButton neon-red-button" th:if="!${isFinished} and ${isManager}">모집마감</div>
 
             <!-- 2. 모집중/참여자 View-->
