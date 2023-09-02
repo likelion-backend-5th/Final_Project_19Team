@@ -1,19 +1,15 @@
 package com.likelion.teammatch.controller.browser;
 
-import com.likelion.teammatch.dto.CreateRecruitDto;
 import com.likelion.teammatch.dto.RecruitDraftDto;
-import com.likelion.teammatch.dto.RecruitInfoDto;
 import com.likelion.teammatch.dto.team.TeamCreateDto;
 import com.likelion.teammatch.service.CommentService;
 import com.likelion.teammatch.service.RecruitService;
 import com.likelion.teammatch.service.team.TeamService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -23,12 +19,10 @@ public class MainController {
 
     private final TeamService teamService;
     private final RecruitService recruitService;
-    private final CommentService commentService;
 
-    public MainController(TeamService teamService, RecruitService recruitService, CommentService commentService) {
+    public MainController(TeamService teamService, RecruitService recruitService) {
         this.teamService = teamService;
         this.recruitService = recruitService;
-        this.commentService = commentService;
     }
 
     @GetMapping("/main")
@@ -45,7 +39,7 @@ public class MainController {
     }
 
     @GetMapping("/createTeam")
-    public String getCreateTeamForm(Model model){
+    public String getCreateTeamForm(){
         return "/html/create";
     }
 
