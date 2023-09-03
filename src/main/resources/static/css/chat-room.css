@@ -1,0 +1,132 @@
+.chat_wrap {
+    border: 0px solid #999;
+    width: 98%;
+    padding: 5px;
+    font-size: 13px;
+    color: #000000;
+}
+
+/* 채팅 참가자 목록 .participants */
+.participants {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    width: 23%;
+    float: right;
+    margin-top: 10px;
+}
+
+.participants h2 {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.participants ul {
+    list-style: none;
+    padding: 0;
+}
+
+.participants li {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+
+/* 채팅창 .inner */
+.chat_wrap .inner {
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    padding: 10px;
+    overflow-y: scroll;
+    height: 400px
+}
+
+.chat_wrap .item {
+    margin-top: 15px
+}
+
+.chat_wrap .item:first-child {
+    margin-top: 0
+}
+
+.chat_wrap .item .box:before {
+    content: "";
+    position: absolute;
+    left: 80px;
+    top: 9px;
+    border-top: 0px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 0px solid #fff;
+}
+
+/*일반 메시지*/
+.chat_wrap .msg_sender_time {
+    top: 2px;
+    position: relative;
+    bottom: 4px;
+}
+
+.chat_wrap .msg {
+    top: 10px;
+    bottom: 10px;
+    left: 2px;
+    position: relative;
+    background: #fff;
+    border-radius: 10px;
+    padding: 4px;
+    display: inline-block;
+    max-width: 60%;
+}
+
+/*내가 보낸 메시지*/
+.chat_wrap .mymsg_sender_time {
+    top: 2px;
+    position: relative;
+    bottom: 4px;
+    float: right;
+}
+
+.chat_wrap .mymsg {
+    top: 4px;
+    bottom: 11px;
+    position: relative;
+    float: right;
+    background: #ffefc4;
+    border-radius: 10px;
+    padding: 4px;
+    display: inline-block;
+    max-width: 60%;
+}
+
+/*애니메이션*/
+.chat_wrap .item .box {
+    transition: all .3s ease-out;
+    margin: 0 0 0 20px;
+    opacity: 0
+}
+
+.chat_wrap .item .mymsg .box {
+    margin: 0 20px 0 0;
+}
+
+.chat_wrap .item .on .box {
+    margin: 0;
+    opacity: 1;
+}
+
+input[type="text"] {
+    border: 0;
+    width: 80%;
+    background: #ddd;
+    border-radius: 5px;
+    height: 30px;
+    padding-left: 5px;
+    box-sizing: border-box;
+    margin-top: 5px;
+    margin-bottom: 5px
+}
+
+input[type="text"]::placeholder {
+    color: #999
+}
