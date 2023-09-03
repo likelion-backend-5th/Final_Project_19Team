@@ -1,9 +1,8 @@
 package com.likelion.teammatch.dto.chat;
 
 import com.likelion.teammatch.entity.ChatRoom;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.likelion.teammatch.entity.User;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
@@ -12,10 +11,10 @@ public class ChatRoomDto {
     private Long id;
     private String roomName;
 
-    public static ChatRoomDto fromEntity(ChatRoom entity) {
+    public static ChatRoomDto fromEntity(ChatRoom chatRoom) {
         return new ChatRoomDto(
-                entity.getId(),
-                entity.getRoomName()
+                chatRoom.getId(),
+                chatRoom.getRoomName()
         );
     }
 }

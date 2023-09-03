@@ -3,13 +3,11 @@ package com.likelion.teammatch.controller.chat;
 import com.likelion.teammatch.dto.chat.ChatRoomDto;
 import com.likelion.teammatch.service.ChatService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @RequestMapping("chat")
 @RequiredArgsConstructor
@@ -22,8 +20,8 @@ public class ChatRestController {
     }
 
     @PostMapping("rooms")
-    public ResponseEntity<ChatRoomDto> createRoom(@RequestBody ChatRoomDto chatRoom){
-        return ResponseEntity.ok(chatService.createChatRoom(chatRoom));
+    public ResponseEntity<ChatRoomDto> createRoom(@RequestBody ChatRoomDto dto){
+        return ResponseEntity.ok(chatService.createChatRoom(dto));
     }
 
     @GetMapping("rooms/{id}/name")

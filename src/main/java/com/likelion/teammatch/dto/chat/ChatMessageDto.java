@@ -14,21 +14,21 @@ public class ChatMessageDto {
     private String message;
     private String time;
 
-    public static ChatMessageDto fromEntity(ChatMessage messageEntity) {
+    public static ChatMessageDto fromEntity(ChatMessage chatMessage) {
         return new ChatMessageDto(
-                messageEntity.getRoomId(),
-                messageEntity.getSender(),
-                messageEntity.getMessage(),
-                messageEntity.getTime()
+                chatMessage.getRoomId(),
+                chatMessage.getSender(),
+                chatMessage.getMessage(),
+                chatMessage.getTime()
         );
     }
 
     public ChatMessage newEntity() {
-        ChatMessage messageEntity = new ChatMessage();
-        messageEntity.setRoomId(roomId);
-        messageEntity.setSender(sender);
-        messageEntity.setMessage(message);
-        messageEntity.setTime(time);
-        return messageEntity;
+        ChatMessage chatMessage = new ChatMessage();
+        chatMessage.setRoomId(roomId);
+        chatMessage.setSender(sender);
+        chatMessage.setMessage(message);
+        chatMessage.setTime(time);
+        return chatMessage;
     }
 }

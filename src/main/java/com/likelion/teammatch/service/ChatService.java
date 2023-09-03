@@ -27,18 +27,18 @@ public class ChatService {
     }
 
     //채팅방 생성
-    public ChatRoomDto createChatRoom(ChatRoomDto chatRoomDto) {
-        ChatRoom chatRoomEntity = new ChatRoom();
-        chatRoomEntity.setRoomName(chatRoomDto.getRoomName());
+    public ChatRoomDto createChatRoom(ChatRoomDto dto) {
+        ChatRoom chatRoom = new ChatRoom();
+        chatRoom.setRoomName(dto.getRoomName());
 
-        return ChatRoomDto.fromEntity(chatRoomRepository.save(chatRoomEntity));
+        return ChatRoomDto.fromEntity(chatRoomRepository.save(chatRoom));
     }
 
     //채팅방 전체 목록 조회
     public List<ChatRoomDto> getChatRooms() {
         List<ChatRoomDto> chatRoomList = new ArrayList<>();
-        for (ChatRoom chatRoomEntity: chatRoomRepository.findAll())
-            chatRoomList.add(ChatRoomDto.fromEntity(chatRoomEntity));
+        for (ChatRoom chatRoom: chatRoomRepository.findAll())
+            chatRoomList.add(ChatRoomDto.fromEntity(chatRoom));
         Collections.reverse(chatRoomList);
         return chatRoomList;
     }
@@ -51,8 +51,8 @@ public class ChatService {
         return ChatRoomDto.fromEntity(optionalChatRoom.get());
     }
 
-    public void saveChatMessage(ChatMessageDto chatMessageDto) {
-        chatMessageRepository.save(chatMessageDto.newEntity());
+    public void saveChatMessage(ChatMessageDto dto) {
+        chatMessageRepository.save(dto.newEntity());
     }
 
     //최근 메시지 10개

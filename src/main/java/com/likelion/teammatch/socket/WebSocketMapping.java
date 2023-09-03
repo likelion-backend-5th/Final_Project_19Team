@@ -3,7 +3,6 @@ package com.likelion.teammatch.socket;
 
 import com.likelion.teammatch.service.ChatService;
 import com.likelion.teammatch.dto.chat.ChatMessageDto;
-import com.likelion.teammatch.dto.chat.ChatRoomDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.*;
@@ -47,24 +46,7 @@ public class WebSocketMapping {
     @SubscribeMapping("/{roomId}")
     public List<ChatMessageDto> sendGreet(@DestinationVariable("roomId") Long roomId) {
         log.info("new subscription to {}", roomId);
-        ChatRoomDto chatRoomDto = chatService.findRoomById(roomId);
         List<ChatMessageDto> last10Messages = chatService.getLast10Messages(roomId);
-
-        // 채팅방 환영 메시지
-        ChatMessageDto chatMessageDto = new ChatMessageDto();
-        chatMessageDto.setRoomId(roomId);
-        chatMessageDto.setSender("admin");
-
-        if (last10Messages.size() > 0) {
-            int count = Math.min(last10Messages.size(), 10);
-            chatMessageDto.setMessage(String.format("채팅방에 입장하셨습니다.", count));
-            chatMessageDto.setTime(last10Messages.get(0).getTime());
-        } else {
-            chatMessageDto.setMessage("채팅방 입장");
-            chatMessageDto.setTime(new SimpleDateFormat("HH:mm").format(new Date()));
-        }
-        last10Messages.add(0, chatMessageDto);
         return last10Messages;
     }
-
 }
