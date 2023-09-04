@@ -163,7 +163,6 @@
     margin: auto;
     border-radius: 1rem;
     flex-shrink: 0;
-    margin-bottom: 5rem;
 }
 
 .grayButton {
@@ -196,6 +195,58 @@
     box-shadow: 0 0 10px rgba(0, 255, 255, 0.8), 0 0 20px rgba(0, 255, 255, 0.6), 0 0 30px rgba(0, 255, 255, 0.4);
 }
 
+.profileTechStackInputGroup{
+    width: 100%;
+}
+
+.profileTechStackInputWithSearchGroup{
+    width: 100%;
+    height: 3.4rem;
+    display: flex;
+}
+
+.profileTechStackInput{
+    margin-left: 0;
+    width: 50rem;
+    height: 3.4rem;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    margin-right: 1rem;
+}
+
+.profileTechStackInputSearch{
+    background: #43b0be;
+    border: 1px solid #ccc; /* Add border for a clear visual separation */
+    border-radius: 5px;
+    width: fit-content;
+    height: 3rem;
+    font-size: 1.5rem;
+    margin-left: 0;
+    padding-top: 5px;
+    justify-content: center;
+    color: white;
+}
+
+.profileTechStackLabelGroup{
+    margin-top: 1rem;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.profileTechStackLabel {
+    margin-left: 0;
+    margin-right: 1rem;
+    width: 5rem;
+    height: 2rem;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc; /* Add border for a clear visual separation */
+    border-radius: 5px;
+    background-color: white;
+}
+
 .profileDoubleLineGroup{
     height: 6.6rem;
     display: flex;
@@ -224,40 +275,9 @@
 }
 
 .profileAboutMe {
-    background: #d9d9d9;
-    border-radius: 5px;
-    width: 65rem;
+    width: 50rem;
     height: 100%;
     font-size: 1rem;
     font-family: Noto Sans KR, 'Source Sans Pro';
     white-space: pre-wrap;
-    box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
-}
-
-.profileTeamGroup{
-    margin-bottom: 1.7rem;
-    box-sizing: border-box;
-    padding: 2.2rem 1.9rem 2.5rem 2rem;
-    width: 100%;
-    row-gap: 1rem;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
-    background-color: #ffffff;
-    border-radius: 1rem;
-    flex-shrink: 0;
-}
-.myTeam{
-    background: #d1d2d4;
-    padding-left: 1rem;
-    text-decoration: none;
-    color: black;
-    height: 3rem;
-    justify-content: flex-start;
-    align-items: center;
-    display: flex;
-    border-radius: 5px;
-    box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
-    font-size: 1.5rem;
-    font-weight: 500;
 }
