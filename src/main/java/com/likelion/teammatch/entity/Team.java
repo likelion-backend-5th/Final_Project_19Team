@@ -49,13 +49,4 @@ public class Team extends BaseTimeEntity{
     private Boolean isFinished;
     //프로젝트 종료 시간.
     private LocalDateTime finishedAt;
-
-    // 팀과 멤버 간의 다대다 관계 설정
-    @ManyToMany
-    @JoinTable(
-            name = "team_members", // 연결 테이블 이름
-            joinColumns = @JoinColumn(name = "team_id"), // 팀과 연결되는 컬럼
-            inverseJoinColumns = @JoinColumn(name = "user_id") // 멤버와 연결되는 컬럼
-    )
-    private Set<User> members = new HashSet<>();
 }
