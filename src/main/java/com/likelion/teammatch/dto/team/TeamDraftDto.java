@@ -8,4 +8,5 @@ import lombok.Setter;
 public class TeamDraftDto {
     private String teamName;
     private Boolean isFinished;
+    private Long teamId;
 }
