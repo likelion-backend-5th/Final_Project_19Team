@@ -1,0 +1,125 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>채팅방 목록</title>
+    <link rel="stylesheet" th:href="@{../../css/chat-room.css}" href="../../static/css/chat-room.css">
+</head>
+<body onLoad="connect()">
+<p>
+<h3 id="room-name"></h3>
+
+<!-- 채팅창 외부 컨테이너-->
+<div id="conversationDiv" class="chat_wrap">
+    <div>
+        <span id="username"></span>
+        <a href="/chat">채팅 나가기</a>
+        <p></p>
+    </div>
+
+    <!-- 채팅 내용 박스 -->
+    <div class="inner">
+        <!--받은 응답을 표시하는 부분-->
+        <p id="response"></p>
+
+
+    </div>
+    <!-- 메시지 입력/전송 양식-->
+    <form id="message-form">
+        <input type="text" id="message" placeholder="메시지를 입력하세요."/>
+        <button type="submit">Send</button>
+    </form>
+
+
+</div>
+
+<!--<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>-->
+<script src="/js/stomp.js"></script>
+<script type="text/javascript">
+    let stompClient = null;
+    const pathname = window.location.pathname;
+    const roomId = parseInt(pathname.split("/")[2]);
+    let username = decodeURI(pathname.split("/")[3]);
+
+    function getRoomNameAndUsername() {
+        fetch(`/chat/rooms/${roomId}/name`).then((response) => {
+            response.json().then((responseBody) => {
+                console.log(responseBody);
+                document.getElementById('room-name').innerHTML = responseBody.roomName;
+                const usernameSpan = document.getElementById('username');
+                usernameSpan.textContent = username;
+            })
+        });
+    }
+
+    function connect() {
+        getRoomNameAndUsername();
+        const socket = new WebSocket('ws://localhost:8080/chatting');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            console.log('Connected: ' + frame);
+            stompClient.subscribe(`/topic/${roomId}`, function (message) {
+                const jsonMessage = JSON.parse(message.body);
+                if (Array.isArray(jsonMessage)) initialMessages(jsonMessage)
+                else receiveMessage(jsonMessage);
+            });
+        }, function (error) {
+            console.error('WebSocket 연결 오류: ' + error);
+        });
+    }
+
+    function initialMessages(messageList) {
+        for (const message of messageList)
+            receiveMessage(message)
+    }
+
+    function receiveMessage(messageOutput) {
+        const response = document.getElementById('response');
+        const p = document.createElement('p');
+
+        const senderAndTimeSpan = document.createElement('span');
+        const senderAndTimeText = `[ ${messageOutput.sender} ]  ${messageOutput.time}`;
+        senderAndTimeSpan.appendChild(document.createTextNode(senderAndTimeText));
+        if (messageOutput.sender === username) {
+            senderAndTimeSpan.classList.add('mymsg_sender_time');
+        } else {
+            senderAndTimeSpan.classList.add('msg_sender_time');
+        }
+        p.appendChild(senderAndTimeSpan);
+        p.appendChild(document.createElement('br'));
+
+        const messageSpan = document.createElement('span');
+        if (messageOutput.sender === username) {
+            messageSpan.classList.add('mymsg');
+        } else {
+            messageSpan.classList.add('msg');
+        }
+        messageSpan.appendChild(document.createTextNode(messageOutput.message));
+        p.appendChild(messageSpan);
+        p.appendChild(document.createElement('br'));
+
+        response.appendChild(p);
+    }
+
+
+    document.getElementById("message-form").addEventListener("submit", (event) => {
+        event.preventDefault()
+
+        const messageInput = document.getElementById('message');
+        const message = messageInput.value.trim();
+        if (message) {
+            stompClient.send("/app/chat",
+                {
+                    "Authorization": "Bearer JWT"
+                },
+                JSON.stringify({
+                    'roomId': roomId,
+                    'sender': username,
+                    'message': message
+                })
+            );
+            messageInput.value = null;
+        }
+    });
+</script>
+</body>
+</html>
