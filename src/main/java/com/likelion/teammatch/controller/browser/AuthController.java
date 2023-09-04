@@ -24,14 +24,14 @@ public class AuthController {
     }
 
     @GetMapping("/login")
-    public String getLoginForm(){
+    public String getLoginForm() {
         return "/html/login";
     }
 
     @PostMapping("/login")
-    public String login(HttpServletResponse response, LoginDto dto){
+    public String login(HttpServletResponse response, LoginDto dto) {
 
-        if (!userService.isLoginAttemptValid(dto)){
+        if (!userService.isLoginAttemptValid(dto)) {
             return "redirect:/login?error=true";
         }
 
@@ -56,24 +56,29 @@ public class AuthController {
 
 
     @GetMapping("/test")
-    public String getTest(Model model){
+    public String getTest(Model model) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("username", username);
         return "/html/test";
     }
 
     @GetMapping("/register")
-    public String getRegisterForm(){
+    public String getRegisterForm() {
         return "/html/register";
     }
 
     @PostMapping("/register")
-    public String register(RegisterDto dto){
-        if (userService.userRegisterConflicts(dto)){
+    public String register(RegisterDto dto) {
+        if (userService.userRegisterConflicts(dto)) {
             return "redirect:/register?error=true";
         }
         userService.createUser(dto);
 
         return "redirect:/login";
     }
+    @GetMapping("/declare")
+    public String showDeclarePage() {
+        return "html/declare";
+    }
+
 }

@@ -1,5 +1,5 @@
 .item--tFK {
-  visibility: visible;
+  visibility: hidden;
   margin: 0;
   box-sizing: border-box;
   overflow: hidden;
@@ -9,6 +9,7 @@
   display: flex;
   align-items: center;
 }
+
 .alarm-6k1 {
   margin: 0;
   box-sizing: border-box;
@@ -19,27 +20,31 @@
   border-radius: 0.5rem;
   flex-shrink: 0;
 }
+
 .alarmdetail-bgm {
   width: 100%;
   align-items: center;
   display: flex;
   flex-direction: column;
 }
+
 .teamreader-x1X {
   position: relative;
-  top: 0px;
+  top: 0;
   margin-bottom: 3rem;
   width: 100%;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
 }
+
 .auto-group-ptnd-fwX {
   margin: 0 20px 10px 20px;
   display: flex;
   align-items: center;
   flex-shrink: 0;
 }
+
 .alarm-oH3 {
   margin-right: 200px;
   display: flex;
@@ -48,10 +53,10 @@
   line-height: 1.6;
   letter-spacing: 0.025rem;
   color: rgba(255, 255, 255, 0.8700000048);
-  font-family: Roboto, 'Source Sans Pro';
   white-space: nowrap;
   flex-shrink: 0;
 }
+
 .close-uqs {
   object-fit: contain;
   vertical-align: top;
@@ -59,7 +64,6 @@
 }
 
 .title-E7T {
-  margin-bottom: 1px;
   width: 100%;
   height: 32px;
   display: flex;
@@ -68,7 +72,6 @@
   line-height: 1.7777777778;
   letter-spacing: 0.025rem;
   color: #ffffff;
-  font-family: Roboto, 'Source Sans Pro';
   white-space: nowrap;
   align-items: center;
   justify-content: center;
@@ -88,7 +91,6 @@
   line-height: 1.7777777778;
   letter-spacing: 0.025rem;
   color: #ffffff;
-  font-family: Roboto, 'Source Sans Pro';
   white-space: nowrap;
   align-items: center;
   justify-content: center;
@@ -96,6 +98,7 @@
   border-radius: 5px;
   flex-shrink: 0;
 }
+
 .project-a-SzD {
   margin-left: 2rem;
   display: flex;
@@ -104,10 +107,10 @@
   line-height: 2;
   letter-spacing: 0.025rem;
   color: rgba(255, 255, 255, 0.8700000048);
-  font-family: Roboto, 'Source Sans Pro';
   white-space: nowrap;
   flex-shrink: 0;
 }
+
 .readerlist-Zow {
   margin: 0 1.5rem;
   width: calc(100% - 3rem);
@@ -145,13 +148,12 @@
 
 .group-236-BqK {
   position: relative;
-  top:-10px;
+  top: -10px;
 }
 
 .item--wpV {
   margin: 0;
   height: 100%;
-  align-items: left;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
@@ -159,13 +161,11 @@
 
 /* 신규등록 알림 */
 .item--6Bb {
-  margin: 0;
-  margin-bottom: 1.5rem;
+  margin: 0 0 1.5rem 0;
   font-size: 16px;
   font-weight: 700;
   line-height: 1.2125;
   color: #000000;
-  font-family: Inter, 'Source Sans Pro';
   white-space: nowrap;
   flex-shrink: 0;
 }
@@ -211,13 +211,11 @@
 
 /* 참여신청 알림 텍스트 */
 .item--fhs {
-  margin: 0;
-  margin-bottom: 1.5rem;
+  margin: 0 0 1.5rem 0;
   font-size: 16px;
   font-weight: 700;
   line-height: 1.2125;
   color: #000000;
-  font-family: Inter, 'Source Sans Pro';
   white-space: nowrap;
   flex-shrink: 0;
 }
@@ -229,7 +227,6 @@
   font-weight: 400;
   line-height: 1.2125;
   color: #000000;
-  font-family: Inter, 'Source Sans Pro';
   flex-shrink: 0;
 }
 
@@ -255,19 +252,16 @@
 .group-255-gJm {
   margin: 0;
   height: 100%;
-  align-items: left;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
 }
 
 .item--Rn9 {
-  margin: 0rem 0rem 1.5rem 0rem;
+  margin: 0 0 1.5rem 0;
   font-size: 16px;
   font-weight: 700;
   color: #000000;
-  font-family: Inter, 'Source Sans Pro';
   white-space: nowrap;
   flex-shrink: 0;
 }
-

@@ -68,7 +68,6 @@ public class TeamService {
         UserTeam userTeam = new UserTeam();
         userTeam.setUserId(user.getId());
         userTeam.setTeamId(team.getId());
-        userTeam.setRole("manager");
         userTeamRepository.save(userTeam);
 
         return team.getId();
@@ -76,9 +75,9 @@ public class TeamService {
 
 
     //Team 가입
-    public void JoinTeamByTeamId(Long teamId, String username, String role){
+    public void joinTeamByTeamId(Long teamId, Long userId){
         //유저 엔티티 가져오기
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         //팀 엔티티 가져오기.
         Team team = teamRepository.findById(teamId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -93,7 +92,6 @@ public class TeamService {
         UserTeam userTeam = new UserTeam();
         userTeam.setUserId(user.getId());
         userTeam.setTeamId(team.getId());
-        userTeam.setRole(role);
         userTeamRepository.save(userTeam);
     }
 
@@ -148,6 +146,7 @@ public class TeamService {
             Team currentTeam = teamRepository.findById(userTeam.getTeamId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
             TeamDraftDto dto = new TeamDraftDto();
             dto.setTeamName(currentTeam.getTeamName());
+            dto.setTeamId(currentTeam.getId());
             dto.setIsFinished(currentTeam.getIsFinished());
             draftList.add(dto);
         }

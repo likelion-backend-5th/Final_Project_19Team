@@ -10,8 +10,6 @@
     <link rel="stylesheet" th:href="@{../css/index.css}" href="../../static/css/index.css">
     <link rel="stylesheet" th:href="@{../css/mypage.css}" href="../../static/css/mypage.css">
     <link rel="stylesheet" th:href="@{../css/mypage_pop.css}" href="../../static/css/mypage_pop.css">
-    <link rel="stylesheet" th:href="@{../css/mypage.css}" href="../../static/css/mypage.css">
-    <link rel="stylesheet" th:href="@{../css/mypage_pop.css}" href="../../static/css/mypage_pop.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons%3A400">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+KR%3A700">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%3A400%2C500%2C700">
@@ -20,7 +18,7 @@
 </head>
 
 <body>
-<!-- header -->
+    <!-- header -->
     <div class="top">
         <div class="nav">
             <div class="nav_logo">
@@ -34,16 +32,19 @@
                 <input type="text" class="nav_search_input" placeholder="Search" />
             </div>
             <div class="nav_btn">
-                <Link to="/Alarm" class='router_link'>
+            <!-- 알람버튼  -->
                 <button id="alarmBtn" class='nav_btn_list'>
                     <img src="../../static/assets/index/bell.svg" th:src="@{/assets/index/bell.svg}" alt="알람" />
                 </button>
+            <!-- 즐겨찾기버튼  -->
                 <button id="starBtn" class='nav_btn_list'>
                     <img src="../../static/assets/index/star.svg" th:src="@{/assets/index/star.svg}" alt="즐겨찾기" />
                 </button>
+            <!-- 마이페이지버튼  -->
                 <button id="mypageBtn" class='nav_btn_list'>
                     <img src="../../static/assets/index/mypage.svg" th:src="@{/assets/index/mypage.svg}" alt="마이페이지" />
                 </button>
+            <!-- 신고페이지버튼  -->
                 <button id="sinrenBtn" class='nav_btn_list'>
                     <img src="../../static/assets/index/siren.svg" th:src="@{/assets/index/siren.svg}" alt="신고" />
                 </button>
@@ -51,7 +52,7 @@
         </div>
     </div>
 
-<!-- quick_filter -->
+    <!-- quick_filter -->
     <div class="main" id="overlay">
         <div class="quick_filter">
             <div class="quick_filter_body">
@@ -75,59 +76,51 @@
                 </div>
             </div>
         </div>
+    </div>
 
-<!-- Create / Sort -->
-        <div class="match">
-            <div class="match_making">
-                <img class='match_making_img' src="../../static/assets/index/create.svg"
-                    th:src="@{/assets/index/create.svg}" alt="" />
-                <span class='match_making_text'>Match Making</span>
-                <button class="match_making_btn" onclick="createTeamRecruit()">+</button>
+    <!-- Match Making / Sort -->
+    <div class="match">
+        <div class="match_making">
+            <img class='match_making_img' src="../../static/assets/index/create.svg"
+                th:src="@{/assets/index/create.svg}" alt="" />
+            <span class='match_making_text'>Match Making</span>
+            <button class="match_making_btn" onclick="createTeamRecruit()">+</button>
+        </div>
+        <div class="sort">
+            <img class='sort_img' src="../../static/assets/index/sort.svg" th:src="@{/assets/index/sort.svg}"
+                alt="#" />
+            <span class='sort_text'>Sort</span>
+            <button class="sort_up_btn">▲</button>
+            <button class="sort_down_btn">▼</button>
+        </div>
+    </div>
+
+    <!-- List -->
+    <div class="grid_report">
+        <div th:each="recruit : ${recruitList}" class="grid_report_item"
+            th:attr="data-recruitId=${recruit.getRecruitId()}" onclick="getRecruitDetails(this)">
+            <img class='grid_report_item_img_img' src="../../static/assets/index/sample_img.png"
+                th:src="@{/assets/index/sample_img.png}" alt="이미지" />
+            <button class="stars_btn">★</button>
+            <div class="grid_report_item_text">
+                <div class="title" th:text="${recruit.getRecruitTitle()}">멋사 19 프로젝트 모집</div>
+                <button th:if="!${recruit.getIsFinished()}" class="status">모집중</button>
+                <button th:if="${recruit.getIsFinished()}" class="status1">모집 완료</button>
             </div>
-            <div class="sort">
-                <img class='sort_img' src="../../static/assets/index/sort.svg" th:src="@{/assets/index/sort.svg}"
-                     alt="#" />
-                <span class='sort_text'>Sort</span>
-                <button class="sort_up_btn">▲</button>
-                <button class="sort_down_btn">▼</button>
+            <div class="grid_report_item_text_mid">
+                <div class="stacks">
+                    <button class="stacks_button" th:text="${recruit.getTeamType()}">스터디</button>
+                    <button th:each="stack: ${recruit.getTechStackList()}" class='stacks_button'
+                        th:text="${stack}">java</button>
+                </div>
+            </div>
+            <div class="grid_report_item_text_low1">
+                <div class="contents" th:text="${recruit.getRecruitDetails()}">
+                    asdfghkjsdjfalsdfasdfasdfasdfasdfasdfasdfasdfasdfsadfsadfsadfsadfsadfsadfsadfsdafsdafasdfsdaf
+                </div>
             </div>
         </div>
-
-<!-- Mache List -->
-        <div class="grid_report">
-            <div th:each="recruit : ${recruitList}" class="grid_report_item" th:attr="data-recruitId=${recruit.getRecruitId()}" onclick="getRecruitDetails(this)">
-                <img class='grid_report_item_img_img' src="../../static/assets/index/sample_img.png"
-                     th:src="@{/assets/index/sample_img.png}" alt="이미지" />
-                <button class="stars_btn">★</button>
-                <div class="grid_report_item_text">
-                    <div class="title" th:text="${recruit.getRecruitTitle()}">멋사 19 프로젝트 모집</div>
-                    <button th:if="!${recruit.getIsFinished()}"  class="status">모집중</button>
-                    <button th:if="${recruit.getIsFinished()}" class="status1">모집 완료</button>
-                </div>
-                <div class="grid_report_item_text_mid">
-                    <div class="stacks">
-                        <button class="stacks_button" th:text="${recruit.getTeamType()}">스터디</button>
-                        <button th:each="stack: ${recruit.getTechStackList()}" class='stacks_button'
-                            th:text="${stack}">java</button>
-                    </div>
-                </div>
-                <div class="grid_report_item_text_low1">
-                    <div class="contents" th:text="${recruit.getRecruitDetails()}">asdfghkjsdjfalsdfasdfasdfasdfasdfasdfasdfasdfasdfsadfsadfsadfsadfsadfsadfsadfsdafsdafasdfsdaf</div>
-                </div>
-            </div>
-        </div>
-        <script>
-            function getRecruitDetails(element){
-                if (!logined){
-                    loginModal.style.display = 'block';
-                    overlay.style.opacity = '50%';
-                }
-                else {
-                    let recruitId = element.getAttribute("data-recruitId");
-                    window.location.href = "/recruit/" + recruitId;
-                }
-            }
-        </script>
+    </div>
         <!--
 
             <div class="grid_report">
@@ -317,7 +310,7 @@
                 </div>
                 -->
 
-<!-- login.html -->
+        <!-- login.html -->
     </div>
     <form class="item--cUZ" id="loginModal" th:action="@{/login}" th:method="post">
         <img src="../assets/login/logo.png" class="image-9-CWd" alt="logo">
@@ -342,7 +335,7 @@
         <img class="close-PDj" src="../assets/login/close.svg" alt="x" onclick="closeLoginPage()">
     </form>
 
-<!-- alarm.html -->
+    <!-- alarm.html -->
     <div id="alarmPage" class="item--tFK">
         <div class="alarm-6k1">
             <div class="alarmdetail-bgm">
@@ -539,8 +532,8 @@
                 </div>
             </div>
         </div>
-
-<!-- mypage.html -->
+    </div>
+    <!-- mypage.html -->
     <div id="mypagePage" class="item--Fa1">
         <img id="mypageClose" class="close-N2M" src="../assets/mypage/close.svg" alt="X" />
         <div class="profile-gQR">Profile</div>
@@ -563,7 +556,7 @@
                                         <div class="group-354-Pn1">
                                             <div class="group-348-6wK">
                                                 <img class="person-add-dwF" src="../assets/mypage/stroke.svg"
-                                                    alt="회원점수" />
+                                                     alt="회원점수" />
                                                 <p class="item--mGm">회원점수</p>
                                             </div>
                                             <div class="group-351-Uws">
@@ -577,7 +570,7 @@
                                         <div class="group-354-Pn1">
                                             <div class="group-348-6wK">
                                                 <img class="person-add-dwF" src="../assets/mypage/happy-face.svg"
-                                                    alt="회원등급" />
+                                                     alt="회원등급" />
                                                 <p class="item--mGm">회원등급</p>
                                             </div>
                                             <div class="group-351-Uws">
@@ -590,7 +583,7 @@
                                         <div class="group-354-Pn1">
                                             <div class="group-348-6wK">
                                                 <img class="person-add-dwF" src="../assets/mypage/error.svg"
-                                                    alt="중도포기" />
+                                                     alt="중도포기" />
                                                 <p class="item--mGm">중도포기</p>
                                             </div>
                                             <div class="group-351-Uws">
@@ -604,7 +597,7 @@
                                     </div>
                                 </div>
                                 <img id="pagedetailShowBtn" class="chevron-right-M7o"
-                                    src="../assets/mypage/chevron-down.svg" alt="#" />
+                                     src="../assets/mypage/chevron-down.svg" alt="#" />
                             </div>
                         </div>
                         <!-- 회원정보 -->
@@ -678,7 +671,7 @@
                                         <div class="group-354-Pn1">
                                             <div class="group-348-6wK">
                                                 <img class="person-add-dwF" src="../assets/mypage/stroke.svg"
-                                                    alt="회원점수" />
+                                                     alt="회원점수" />
                                                 <p class="item--mGm">회원점수</p>
                                             </div>
                                             <div class="group-351-Uws">
@@ -691,7 +684,7 @@
                                         <div class="group-354-Pn1">
                                             <div class="group-348-6wK">
                                                 <img class="person-add-dwF" src="../assets/mypage/happy-face.svg"
-                                                    alt="회원등급" />
+                                                     alt="회원등급" />
                                                 <p class="item--mGm">회원등급</p>
                                             </div>
                                             <div class="group-351-Uws">
@@ -703,7 +696,7 @@
                                         <div class="group-354-Pn1">
                                             <div class="group-348-6wK">
                                                 <img class="person-add-dwF" src="../assets/mypage/error.svg"
-                                                    alt="중도포기" />
+                                                     alt="중도포기" />
                                                 <p class="item--mGm">중도포기</p>
                                             </div>
                                             <div class="group-351-Uws">
@@ -723,7 +716,8 @@
                                     <div class="group-319-YBj">
                                         <div class="auto-group-fvdt-j1K">
                                             <div class="group-320-Eim">
-                                                <img class="calendar-sE1" src="../assets/mypage/calendar.svg" alt="#">
+                                                <img class="calendar-sE1" src="../assets/mypage/calendar.svg"
+                                                     alt="#">
                                                 <p class="item--CGH">날짜</p>
                                             </div>
                                             <div class="group-320-Eim">
@@ -798,7 +792,7 @@
 
                                 </div>
                                 <img id="pagedetailHideBtn" class="chevron-right-M7o"
-                                    src="../assets/mypage/chevron-up.svg" alt="up" />
+                                     src="../assets/mypage/chevron-up.svg" alt="up" />
                             </div>
                         </div>
                     </div>
@@ -807,7 +801,7 @@
         </div>
     </div>
 
-<!-- mypage_pop.html 회원등급 / 점수 안내-->
+    <!-- mypage_pop.html 회원등급 / 점수 안내-->
     <div id="tooltipPop" class="group-421-cgR">
         <div class="group-419-aW5">
             <p class="item--wLd">회원등급</p>
@@ -872,10 +866,19 @@
             </div>
         </div>
     </div>
-    </div>
 </body>
-
 <script>
+    function getRecruitDetails(element) {
+        if (!logined) {
+            loginModal.style.display = 'block';
+            overlay.style.opacity = '50%';
+        }
+        else {
+            let recruitId = element.getAttribute("data-recruitId");
+            window.location.href = "/recruit/" + recruitId;
+        }
+    }
+
     const logined = [[${ logined }]];
     let overlay = document.getElementById("overlay");
     let loginModal = document.getElementById("loginModal");
@@ -972,13 +975,12 @@
     // 마우스 mouseenter 시 팝업, mouseleave 팝업 닫기
     let helpBtn = document.getElementById('helpBtn');
     let tooltipPop = document.getElementById('tooltipPop');
-    helpBtn.addEventListener('mouseenter', function() {
+    helpBtn.addEventListener('mouseenter', function () {
         tooltipPop.style.visibility = 'visible';
     });
-    helpBtn.addEventListener('mouseleave', function() {
+    helpBtn.addEventListener('mouseleave', function () {
         tooltipPop.style.visibility = 'hidden';
     });
-
 
     // let sinrenBtn = document.getElementById("sinrenBtn");
     // let starBtn = document.getElementById("starBtn");

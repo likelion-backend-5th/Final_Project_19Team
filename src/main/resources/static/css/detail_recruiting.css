@@ -505,6 +505,11 @@ input {
     background-color: #3f51b5;
 }
 
+.applyLabel{
+    font-size: 2rem;
+    font-weight: 700;
+}
+
 .commentContainer{
     margin-top: 2rem;
     box-sizing: border-box;
@@ -514,6 +519,18 @@ input {
     display: flex;
     flex-direction: column;
     background-color: #e6e6e6;
+    border-radius: 1rem;
+}
+
+.applyContainer{
+    margin-top: 2rem;
+    box-sizing: border-box;
+    padding: 1.3rem 2rem 1.7rem 2rem;
+    width: 140rem;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    background-color: #fcecec;
     border-radius: 1rem;
 }
 
@@ -589,6 +606,19 @@ input {
     border-radius: 1rem;
 }
 
+.applySection {
+    margin-top: 1rem;
+    box-sizing: border-box;
+    padding: 1.3rem 2rem 1.7rem 2rem;
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    background-color: #f8dddd;
+    border-radius: 1rem;
+}
+
+
 .commentEach{
     display:flex;
     flex-direction: column;
@@ -621,6 +651,17 @@ input {
 
 .commentContent {
     background: #d9d9d9;
+    width: 117rem;
+    height: fit-content;
+    flex-shrink: 0;
+    border-radius: 0.5rem;
+    font-size: 2rem;
+    line-height: 1.4475;
+    font-weight: 400;
+}
+
+.applyIntroduction {
+    background: #fdcbcb;
     width: 117rem;
     height: fit-content;
     flex-shrink: 0;
