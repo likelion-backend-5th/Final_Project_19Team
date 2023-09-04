@@ -20,20 +20,36 @@ body {
     width: 144rem;
 }
 
+.close-button{
+    background-color: #e6e6e6;
+    border: 0;
+}
+
 .item--DHT {
+    position: relative;
+    top: 20px;
     box-sizing: border-box;
     padding-bottom: 2.5rem;
     width: 100%;
     overflow: hidden;
-    position: relative;
+    left: 200px;
     display: flex;
     flex-direction: column;
     background-color: #ffffff;
 }
+.font12{
+    font-size: 20px;
+}
 
+.item--tPs {
+    position: relative;
+    left: 540px;
+    top: -559px;
+}
 
-.item--DHT .auto-group-rt5f-Hgd {
+.auto-group-rt5f-Hgd {
     margin: 0 8.9rem;
+    height: 700px;
     box-sizing: border-box;
     padding: 1.6rem 1.8rem 2.4rem 1.9rem;
     width: calc(100% - 17.8rem);
@@ -44,7 +60,7 @@ body {
     flex-shrink: 0;
 }
 
-.item--DHT .auto-group-rt5f-Hgd .group-254-C2u {
+.group-254-C2u {
     margin: 0rem 100.2rem 1.6rem 0rem;
     width: calc(100% - 100.2rem);
     height: 3.9rem;
@@ -54,7 +70,7 @@ body {
     flex-shrink: 0;
 }
 
-.item--DHT .auto-group-rt5f-Hgd .group-254-C2u .declare-list-WJV {
+.declare-list-WJV {
     margin: 0rem 1.6rem 0.1rem 0rem;
     display: flex;
     font-size: 2rem;
@@ -67,7 +83,7 @@ body {
     flex-shrink: 0;
 }
 
-.item--DHT .auto-group-rt5f-Hgd .group-254-C2u .group-213-jww {
+.group-213-jww {
     width: 9.8rem;
     height: 100%;
     box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
@@ -75,7 +91,7 @@ body {
     flex-shrink: 0;
 }
 
-.item--DHT .auto-group-rt5f-Hgd .group-254-C2u .group-213-jww .group-249-6nV {
+.group-249-6nV {
     width: 100%;
     height: 100%;
     display: flex;
@@ -88,13 +104,15 @@ body {
     font-family: Noto Sans KR, 'Source Sans Pro';
     white-space: nowrap;
     background-color: #b63939;
-    border-radius: 1rem;
+    border-radius: 5px;
+    border: 0;
 }
 
-.item--DHT .auto-group-rt5f-Hgd .auto-group-ebq3-m7w {
+.auto-group-ebq3-m7w {
     box-sizing: border-box;
     padding: 2.3rem 2.5rem 41.95rem 2.2rem;
     width: 100%;
+    height: 610px;
     align-items: center;
     display: flex;
     flex-direction: column;
@@ -104,7 +122,7 @@ body {
     flex-shrink: 0;
 }
 
-.item--DHT .auto-group-rt5f-Hgd .auto-group-ebq3-m7w .line-86-G4h {
+.line-86-G4h {
     margin-bottom: 0.65rem;
     width: 100%;
     height: 0.05rem;
@@ -112,7 +130,7 @@ body {
     flex-shrink: 0;
 }
 
-.item--DHT .auto-group-rt5f-Hgd .auto-group-ebq3-m7w .group-250-Cyw {
+.group-250-Cyw {
     margin: 0rem 6.8rem 0.7rem 6.6rem;
     width: calc(100% - 13.4rem);
     display: flex;
@@ -120,8 +138,8 @@ body {
     flex-shrink: 0;
 }
 
-.item--DHT .auto-group-rt5f-Hgd .auto-group-ebq3-m7w .group-250-Cyw .item--LqF {
-    margin: 0rem 30.4rem 0.1rem 0rem;
+.item--LqF {
+    margin: 0rem 22rem 0.1rem 0rem;
     font-size: 2rem;
     font-weight: 700;
     line-height: 1.2125;
@@ -131,7 +149,7 @@ body {
     flex-shrink: 0;
 }
 
-.item--DHT .auto-group-rt5f-Hgd .auto-group-ebq3-m7w .group-250-Cyw .item--Rbo {
+.item--Rbo {
     margin-right: 28.4rem;
     font-size: 2rem;
     font-weight: 700;
@@ -142,7 +160,9 @@ body {
     flex-shrink: 0;
 }
 
-.item--DHT .auto-group-rt5f-Hgd .auto-group-ebq3-m7w .group-250-Cyw .item--9Gu {
+.item--9Gu {
+    left: 8px;
+    position: relative;
     margin-right: 11.5rem;
     font-size: 2rem;
     font-weight: 700;
@@ -152,8 +172,7 @@ body {
     white-space: nowrap;
     flex-shrink: 0;
 }
-
-.item--DHT .auto-group-rt5f-Hgd .auto-group-ebq3-m7w .group-250-Cyw .item--THb {
+.item--THb {
     margin-right: 8.2rem;
     font-size: 2rem;
     font-weight: 700;
@@ -164,7 +183,7 @@ body {
     flex-shrink: 0;
 }
 
-.item--DHT .auto-group-rt5f-Hgd .auto-group-ebq3-m7w .group-250-Cyw .item--QCq {
+.item--QCq {
     font-size: 2rem;
     font-weight: 700;
     line-height: 1.2125;
@@ -174,7 +193,7 @@ body {
     flex-shrink: 0;
 }
 
-.item--DHT .auto-group-rt5f-Hgd .auto-group-ebq3-m7w .line-79-Kah {
+.line-79-Kah {
     margin-bottom: 0.45rem;
     width: 100%;
     height: 0.05rem;
@@ -182,7 +201,7 @@ body {
     flex-shrink: 0;
 }
 
-.item--DHT .auto-group-rt5f-Hgd .auto-group-ebq3-m7w .group-251-3mb {
+.group-251-3mb {
     margin: 0rem 6.2rem 0.4rem 4.9rem;
     box-sizing: border-box;
     padding-right: 1.2rem;
@@ -194,7 +213,7 @@ body {
     flex-shrink: 0;
 }
 
-.item--DHT .auto-group-rt5f-Hgd .auto-group-ebq3-m7w .group-251-3mb .auto-group-6pd7-LVo {
+.auto-group-6pd7-LVo {
     box-sizing: border-box;
     padding: 0.2rem 7.1rem 0.2rem 0rem;
     height: 100%;
@@ -203,7 +222,9 @@ body {
     flex-shrink: 0;
 }
 
-.item--DHT .auto-group-rt5f-Hgd .auto-group-ebq3-m7w .group-251-3mb .auto-group-6pd7-LVo .item-230817-gJm {
+.item-230817-gJm {
+    left: 30px;
+    position: relative;
     margin-right: 9.5rem;
     font-size: 2rem;
     font-weight: 400;
@@ -213,8 +234,7 @@ body {
     white-space: nowrap;
     flex-shrink: 0;
 }
-
-.item--DHT .auto-group-rt5f-Hgd .auto-group-ebq3-m7w .group-251-3mb .auto-group-6pd7-LVo .oo--DpV {
+.oo--DpV {
     margin-right: 5.5rem;
     overflow: hidden;
     width: 43.5rem;
@@ -227,7 +247,7 @@ body {
     flex-shrink: 0;
 }
 
-.item--DHT .auto-group-rt5f-Hgd .auto-group-ebq3-m7w .group-251-3mb .auto-group-6pd7-LVo .item-2023-08-02-kpR {
+.item-2023-08-02-kpR {
     font-size: 2rem;
     font-weight: 400;
     line-height: 1.2125;
@@ -242,7 +262,7 @@ body {
     
 }
 
-.item--DHT .auto-group-rt5f-Hgd .auto-group-ebq3-m7w .group-251-3mb .group-262-euo {
+.group-262-euo {
     margin-right: 1.1rem;
     width: 5.6rem;
     height: 3rem;
@@ -252,15 +272,15 @@ body {
     font-size: 1.6rem;
     font-weight: 700;
     line-height: 1.4475;
-    color: 424B5A;
     font-family: Noto Sans KR, 'Source Sans Pro';
     white-space: nowrap;
     background-color: #CCCCCC;
-    border-radius: 0.5rem;
+    border-radius: 5px;
+    border: 0;
     flex-shrink: 0;
 }
 
-.item--DHT .auto-group-rt5f-Hgd .auto-group-ebq3-m7w .group-251-3mb .group-264-euo {
+.group-264-euo {
     margin-right: 8rem;
     width: 5.6rem;
     height: 3rem;
@@ -274,11 +294,12 @@ body {
     font-family: Noto Sans KR, 'Source Sans Pro';
     white-space: nowrap;
     background-color: #b63939;
-    border-radius: 0.5rem;
+    border-radius: 5px;
+    border: 0;
     flex-shrink: 0;
 }
 
-.item--DHT .auto-group-rt5f-Hgd .auto-group-ebq3-m7w .group-251-3mb .item--VvR {
+.item--VvR {
     font-size: 2rem;
     font-weight: 400;
     line-height: 1.2125;
@@ -288,9 +309,12 @@ body {
     flex-shrink: 0;
 }
 
-.item--DHT .auto-group-rt5f-Hgd .auto-group-ebq3-m7w .line-80-dmj {
+.line-80-dmj {
+    top: 19px;
+    right: 1050px;
+    position: relative;
     margin-bottom: 0.5rem;
-    width: 100%;
+    width: 1178px;
     height: 0.05rem;
     background-color: #1e1e1e;
     flex-shrink: 0;
@@ -300,8 +324,7 @@ body {
 
 
 
-
-.item--tPs .auto-group-oydx-bhb {
+.auto-group-oydx-bhb {
     margin-left: 7.8rem;
     box-sizing: border-box;
     padding: 1.6rem 0.3rem 1.5rem 0.3rem;
@@ -311,10 +334,11 @@ body {
     flex-direction: column;
     background-color: #e6e6e6;
     border-radius: 1rem;
+    border: 1px solid;
     flex-shrink: 0;
 }
 
-.item--tPs .auto-group-oydx-bhb .auto-group-wdus-V2H {
+.auto-group-wdus-V2H {
     margin: 0rem 2.405rem 0.4rem 1.7rem;
     width: calc(100% - 4.1045rem);
     display: flex;
@@ -322,7 +346,7 @@ body {
     flex-shrink: 0;
 }
 
-.item--tPs .auto-group-oydx-bhb .auto-group-wdus-V2H .declare-AeD {
+.declare-AeD {
     margin-right: 43.5045rem;
     display: flex;
     font-size: 2rem;
@@ -335,14 +359,14 @@ body {
     flex-shrink: 0;
 }
 
-.item--tPs .auto-group-oydx-bhb .auto-group-wdus-V2H .close-Srd {
+.close-Srd {
     margin-bottom: 0.2rem;
     object-fit: contain;
     vertical-align: top;
     flex-shrink: 0;
 }
 
-.item--tPs .auto-group-oydx-bhb .singupbutton-Y8y {
+.singupbutton-Y8y {
     margin: 0rem 1.7rem 1.7rem 1.7rem;
     box-sizing: border-box;
     padding: 0.8rem 2rem;
@@ -355,12 +379,12 @@ body {
     font-family: Roboto, 'Source Sans Pro';
     white-space: nowrap;
     background-color: #ffffff;
-    border-radius: 1.5rem;
+    border-radius: 10px;
     box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
     flex-shrink: 0;
 }
 
-.item--tPs .auto-group-oydx-bhb .type-m1j {
+.type-m1j {
     margin: 0rem 48.3rem 0.3rem 0rem;
     display: flex;
     font-size: 2rem;
@@ -373,7 +397,7 @@ body {
     flex-shrink: 0;
 }
 
-.item--tPs .auto-group-oydx-bhb .auto-group-tkjb-t6M {
+.auto-group-tkjb-t6M {
     display: flex;
     margin: 0rem 11.6rem 1rem 0rem;
     width: 44.6rem;
@@ -382,34 +406,28 @@ body {
     flex-shrink: 0;
 }
 
-.item--tPs .auto-group-oydx-bhb .auto-group-tkjb-t6M .mat-btn-mvq {
-    width: 8.1rem;
-    height: 3.6rem;
-    margin-left: 1.8rem;
-    margin-right: 0rem;
-    background-color: #cccccc;
-    border-radius: 0.4rem;
-}
-
-.item--tPs .auto-group-oydx-bhb .auto-group-tkjb-t6M .mat-btn-mvq .content-7E1 {
-    width: 100%;
-    height: 100%;
+.content-7E1 {
+    margin-right: 1.1rem;
+    left: 17px;
+    position: relative;
+    width: 90px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.4rem;
-    font-weight: 500;
-    line-height: 2.5714285714;
-    letter-spacing: 0.125rem;
-    text-transform: uppercase;
-    color: #212121;
-    font-family: Roboto, 'Source Sans Pro';
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.4475;
+    font-family: Noto Sans KR, 'Source Sans Pro';
     white-space: nowrap;
+    color: #212121;
+    background-color: #CCCCCC;
+    border-radius: 5px;
+    border: 0;
+    flex-shrink: 0;
 }
 
-
-
-.item--tPs .auto-group-oydx-bhb .auto-group-jykm-4iu {
+.auto-group-jykm-4iu {
     margin: 0rem 1.7rem 1.8rem 1.7rem;
     box-sizing: border-box;
     padding: 0.9rem 2rem;
@@ -424,13 +442,14 @@ body {
     white-space: nowrap;
     box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
     background-color: #ffffff;
-    border-radius: 1rem;
+    border-radius: 10px;
+    border: 0;
     flex-shrink: 0;
 }
 
-.item--tPs .auto-group-oydx-bhb .group-249-KPw {
-    margin: 0 23.2rem;
-    width: calc(100% - 46.4rem);
+.group-249-KPw {
+    margin-right: 10px;
+    width: 100px;
     height: 3.9rem;
     display: flex;
     align-items: center;
@@ -442,6 +461,29 @@ body {
     font-family: Noto Sans KR, 'Source Sans Pro';
     white-space: nowrap;
     background-color: #b63939;
-    border-radius: 1rem;
+    border-radius: 5px;
+    border: 0;
+    flex-shrink: 0;
+}
+
+.fgrou-KPw{
+    display: flex;
+}
+
+.group-555-KPw {
+    width: 100px;
+    height: 3.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.4475;
+    color: #ffffff;
+    font-family: Noto Sans KR, 'Source Sans Pro';
+    white-space: nowrap;
+    background-color: #3f51b5;
+    border-radius: 5px;
+    border: 0;
     flex-shrink: 0;
 }
