@@ -17,11 +17,5 @@ public class Alarm extends BaseTimeEntity{
     // 내용
     private String text;
     // 수신자
-    @ManyToMany
-    @JoinTable(
-            name = "alarm_receiver",
-            joinColumns = @JoinColumn(name = "alarm_id"),
-            inverseJoinColumns = @JoinColumn(name = "receiver_id")
-    )
-    private List<User> receivers = new ArrayList<>();
+    private Long receiverId;
 }
