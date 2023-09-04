@@ -21,5 +21,4 @@ public class UserTeam {
 
     private Long userId;
     private Long teamId;
-    private String role;
 }
