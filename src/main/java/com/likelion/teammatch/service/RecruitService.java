@@ -1,13 +1,13 @@
 package com.likelion.teammatch.service;
 
+import com.likelion.teammatch.dto.ApplyDto;
 import com.likelion.teammatch.dto.RecruitDraftDto;
 import com.likelion.teammatch.dto.RecruitInfoDto;
 import com.likelion.teammatch.entity.*;
-import com.likelion.teammatch.repository.RecruitRepository;
-import com.likelion.teammatch.repository.TeamTechStackRepository;
-import com.likelion.teammatch.repository.TechStackRepository;
-import com.likelion.teammatch.repository.UserRepository;
+import com.likelion.teammatch.repository.*;
 import com.likelion.teammatch.repository.team.TeamRepository;
+import com.likelion.teammatch.repository.team.UserTeamRepository;
+import com.likelion.teammatch.service.team.TeamService;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -27,14 +27,20 @@ public class RecruitService {
     private final UserRepository userRepository;
     private final TeamRepository teamRepository;
     private final TeamTechStackRepository teamTechStackRepository;
+    private final UserTeamRepository userTeamRepository;
 
     private final TechStackRepository techStackRepository;
-    public RecruitService(RecruitRepository recruitRepository, UserRepository userRepository, TeamRepository teamRepository, TeamTechStackRepository teamTechStackRepository, TechStackRepository techStackRepository) {
+    private final TeamService teamService;
+    private final ApplyRepository applyRepository;
+    public RecruitService(RecruitRepository recruitRepository, UserRepository userRepository, TeamRepository teamRepository, TeamTechStackRepository teamTechStackRepository, UserTeamRepository userTeamRepository, TechStackRepository techStackRepository, TeamService teamService, ApplyRepository applyRepository) {
         this.recruitRepository = recruitRepository;
         this.userRepository = userRepository;
         this.teamRepository = teamRepository;
         this.teamTechStackRepository = teamTechStackRepository;
+        this.userTeamRepository = userTeamRepository;
         this.techStackRepository = techStackRepository;
+        this.teamService = teamService;
+        this.applyRepository = applyRepository;
     }
     
     //모집 공고를 따로 추가하는 메소드
@@ -185,6 +191,78 @@ public class RecruitService {
     public Page<RecruitInfoDto> getRecruitInfoListBaseOnTechStack(int page){
         throw new ResponseStatusException(HttpStatus.NOT_IMPLEMENTED);
     }
+
+    public void applyToRecruit(Long recruitId, String introduction) {
+        //현재 사용자의 username 가져오기
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        //user Entity 가져오기
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        //recruitEntity 가져오기
+        Recruit recruit = recruitRepository.findById(recruitId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        //이미 팀에 참가한 유저인지 확인하기
+        if (userTeamRepository.existsByUserIdAndTeamId(user.getId(), recruit.getTeamId())) throw new ResponseStatusException(HttpStatus.CONFLICT);
+
+        //다른 포지션으로 여러번 지원할 수 있기 때문에 apply를 중복해서 넣은 건 아닌지 검사하지 않는다.
+        Apply apply = new Apply();
+        apply.setUserId(user.getId());
+        apply.setTeamId(recruit.getTeamId());
+        apply.setRecruitId(recruit.getId());
+        apply.setIntroduction(introduction);
+
+        applyRepository.save(apply);
+    }
+
+    @Transactional
+    public void acceptOrDenyApply(Long recruitId, Long applyId, String status) {
+        //현재 사용자의 username 가져오기
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        //user Entity 가져오기
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        //recruitEntity 가져오기
+        Recruit recruit = recruitRepository.findById(recruitId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        //Apply Entity 가져오기
+        Apply apply = applyRepository.findById(applyId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        //현재 user가 teamManager가 맞는지 검증
+        if (!user.getId().equals(recruit.getTeamManagerId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        //recruit의 id와 apply가 작성된 recruit이 일치하는지 검증
+        if (!recruit.getTeamId().equals(apply.getTeamId())) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        //이미 종료된 recruit인지 검증
+        if (recruit.getIsFinished()) throw new ResponseStatusException(HttpStatus.GONE);
+
+        //분기
+        if (status.equals("accept")){
+            //teamService의 메소드 활용
+            teamService.joinTeamByTeamId(recruit.getTeamId(), apply.getUserId());
+        }
+        applyRepository.deleteById(apply.getId());
+    }
+
+    public List<ApplyDto> getApplyListForRecruit(Long recruitId) {
+
+        List<Apply> applyList = applyRepository.findAllByRecruitId(recruitId);
+
+        List<ApplyDto> dtoList = new ArrayList<>();
+        for (Apply entity: applyList){
+            ApplyDto dto = new ApplyDto();
+
+            String username = userRepository.findById(entity.getUserId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)).getUsername();
+
+            dto.setId(entity.getId());
+            dto.setUsername(username);
+            dto.setIntroduction(entity.getIntroduction());
+            dtoList.add(dto);
+
+        }
+        return dtoList;
+    }
+
 
     //신청자수가 많은 순으로 가져오기 혹은...? 좋아요 순으로 가져오기.
     //미구현

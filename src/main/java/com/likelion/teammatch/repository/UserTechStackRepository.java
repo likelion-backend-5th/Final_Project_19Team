@@ -12,5 +12,6 @@ public interface UserTechStackRepository extends JpaRepository<UserTechStack, Lo
 
     //특정 techStack에 연관이 있는 사람의 수를 리턴하는 메소드
     Long countAllByTechStackId(Long techStackId);
-    
+
+    void deleteAllByUserId(Long id);
 }
