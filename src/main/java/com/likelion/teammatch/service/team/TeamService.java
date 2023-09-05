@@ -1,6 +1,7 @@
 package com.likelion.teammatch.service.team;
 
 
+import com.likelion.teammatch.dto.RecruitInfoDto;
 import com.likelion.teammatch.dto.team.TeamCreateDto;
 import com.likelion.teammatch.dto.team.TeamDraftDto;
 import com.likelion.teammatch.dto.team.TeamInfoDto;
@@ -154,9 +155,124 @@ public class TeamService {
     }
 
 
-    // Team 수정
+    // Team 정보 수정
+    public void updateTeamInfo(Long teamId, TeamInfoDto dto) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        Team team = teamRepository.findById(teamId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        if (!user.getId().equals(team.getTeamMangerId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+
+        team.setTeamName(dto.getTeamName());
+        team.setIsOnline(dto.getIsOnline());
+        team.setMemberNum(dto.getMemberNum());
+        team.setIsFinished(dto.getIsFinished());
+        team.setTeamDescribe(dto.getTeamDescribe());
+
+        teamRepository.save(team);
+    }
 
     // Team 삭제
+    public void deleteTeam(Long teamId) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        Team team = teamRepository.findById(teamId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        if (!user.getId().equals(team.getTeamMangerId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+
+        teamRepository.delete(team);
+    }
+
+    // 신규 팀원 모집공고 생성
+    public Long createAddRecruit(Long teamId, RecruitInfoDto dto) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        Team team = teamRepository.findById(teamId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        if (!user.getId().equals(team.getTeamMangerId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+
+        Recruit recruit = new Recruit();
+        recruit.setTeamManagerId(user.getId());
+        recruit.setTeamId(teamId);
+        recruit.setTitle(dto.getRecruitTitle());
+        recruit.setTeamRecruitDetails(dto.getTeamRecruitDetails());
+        recruit.setRecruitMemberNum(dto.getRecruitMemberNum());
+
+        return recruitRepository.save(recruit).getId();
+    }
+
+    // 신규 팀원 모집공고 수정
+    public void updateAddRecruit(Long recruitId, RecruitInfoDto dto) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        Recruit recruit = recruitRepository.findById(recruitId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        if (!user.getId().equals(recruit.getTeamManagerId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+
+        recruit.setTitle(dto.getRecruitTitle());
+        recruit.setTeamRecruitDetails(dto.getTeamRecruitDetails());
+        recruit.setRecruitMemberNum(dto.getRecruitMemberNum());
+
+        recruitRepository.save(recruit);
+    }
+
+    // 신규 팀원 모집공고 삭제
+    public void deleteAddRecruit(Long recruitId) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        Recruit recruit = recruitRepository.findById(recruitId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        if (!user.getId().equals(recruit.getTeamManagerId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+
+        recruitRepository.deleteById(recruitId);
+    }
+
+    // 특정 인원 내보내기
+    public void removeMemberFromTeam(Long teamId, Long memberId) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        Team team = teamRepository.findById(teamId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        if (!user.getId().equals(team.getTeamMangerId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+
+        // 멤버 엔티티 가져오기
+        User memberToRemove = userRepository.findById(memberId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        // 팀에서 멤버 내보내기
+        userTeamRepository.deleteByUserIdAndTeamId(memberToRemove.getId(), teamId);
+
+        // 팀의 현재 멤버 수 감소
+        team.setMemberNum(team.getMemberNum() - 1);
+        teamRepository.save(team);
+    }
+
+    // 팀에서 탈퇴하기
+    public void leaveTeam(Long teamId) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        Team team = teamRepository.findById(teamId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        if (!user.getId().equals(team.getTeamMangerId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN, "팀 매니저는 팀에서 탈퇴할 수 없습니다.");
+
+        // 팀에서 유저를 탈퇴시키기
+        userTeamRepository.deleteByUserIdAndTeamId(user.getId(), teamId);
+
+        // 팀의 현재 멤버 수 감소
+        team.setMemberNum(team.getMemberNum() - 1);
+        teamRepository.save(team);
+    }
 }
