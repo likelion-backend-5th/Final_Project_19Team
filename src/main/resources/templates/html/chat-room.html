@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>채팅방 목록</title>
+    <title>채팅방</title>
     <link rel="stylesheet" th:href="@{../../css/chat-room.css}" href="../../static/css/chat-room.css">
 </head>
 <body onLoad="connect()">
@@ -14,6 +14,12 @@
         <span id="username"></span>
         <a href="/chat">채팅 나가기</a>
         <p></p>
+    </div>
+
+    <!-- 실시간 참가자 목록 -->
+    <div id="participants-list">
+        <h4>현재 대화 멤버</h4>
+        <ul id="participants"></ul>
     </div>
 
     <!-- 채팅 내용 박스 -->
@@ -62,6 +68,12 @@
                 if (Array.isArray(jsonMessage)) initialMessages(jsonMessage)
                 else receiveMessage(jsonMessage);
             });
+
+            //participnats 추가
+            const participantsList = document.getElementById('participants');
+            const listItem = document.createElement('li');
+            listItem.textContent = username;
+            participantsList.appendChild(listItem);
         }, function (error) {
             console.error('WebSocket 연결 오류: ' + error);
         });
