@@ -46,6 +46,14 @@
     const roomId = parseInt(pathname.split("/")[2]);
     let username = decodeURI(pathname.split("/")[3]);
 
+    //participants 추가
+    function addParticipants(participantname) {
+        const participantsList = document.getElementById('participants');
+        const listItem = document.createElement('li');
+        listItem.textContent = participantname;
+        participantsList.appendChild(listItem);
+    }
+
     function getRoomNameAndUsername() {
         fetch(`/chat/rooms/${roomId}/name`).then((response) => {
             response.json().then((responseBody) => {
@@ -59,6 +67,7 @@
 
     function connect() {
         getRoomNameAndUsername();
+        addParticipants(username);
         const socket = new WebSocket('ws://localhost:8080/chatting');
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
@@ -69,11 +78,6 @@
                 else receiveMessage(jsonMessage);
             });
 
-            //participnats 추가
-            const participantsList = document.getElementById('participants');
-            const listItem = document.createElement('li');
-            listItem.textContent = username;
-            participantsList.appendChild(listItem);
         }, function (error) {
             console.error('WebSocket 연결 오류: ' + error);
         });
