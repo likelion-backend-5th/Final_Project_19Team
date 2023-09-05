@@ -14,4 +14,7 @@ public interface UserTeamRepository extends JpaRepository<UserTeam, Long> {
 
     //해당 userId를 가진 유저가 가입한 모든 팀가입정보 가져오기
     List<UserTeam> findAllByUserId(Long id);
+
+    // userId와 teamId를 기반으로 특정 유저를 해당 팀에서 삭제
+    void deleteByUserIdAndTeamId(Long userId, Long teamId);
 }

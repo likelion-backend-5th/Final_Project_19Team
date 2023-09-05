@@ -4,11 +4,6 @@
     margin: 0 auto;
 }
 
-.router_link {
-    text-decoration: none;
-    color: inherit;
-}
-
 span {
     color: #1E1E1E;
     font-size: 20px;
@@ -279,7 +274,8 @@ span {
 
 .grid_report_item_text {
     position: relative;
-    display: flex;
+    /* 부모 요소에 상대적인 위치 설정 */
+    display: inline-block;
     width: 90%;
 }
 
@@ -288,17 +284,23 @@ span {
     font-weight: 600;
     text-align: left;
     color: #1E1E1E;
-    font-size: 1.5rem;
-    margin-left: 0;
 }
 
 .status {
-    margin-top: 0.7rem;
+    position: absolute;
+    width: 50px;
     height: 23px;
+    /* 버튼의 위치를 설정하기 위해 절대 위치 설정 */
+    top: -5px;
+    /* 원하는 위치로 조절 */
+    right: 5px;
+    /* 원하는 위치로 조절 */
     border: none;
     border-radius: 4px;
+    background-color: #ff0000;
     color: #FFF;
     text-align: center;
+    line-height: 10px;
     font-size: 10px;
     cursor: pointer;
     font-style: normal;
@@ -308,16 +310,23 @@ span {
     letter-spacing: 0.1px;
     background: #B73A3A;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-    margin-right: 0;
 }
 
 .status1 {
-    margin-top: 0.7rem;
+    position: absolute;
+    width: 50px;
     height: 23px;
+    /* 버튼의 위치를 설정하기 위해 절대 위치 설정 */
+    top: -5px;
+    /* 원하는 위치로 조절 */
+    right: 5px;
+    /* 원하는 위치로 조절 */
     border: none;
     border-radius: 4px;
+    background-color: #ff0000;
     color: #FFF;
     text-align: center;
+    line-height: 10px;
     font-size: 10px;
     cursor: pointer;
     font-style: normal;
@@ -327,7 +336,6 @@ span {
     letter-spacing: 0.1px;
     background: #78AE65;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-    margin-right: 0;
 }
 
 .stacks {
@@ -335,7 +343,6 @@ span {
     flex-wrap: wrap;
     overflow: hidden;
     margin-top: 5px;
-    margin-left: 0.5rem;
 }
 
 .stacks_button {
@@ -360,7 +367,7 @@ span {
     font-weight: 200;
     margin-top: 10px;
     text-align: left;
-    color: rgb(69, 73, 75);
+    color: #1E1E1E;
 }
 
 .grid_report_item_text_low2 {
@@ -403,17 +410,3 @@ span {
     border: none;
     background-color: white;
 }
-
-.grid_report_item_text_low1{
-    margin-top: 1rem;
-    text-align: left;
-    color: #343131;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    height: auto;
-    overflow: hidden;
-    white-space: normal; /* 개행을 허용하도록 설정 */
-    word-wrap: break-word;
-    transition: height 0.3s; /* 높이 변경 애니메이션 설정 */
-}
-
