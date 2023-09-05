@@ -23,4 +23,6 @@ public interface TokenRepository extends JpaRepository<Token, Long> {
     @Query("DELETE FROM Token t WHERE t.lastModifiedAt IS NOT NULL AND t.lastModifiedAt <= :timeThreshold")
     void deleteTokensWithLastModifiedOlderThan(LocalDateTime timeThreshold);
 
+    @Transactional
+    void deleteAllByUsername(String username);
 }

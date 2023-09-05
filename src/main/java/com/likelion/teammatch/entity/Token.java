@@ -20,4 +20,6 @@ public class Token extends BaseTimeEntity{
     private String refreshToken;
 
     private String accessToken;
+
+    private String username;
 }
