@@ -57,7 +57,7 @@ public class TeamService {
             teamTechStackRepository.save(teamTechStack);
         }
 
-        if (dto.getRecruitCheck()){
+        if (dto.getRecruitCheck() != null && dto.getRecruitCheck()){
             log.info("모집글 생성 with Team");
             Recruit recruit = TeamCreateDto.getRecruitEntity(dto);
             recruit.setTeamManagerId(user.getId());
