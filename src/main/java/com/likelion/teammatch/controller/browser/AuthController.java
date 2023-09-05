@@ -22,11 +22,11 @@ public class AuthController {
     public AuthController(UserService userService) {
         this.userService = userService;
     }
-
-    @GetMapping("/login")
-    public String getLoginForm() {
-        return "/html/login";
-    }
+//메인페이지에서 로그인 진행시킬거임.
+//    @GetMapping("/login")
+//    public String getLoginForm() {
+//        return "/html/login";
+//    }
 
     @PostMapping("/login")
     public String login(HttpServletResponse response, LoginDto dto) {

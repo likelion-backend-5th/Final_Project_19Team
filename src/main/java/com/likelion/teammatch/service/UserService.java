@@ -126,6 +126,7 @@ public class UserService {
         Token token = new Token();
         token.setAccessToken(accessToken);
         token.setRefreshToken(refreshToken);
+        token.setUsername(username);
         tokenRepository.save(token);
 
         //dto 리턴하기

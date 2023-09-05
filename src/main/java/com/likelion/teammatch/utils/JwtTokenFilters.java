@@ -78,6 +78,7 @@ public class JwtTokenFilters extends OncePerRequestFilter {
             //refresh Token 체크
             if (!jwtTokenUtils.checkAccessAndRefreshToken(accessToken, refreshToken)) {
                 log.warn("refreshToken is not Valid!");
+                jwtTokenUtils.deleteAllTokenAccessAndRefreshToken(accessToken, refreshToken);//해당 유저네임으로 기록된 모든 토큰을 다 지움.
                 filterChain.doFilter(request, response);
                 return;
             }
@@ -87,7 +88,7 @@ public class JwtTokenFilters extends OncePerRequestFilter {
             String username = jwtTokenUtils.parseClaims(refreshToken).getSubject();
             String generatedAccessToken = jwtTokenUtils.generateTokenByUsername(username);
             String generatedRefreshToken = jwtTokenUtils.generateRefreshTokenByUsername(username);
-            jwtTokenUtils.updateAccessAndRefreshToken(accessToken, refreshToken, generatedAccessToken, generatedRefreshToken);
+            jwtTokenUtils.updateAccessAndRefreshToken(accessToken, refreshToken, generatedAccessToken, generatedRefreshToken, username);
             accessTokenCookie.setValue(generatedAccessToken);
             refreshTokenCookie.setValue(generatedRefreshToken);
             accessTokenCookie.setMaxAge(3600 * 10);//10시간
