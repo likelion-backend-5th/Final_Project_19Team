@@ -74,7 +74,7 @@ public class AuthController {
         }
         userService.createUser(dto);
 
-        return "redirect:/login";
+        return "redirect:/main";
     }
     @GetMapping("/declare")
     public String showDeclarePage() {
