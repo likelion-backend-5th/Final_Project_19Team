@@ -11,8 +11,10 @@ import jakarta.servlet.http.Cookie;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Key;
 import java.time.Instant;
@@ -119,7 +121,7 @@ public class JwtTokenUtils {
 
 
     //기존 토큰을 지우고, 새로운 토큰 정보를 추가한다.
-    public void updateAccessAndRefreshToken(String accessToken, String refreshToken, String generatedAccessToken, String generatedRefreshToken) {
+    public void updateAccessAndRefreshToken(String accessToken, String refreshToken, String generatedAccessToken, String generatedRefreshToken, String username) {
 
         Token token;
         Optional<Token> optionalOldToken = tokenRepository.findByAccessTokenAndRefreshToken(accessToken, refreshToken);
@@ -132,6 +134,7 @@ public class JwtTokenUtils {
         }
         token.setAccessToken(generatedAccessToken);
         token.setRefreshToken(generatedRefreshToken);
+        token.setUsername(username);
         tokenRepository.save(token);
     }
 
@@ -149,5 +152,10 @@ public class JwtTokenUtils {
         cookie.setHttpOnly(true);
         cookie.setMaxAge(3600 * 6);
         return cookie;
+    }
+
+    public void deleteAllTokenAccessAndRefreshToken(String accessToken, String refreshToken) {
+        String username = parseClaims(refreshToken).getSubject();
+        tokenRepository.deleteAllByUsername(username);
     }
 }

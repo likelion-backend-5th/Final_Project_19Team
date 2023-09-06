@@ -52,7 +52,17 @@ public class UserService {
         user.setEmail(dto.getEmail());
         user.setPhone(dto.getPhone());
 
-        userRepository.save(user);
+        user = userRepository.save(user);
+
+        String[] techStackList = dto.getTechStackList().split("/");
+
+        for (String techStackString : techStackList){
+            TechStack techStack = techStackRepository.findByName(techStackString).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            UserTechStack userTechStack = new UserTechStack();
+            userTechStack.setUserId(user.getId());
+            userTechStack.setTechStackId(techStack.getId());
+            userTechStackRepository.save(userTechStack);
+        }
     }
 
     //회원가입시 username과 email, phone이 중복인지 아닌지 검사
@@ -116,6 +126,7 @@ public class UserService {
         Token token = new Token();
         token.setAccessToken(accessToken);
         token.setRefreshToken(refreshToken);
+        token.setUsername(username);
         tokenRepository.save(token);
 
         //dto 리턴하기
