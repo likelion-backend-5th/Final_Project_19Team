@@ -92,6 +92,7 @@ public class RecruitService {
     }
 
     //모집 공고 해제
+    @Transactional
     public void recruitFinish(Long recruitId){
         //현재 사용자의 username 가져오기
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -105,6 +106,7 @@ public class RecruitService {
         //모집 공고 수정 권한 확인하기
         if (!recruit.getTeamManagerId().equals(user.getId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 
+        applyRepository.deleteAllByRecruitId(recruitId);//모집 마감시 해당 모집 공고에 연결된 모든 모집 신청 삭제
         recruit.setIsFinished(true);
         recruitRepository.save(recruit);
     }
