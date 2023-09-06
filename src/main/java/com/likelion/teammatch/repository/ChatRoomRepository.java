@@ -4,4 +4,6 @@ import com.likelion.teammatch.entity.ChatRoom;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
+    // TeamId에 해당하는 모든 채팅방 삭제
+    void deleteAllByTeamId(Long teamId);
 }
