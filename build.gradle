@@ -48,6 +48,9 @@ dependencies {
 	// websocket
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
+	// gson
+	implementation 'com.google.code.gson:gson:2.9.0'
+
 	//quartz
 	implementation 'org.springframework.boot:spring-boot-starter-quartz:3.1.2'
 	
