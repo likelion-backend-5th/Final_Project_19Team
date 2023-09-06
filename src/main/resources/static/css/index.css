@@ -21,6 +21,10 @@ span {
 
 }
 
+.contents{
+    color: black;
+}
+
 .nav {
     position: relative;
     left: -10px;
