@@ -10,5 +10,6 @@ public class ChatRoom extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Long teamId;
     private String roomName;
 }
