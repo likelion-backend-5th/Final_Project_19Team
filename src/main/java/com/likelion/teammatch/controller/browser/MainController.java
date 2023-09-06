@@ -38,22 +38,8 @@ public class MainController {
         return "/html/index";
     }
 
-    @GetMapping("/createTeam")
-    public String getCreateTeamForm(){
-        return "/html/create";
-    }
 
-    @PostMapping("/createTeam")
-    public String createTeam(TeamCreateDto dto){
-        Long teamId = teamService.createTeam(dto);
 
-        return "redirect:/main";
-    }
-
-    @GetMapping("/team/{teamId}")
-    public String getTeamInfo(@PathVariable("teamId") Long teamId){
-        return "redirect:/main";//todo 임시로 main으로 보냄.
-    }
 
 
 
