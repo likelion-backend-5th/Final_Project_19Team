@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 @Controller
 @Slf4j
 public class MyPageController {
@@ -59,10 +62,10 @@ public class MyPageController {
             @PathVariable("username") String username,
             UserProfileDto dto,
             @RequestParam("techStackInputString") String techStackString
-    ){
+    ) throws UnsupportedEncodingException {
         userService.updateProfile(dto, techStackString);
-
-        return "redirect:/profile/" + username;
+        String encodedUsername = URLEncoder.encode(username, "UTF-8");
+        return "redirect:/profile/" + encodedUsername;
     }
 
 }
