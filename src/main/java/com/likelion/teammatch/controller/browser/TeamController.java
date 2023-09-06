@@ -36,4 +36,16 @@ public class TeamController {
         return "/html/detail_complete";
     }
 
+    // 팀 채팅방으로 이동
+    @GetMapping("/team/{teamId}/chatroom")
+    public String goToChatRoom(@PathVariable Long teamId, Model model) {
+        // ChatRoom 으로 이동하는 URL 생성
+        String chatRoomUrl = "/team/" + teamId + "/chatroom"; // 예: "/team/1/chatroom"
+
+        // chatRoomUrl 을 모델에 추가
+        model.addAttribute("chatRoomUrl", chatRoomUrl);
+
+        // ChatRoom 템플릿 페이지로 이동
+        return "/html/chat-room";
+    }
 }
