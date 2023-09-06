@@ -6,12 +6,9 @@ import com.likelion.teammatch.dto.team.TeamCreateDto;
 import com.likelion.teammatch.dto.team.TeamDraftDto;
 import com.likelion.teammatch.dto.team.TeamInfoDto;
 import com.likelion.teammatch.entity.*;
-import com.likelion.teammatch.repository.RecruitRepository;
-import com.likelion.teammatch.repository.TeamTechStackRepository;
-import com.likelion.teammatch.repository.TechStackRepository;
+import com.likelion.teammatch.repository.*;
 import com.likelion.teammatch.repository.team.UserTeamRepository;
 import com.likelion.teammatch.repository.team.TeamRepository;
-import com.likelion.teammatch.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -32,6 +29,7 @@ public class TeamService {
     private final RecruitRepository recruitRepository;
     private final TechStackRepository techStackRepository;
     private final TeamTechStackRepository teamTechStackRepository;
+    private final ChatRoomRepository chatRoomRepository;
     //Team 생성
     //생성 후 teamId 리턴함
     public Long createTeam(TeamCreateDto dto){
@@ -291,7 +289,8 @@ public class TeamService {
         // 팀 멤버 정보 삭제
         userTeamRepository.deleteAllByTeamId(teamId);
 
-        // 팀에 속한 채팅방 삭제 (추가해야 함)
+        // 팀에 속한 채팅방 삭제
+        chatRoomRepository.deleteAllByTeamId(teamId);
 
         // 팀의 상태를 종료로 변경
         team.setIsFinished(true);
