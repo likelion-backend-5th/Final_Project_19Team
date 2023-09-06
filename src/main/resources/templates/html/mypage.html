@@ -89,19 +89,14 @@
             </div>
         </div>
 
-        <div class="profileTeamGroup" th:if="${isOwner}">
-            <a class="myTeam" th:each="myTeam : ${teamList}" th:text="${myTeam.getTeamName()}" th:attr="teamId=${myTeam.getTeamName()}" onclick="goTeamPage(this)"></a>
-            <script>
-                function goTeamPage(element){
-                    let teamId = element.getAttribute("teamId");
-                    window.location.href = '/team/' + teamId;
-                }
-            </script>
-        </div>
+<!--        <div class="profileTeamGroup" th:if="${isOwner}">-->
+
+<!--        </div>-->
 
         <div class="buttonGroup">
             <!-- 1. 모집중/등록자 View-->
             <a class="grayButton neon-soda-button" th:if="${isOwner}" th:href="@{'/profile/' + ${profile.getUsername()} + '/edit'}">수정</a>
+            <a class="grayButton neon-soda-button" th:href="@{/teamlist}">팀 목록</a>
         </div>
 
 
