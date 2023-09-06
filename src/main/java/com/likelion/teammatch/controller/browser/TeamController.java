@@ -1,6 +1,5 @@
 package com.likelion.teammatch.controller.browser;
 
-import com.likelion.teammatch.dto.RecruitInfoDto;
 import com.likelion.teammatch.dto.team.TeamCreateDto;
 import com.likelion.teammatch.dto.team.TeamDraftDto;
 import com.likelion.teammatch.dto.team.TeamInfoDto;

@@ -1,8 +1,6 @@
 package com.likelion.teammatch.controller.browser;
 
 import com.likelion.teammatch.dto.RecruitDraftDto;
-import com.likelion.teammatch.dto.team.TeamCreateDto;
-import com.likelion.teammatch.service.CommentService;
 import com.likelion.teammatch.service.RecruitService;
 import com.likelion.teammatch.service.team.TeamService;
 import lombok.extern.slf4j.Slf4j;
