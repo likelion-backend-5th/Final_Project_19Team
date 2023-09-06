@@ -286,9 +286,6 @@ public class TeamService {
 
         if (!user.getId().equals(team.getTeamMangerId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN, "팀 매니저만 팀을 종료할 수 있습니다.");
 
-        // 팀 멤버 정보 삭제
-        userTeamRepository.deleteAllByTeamId(teamId);
-
         // 팀에 속한 채팅방 삭제
         chatRoomRepository.deleteAllByTeamId(teamId);
 
