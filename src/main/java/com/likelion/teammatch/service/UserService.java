@@ -11,6 +11,7 @@ import com.likelion.teammatch.repository.UserRepository;
 import com.likelion.teammatch.repository.UserTechStackRepository;
 import com.likelion.teammatch.utils.JwtTokenUtils;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,6 +24,7 @@ import java.util.Optional;
 
 
 @Service
+@Slf4j
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;

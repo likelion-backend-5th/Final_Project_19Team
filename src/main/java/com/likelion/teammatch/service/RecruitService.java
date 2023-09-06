@@ -32,7 +32,8 @@ public class RecruitService {
     private final TechStackRepository techStackRepository;
     private final TeamService teamService;
     private final ApplyRepository applyRepository;
-    public RecruitService(RecruitRepository recruitRepository, UserRepository userRepository, TeamRepository teamRepository, TeamTechStackRepository teamTechStackRepository, UserTeamRepository userTeamRepository, TechStackRepository techStackRepository, TeamService teamService, ApplyRepository applyRepository) {
+    private final AlarmService alarmService;
+    public RecruitService(RecruitRepository recruitRepository, UserRepository userRepository, TeamRepository teamRepository, TeamTechStackRepository teamTechStackRepository, UserTeamRepository userTeamRepository, TechStackRepository techStackRepository, TeamService teamService, ApplyRepository applyRepository, AlarmService alarmService) {
         this.recruitRepository = recruitRepository;
         this.userRepository = userRepository;
         this.teamRepository = teamRepository;
@@ -41,6 +42,7 @@ public class RecruitService {
         this.techStackRepository = techStackRepository;
         this.teamService = teamService;
         this.applyRepository = applyRepository;
+        this.alarmService = alarmService;
     }
     
     //모집 공고를 따로 추가하는 메소드
@@ -92,6 +94,7 @@ public class RecruitService {
     }
 
     //모집 공고 해제
+    @Transactional
     public void recruitFinish(Long recruitId){
         //현재 사용자의 username 가져오기
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -105,6 +108,11 @@ public class RecruitService {
         //모집 공고 수정 권한 확인하기
         if (!recruit.getTeamManagerId().equals(user.getId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 
+        for (Apply applyEntity : applyRepository.findAllByRecruitId(recruitId)){
+            alarmService.createAlarm("\"" + recruit.getTitle() + "\" 모집 종료", applyEntity.getUserId());
+        }
+
+        applyRepository.deleteAllByRecruitId(recruitId);//모집 마감시 해당 모집 공고에 연결된 모든 모집 신청 삭제
         recruit.setIsFinished(true);
         recruitRepository.save(recruit);
     }
@@ -213,6 +221,8 @@ public class RecruitService {
         apply.setIntroduction(introduction);
 
         applyRepository.save(apply);
+
+        alarmService.createAlarm(username + " 유저 \n" + recruit.getTitle() + "\n모집 공고 신청", recruit.getTeamManagerId());
     }
 
     @Transactional
@@ -240,6 +250,10 @@ public class RecruitService {
         if (status.equals("accept")){
             //teamService의 메소드 활용
             teamService.joinTeamByTeamId(recruit.getTeamId(), apply.getUserId());
+            alarmService.createAlarm( recruit.getTitle() + "\n 모집 공고 합격!", apply.getUserId());
+        }
+        else {
+            alarmService.createAlarm(recruit.getTitle() + "\n 모집 공고 탈락", apply.getUserId());
         }
         applyRepository.deleteById(apply.getId());
     }
