@@ -32,9 +32,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authRequest -> authRequest
                         .requestMatchers("/api/issue", "/api/register","/login", "/register")
                         .anonymous()
-                        .requestMatchers( "/css/**", "/js/**", "/assets/**","/main",
-                                "/chatting/**", "/chat/**", "/app/**", "/topic/**"  // Chat
-                        ).permitAll()
+                        .requestMatchers( "/css/**", "/js/**", "/assets/**","/main", "/chatting/**", "/chat/**", "/app/**", "/topic/**", "/api/techStackExists")
+                        .permitAll()
                         .anyRequest()
                         .authenticated()
                 )

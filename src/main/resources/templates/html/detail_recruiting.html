@@ -81,13 +81,88 @@
         <div class="buttonGroup">
 
             <!-- 1. 모집중/등록자 View-->
-            <div class="grayButton neon-soda-button" th:if="${isManager}">수정</div>
-            <div class="redButton neon-red-button" th:if="!${isFinished} and ${isManager}">모집마감</div>
+            <a class="grayButton neon-soda-button" th:if="${isManager}" th:href="@{'/recruit/' + ${recruitId} + '/edit'}">수정</a>
+            <div class="redButton neon-red-button" th:if="!${isFinished} and ${isManager}" onclick="closeRecruit()">모집마감</div>
 
             <!-- 2. 모집중/참여자 View-->
-            <div class="grayButton neon-soda-button" th:if="!${isManager} and !${alreadyApplied} and !${isFinished}">참여신청</div>
+            <div class="grayButton neon-soda-button" th:if="!${isManager} and !${isFinished}" onclick="createApply()">참여신청</div>
+
         </div>
     </div>
+
+    <div class="applyContainer" th:if="${isManager}">
+        <div class="applyLabel">모집 신청 목록</div>
+        <div class="applySection">
+            <div class="commentEach" th:each="applyDto : ${applyList}">
+                <div class="commentTop">
+                    <div class="commentUsername" th:text="${applyDto.getUsername()}">username</div>
+                    <div class="commentButtonGroup">
+                        <button class="commentEditButton" th:attr="apply-id=${applyDto.getId()}" onclick="acceptApply(this)">수락</button>
+                        <button class="commentDeleteButton" th:attr="apply-id=${applyDto.getId()}" onclick="denyApply(this)">거절</button>
+                    </div>
+                </div>
+                <div class="applyIntroduction" th:text="${applyDto.getIntroduction()}">
+                    질문있습니다! 왜 이렇게 타임리프가 어려운거죠??
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function createApply(){
+            let recruitId = [[${ recruitId }]];
+
+            let applyText = window.prompt("참여 신청 글을 간단하게 적어주세요!");
+            fetch('/recruit/' + recruitId + '/apply', {
+                method: 'POST',
+                body: applyText,
+                credentials: 'include' // 인증정보를 포함하는 옵션
+            });
+        }
+
+        async function closeRecruit(){
+            let recruitId = [[${ recruitId }]];
+
+            let response = await fetch('/recruit/' + recruitId + '/finish', {
+                method: 'POST',
+                credentials: 'include' // 인증정보를 포함하는 옵션
+            });
+
+            if (response.ok){
+                window.location.reload();
+            }
+
+        }
+
+        async function acceptApply(element){
+            let recruitId = [[${ recruitId }]];
+            let applyId = element.getAttribute("apply-id");
+            let response = await fetch('/recruit/' + recruitId + '/apply/' + applyId + '?status=accept', {
+                method: 'POST',
+                credentials: 'include' // 인증정보를 포함하는 옵션
+            });
+
+            if (response.ok){
+                window.location.reload();
+            }
+
+
+        }
+
+        async function denyApply(element){
+            let recruitId = [[${ recruitId }]];
+            let applyId = element.getAttribute("apply-id");
+            let response = await fetch('/recruit/' + recruitId + '/apply/' + applyId + '?status=deny', {
+                method: 'POST',
+                credentials: 'include' // 인증정보를 포함하는 옵션
+            });
+
+            if (response.ok){
+                window.location.reload();
+            }
+        }
+    </script>
+
+
 
     <div class="commentContainer">
         <form class="commentForm" th:action="@{'/recruit/' + ${recruitId} + '/comment'}" method="post">

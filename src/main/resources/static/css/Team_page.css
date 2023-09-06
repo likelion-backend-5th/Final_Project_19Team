@@ -1,0 +1,105 @@
+*{
+    box-sizing: border-box;
+    margin: 0 auto;
+    color: #1E1E1E;
+    font-family: Roboto, 'Source Sans Pro';
+}
+
+.Team{
+    margin: 30px auto;
+    width: 80vw;
+    height: 39vh;
+    background: #505D68;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+
+}
+
+.Team_text{
+    margin: 0 0 0 20px;
+    padding-top: 10px;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8700000048);
+}
+
+.Tema_box{
+    margin: 10px 20px;
+    background: #E5E5E5;
+    border-radius: 10px;
+}
+
+.Team_box_detail{
+    display: flex;
+    justify-content: right;
+}
+
+.btns{
+    position: relative;
+    right: 20px;
+    top: 25px;
+    margin: 5px;
+}
+
+.btn_blue{
+    width: 90px;
+    height: 50px;
+    color: white;
+    background-color: #3f51b5;
+    font-family: Noto Sans KR, 'Source Sans Pro';
+    font-size: 16px;
+    font-weight: 500;
+    border: 0;
+    border-radius: 5px;
+}
+
+.btn_red{
+    width: 90px;
+    height: 50px;
+    color: white;
+    background-color: #B73A3A;
+    font-family: Noto Sans KR, 'Source Sans Pro';
+    font-size: 16px;
+    font-weight: 500;
+    border: 0;
+    border-radius: 5px;
+}
+
+.btn_basic{
+    width: 90px;
+    height: 50px;
+    color: white;
+    background-color: #979797;
+    font-family: Noto Sans KR, 'Source Sans Pro';
+    font-size: 16px;
+    font-weight: 500;
+    border: 0;
+    border-radius: 5px;
+}
+
+.texts{
+    position: relative;
+    top: -20px;
+    display: flex;
+    margin-left: 20px;
+}
+
+.text_title{
+    font-family: Roboto, 'Source Sans Pro';
+    font-weight: 500;
+    font-size: 20px;
+    text-align: left;
+    width: 200px;
+    margin: 10px;
+}
+.text_sub{
+    font-family: Noto Sans KR, 'Source Sans Pro';
+    font-weight: 500;
+    font-size: 20px;
+    width: 200px;
+    text-align: left;
+    margin: 10px;
+
+
+}

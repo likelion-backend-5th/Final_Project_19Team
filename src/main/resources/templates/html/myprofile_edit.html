@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>mypage</title>
+  <link rel="stylesheet" th:href="@{../../css/myprofile_edit.css}" href="../../static/css/myprofile_edit.css">
+  <link th:href="@{../../bootstrap/bootstrap.css}" href="../../static/bootstrap/bootstrap.css" rel="stylesheet">
+</head>
+<body>
+
+<form class="container" id="profileForm" th:action="@{'/profile/' + ${profile.getUsername()} + '/edit'}" method="post">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark-subtle rounded-1">
+    <div class="container-fluid">
+      <a class="navbar-brand text-dark" href="#">QuickMatch</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link text-dark text-decoration-none" href="#">Main</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white text-decoration-none bg-dark rounded-3">MyPage</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark text-decoration-none" th:href="@{/logout}">logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="profileContainer">
+    <div class="profileTitleGroup">
+      <div class="profileTitleUsername" th:text="${profile.getUsername()}">username</div>
+      <img class="close-cL9" src="../assets/detail_recruiting/close.svg" alt="#">
+    </div>
+
+    <div class="profileInfoGroup">
+      <div class="profileContainerLeft">
+
+        <div class="profileSingleLineGroup">
+          <div class="profileTagLabel">Email</div>
+          <input class="profileTagButton" th:value="${profile.getEmail()}" id="email" name="email"/>
+        </div>
+
+        <div class="profileSingleLineGroup">
+          <div class="profileTagLabel">Phone</div>
+          <input class="profileTagButton" th:value="${profile.getPhone()}" id="phone" name="phone"/>
+        </div>
+
+
+        <div class="profileSingleLineGroup">
+          <div class="profileTagLabel">Location</div>
+          <input class="profileTagButton" th:value="${profile.getLocation()}" id="location" name="location"/>
+        </div>
+
+
+        <div class="profileSingleLineGroup">
+          <div class="profileTagLabel">GITHUB</div>
+          <input class="profileTagButton" th:text="${profile.getGithub()}" id="github" name="github"/>
+        </div>
+      </div>
+
+      <div class="profileContainerRight">
+        <div class="profileLongLineGroup">
+          <div class="profileRightTagLabel">수상경력</div>
+          <div class="profileRightDescribe">
+            <textarea class="profileRightDescribeBox" th:text="${profile.getPrize()}" id="prize" name="prize"> </textarea>
+          </div>
+        </div>
+        <div class="profileLongLineGroup">
+          <div class="profileRightTagLabel">과거경력</div>
+          <div class="profileRightDescribe">
+            <textarea class="profileRightDescribeBox" th:text="${profile.getPast()}" id="past" name="past"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="profileInfoGroup">
+      <div class="profileDoubleLineGroup">
+        <div class="profileDoubleTagLabel" title="자신의 기술 스택을 골라주세요!">Tech</div>
+        <div class="profileTechStackInputGroup">
+          <div class="profileTechStackInputWithSearchGroup" id="profileTechStackInputWithSearchGroup">
+            <input class="profileTechStackInput" id="profileTechStackInput">
+            <div class="profileTechStackInputSearch"  onclick="techStackInputEntered()">Search</div>
+          </div>
+
+          <div class="profileTechStackLabelGroup" id="profileTechStackLabelGroup">
+          </div>
+          <input hidden="hidden" type="text" id="techStackInputString" name="techStackInputString">
+
+          <script>
+            let profileTechStackInput = document.getElementById("profileTechStackInput");
+
+            let techStackLabelGroup = document.getElementById("profileTechStackLabelGroup");
+            let techStackForm = document.getElementById('techStackInputString');
+            async function techStackInputEntered(){
+              let techStackValue = profileTechStackInput.value;
+              let response = await fetch('/api/techStackExists', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: techStackValue,
+                credentials: 'include' // 인증정보를 포함하는 옵션
+              });
+
+              if (await response.text() === 'true'){
+                let techStackName = techStackValue.toLowerCase();
+                if (checkTechStackAlreadyIncluded(techStackName)){
+                  alert('이미 포함된 techStack 이름입니다.');
+                }
+                else {
+                  let newDiv = document.createElement('div');
+                  newDiv.classList.add("profileTechStackLabel");
+                  newDiv.innerText = techStackName;
+                  techStackLabelGroup.appendChild(newDiv);
+                  techStackForm.value = techStackName + "/" + techStackForm.value ;
+                  techStackNum = techStackNum + 1;
+                }
+              }
+              else {
+                alert('서버에서 관리하지 않는 techStack 이름입니다.');
+              }
+            }
+
+            function checkTechStackAlreadyIncluded(name){
+              let divList = document.getElementsByClassName('profileTechStackLabel');
+              // 가져온 div 요소들을 순회하면서 조건을 확인합니다.
+              for (let i = 0; i < divList.length; i++){
+                if (divList[i].innerText === name){
+                  return true;
+                }
+              }
+              return false;
+            }
+
+          </script>
+        </div>
+      </div>
+
+
+    </div>
+
+    <div class="profileInfoGroup">
+      <div class="profileDoubleLineGroup">
+        <div class="profileDoubleTagLabel" title="자신에 대한 설명을 적어주세요!">About Me</div>
+        <textarea class="profileAboutMe" th:text="${profile.getIntroduction()}" id="introduction" name="introduction"></textarea>
+      </div>
+    </div>
+
+
+
+    <div class="buttonGroup">
+
+      <!-- 1. 모집중/등록자 View-->
+      <button class="grayButton neon-soda-button" type="submit">수정</button>
+    </div>
+
+
+
+
+  </div>
+</form>
+
+</body>
+</html>

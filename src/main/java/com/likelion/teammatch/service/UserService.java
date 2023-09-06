@@ -4,17 +4,21 @@ import com.likelion.teammatch.dto.JwtTokenDto;
 import com.likelion.teammatch.dto.LoginDto;
 import com.likelion.teammatch.dto.RegisterDto;
 import com.likelion.teammatch.dto.UserProfileDto;
-import com.likelion.teammatch.entity.Token;
-import com.likelion.teammatch.entity.User;
+import com.likelion.teammatch.entity.*;
+import com.likelion.teammatch.repository.TechStackRepository;
 import com.likelion.teammatch.repository.TokenRepository;
 import com.likelion.teammatch.repository.UserRepository;
+import com.likelion.teammatch.repository.UserTechStackRepository;
 import com.likelion.teammatch.utils.JwtTokenUtils;
+import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -24,13 +28,17 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenUtils jwtTokenUtils;
     private final TokenRepository tokenRepository;
+    private final UserTechStackRepository userTechStackRepository;
+    private final TechStackRepository techStackRepository;
 
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtTokenUtils jwtTokenUtils, TokenRepository tokenRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtTokenUtils jwtTokenUtils, TokenRepository tokenRepository, UserTechStackRepository userTechStackRepository, TechStackRepository techStackRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtTokenUtils = jwtTokenUtils;
         this.tokenRepository = tokenRepository;
+        this.userTechStackRepository = userTechStackRepository;
+        this.techStackRepository = techStackRepository;
     }
 
     //회원가입
@@ -44,7 +52,17 @@ public class UserService {
         user.setEmail(dto.getEmail());
         user.setPhone(dto.getPhone());
 
-        userRepository.save(user);
+        user = userRepository.save(user);
+
+        String[] techStackList = dto.getTechStackList().split("/");
+
+        for (String techStackString : techStackList){
+            TechStack techStack = techStackRepository.findByName(techStackString).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            UserTechStack userTechStack = new UserTechStack();
+            userTechStack.setUserId(user.getId());
+            userTechStack.setTechStackId(techStack.getId());
+            userTechStackRepository.save(userTechStack);
+        }
     }
 
     //회원가입시 username과 email, phone이 중복인지 아닌지 검사
@@ -108,6 +126,7 @@ public class UserService {
         Token token = new Token();
         token.setAccessToken(accessToken);
         token.setRefreshToken(refreshToken);
+        token.setUsername(username);
         tokenRepository.save(token);
 
         //dto 리턴하기
@@ -126,7 +145,18 @@ public class UserService {
     public UserProfileDto getProfileOfUser(String username){
         User user = userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        return UserProfileDto.fromEntity(user);
+        UserProfileDto dto = UserProfileDto.fromEntity(user);
+
+        List<UserTechStack> techStackList = userTechStackRepository.findAllByUserId(user.getId());
+        List<String> techStackStringList = new ArrayList<>();
+
+        for (UserTechStack userTechStack : techStackList){
+            String techStackName = techStackRepository.findById(userTechStack.getTechStackId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)).getName();
+            techStackStringList.add(techStackName);
+        }
+        dto.setTechStackList(techStackStringList);
+
+        return dto;
     }
 
     //비밀번호 변경
@@ -150,19 +180,18 @@ public class UserService {
     }
 
     //프로필 업데이트하기
-    public String updateProfile(UserProfileDto dto){
+    @Transactional
+    public String updateProfile(UserProfileDto dto, String techStackString){
         //내 Username 가져오기
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         //나의 user Entity 가져오기
         User user = userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
 
-        //유저네임은 변경 불가! DTO의 username 필드는 비어있어야 한다.
-        if (dto.getUsername() != null) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 
-        //이메일 또는 전화번호가 중복이라면 에러!
-        if (emailExists(dto.getEmail())) throw new ResponseStatusException(HttpStatus.CONFLICT);
-        if (phoneExists(dto.getPhone())) throw new ResponseStatusException(HttpStatus.CONFLICT);
+//        //이메일 또는 전화번호가 중복이라면 에러!
+//        if (emailExists(dto.getEmail())) throw new ResponseStatusException(HttpStatus.CONFLICT);
+//        if (phoneExists(dto.getPhone())) throw new ResponseStatusException(HttpStatus.CONFLICT);
 
         //user 업데이트
         user.setEmail(dto.getEmail());
@@ -172,6 +201,18 @@ public class UserService {
         user.setPrize(dto.getPrize());
         user.setPast(dto.getPast());
         user.setGithub(dto.getGithub());
+
+        //테크 스택 업데이트
+        userTechStackRepository.deleteAllByUserId(user.getId());
+        String[] techList = techStackString.split("/");
+        for (String techStackName : techList){
+            TechStack techStack = techStackRepository.findByName(techStackName).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+            UserTechStack userTechStack = new UserTechStack();
+            userTechStack.setTechStackId(techStack.getId());
+            userTechStack.setUserId(user.getId());
+            userTechStackRepository.save(userTechStack);
+        }
         userRepository.save(user);
 
         return "done";

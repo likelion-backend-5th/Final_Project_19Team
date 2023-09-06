@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 @Getter
 @Setter
 @ToString
@@ -20,6 +22,7 @@ public class UserProfileDto {
     private String past;
     private String github;
     private Long id;
+    private List<String> techStackList;
 
     public static UserProfileDto fromEntity(User user){
         UserProfileDto dto = new UserProfileDto();
@@ -33,6 +36,7 @@ public class UserProfileDto {
         dto.setPast(user.getPast());
         dto.setGithub(user.getGithub());
 
+        //techStackList는 알아서 채워라.
         return dto;
     }
 }
