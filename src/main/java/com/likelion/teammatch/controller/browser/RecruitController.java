@@ -2,6 +2,7 @@ package com.likelion.teammatch.controller.browser;
 
 import com.likelion.teammatch.dto.CreateRecruitDto;
 import com.likelion.teammatch.dto.RecruitInfoDto;
+import com.likelion.teammatch.dto.team.TeamInfoDto;
 import com.likelion.teammatch.service.CommentService;
 import com.likelion.teammatch.service.RecruitService;
 import com.likelion.teammatch.service.team.TeamService;
@@ -56,6 +57,8 @@ public class RecruitController {
     public String getUpdateRecruit(@PathVariable("recruitId") Long recruitId, Model model){
         RecruitInfoDto dto = recruitService.getRecruitInfo(recruitId);
 
+        model.addAttribute("isEdit", true);
+        model.addAttribute("recruitId", recruitId);
         model.addAttribute("teamName", dto.getTeamName());
         model.addAttribute("teamRecruitName", dto.getRecruitTitle());
         model.addAttribute("teamRecruitDetails", dto.getTeamRecruitDetails());
@@ -71,10 +74,20 @@ public class RecruitController {
         return "redirect:/recruit/" + recruitId;
     }
 
+    //모집공고 추가 폼 가져오기
+    @GetMapping("/team/{teamId}/recruit")
+    public String getCreateRecruitForm(@PathVariable("teamId") Long teamId, Model model){
+        TeamInfoDto teamInfo = teamService.getTeamInfo(teamId);
+        model.addAttribute("isEdit", false);
+        model.addAttribute("teamId", teamId);
+        model.addAttribute("teamName", teamInfo.getTeamName());
+        return "/html/create_recruit";
+    }
     //팀에 모집 공고 추가하기
     @PostMapping("/team/{teamId}/recruit")
-    public String createRecruit(@PathVariable("teamId") Long teamId){
-        throw new ResponseStatusException(HttpStatus.NOT_IMPLEMENTED);
+    public String createRecruit(@PathVariable("teamId") Long teamId, CreateRecruitDto dto){
+        Long recruitId = recruitService.createRecruit(teamId, dto.getTeamRecruitName(), dto.getMemberNum(), dto.getTeamRecruitDetails());
+        return "redirect:/recruit" + recruitId;
     }
 
     //모집 공고 신청하기
