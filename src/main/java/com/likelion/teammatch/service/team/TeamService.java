@@ -144,7 +144,8 @@ public class TeamService {
 
         List<TeamDraftDto> draftList = new ArrayList<>();
         for (UserTeam userTeam : myTeamList){
-            Team currentTeam = teamRepository.findById(userTeam.getTeamId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            Team currentTeam = teamRepository.findByIdAndDeletedFalse(userTeam.getTeamId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
             TeamDraftDto dto = new TeamDraftDto();
             dto.setTeamName(currentTeam.getTeamName());
             dto.setTeamId(currentTeam.getId());
@@ -184,7 +185,8 @@ public class TeamService {
 
         if (!user.getId().equals(team.getTeamMangerId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 
-        teamRepository.delete(team);
+        team.setDeleted(true);
+        teamRepository.save(team);
     }
 
     // 신규 팀원 모집공고 생성
@@ -273,6 +275,26 @@ public class TeamService {
 
         // 팀의 현재 멤버 수 감소
         team.setMemberNum(team.getMemberNum() - 1);
+        teamRepository.save(team);
+    }
+
+    // 팀 종료하기
+    public void endTeam(Long teamId) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        Team team = teamRepository.findById(teamId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        if (!user.getId().equals(team.getTeamMangerId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN, "팀 매니저만 팀을 종료할 수 있습니다.");
+
+        // 팀 멤버 정보 삭제
+        userTeamRepository.deleteAllByTeamId(teamId);
+
+        // 팀에 속한 채팅방 삭제 (추가해야 함)
+
+        // 팀의 상태를 종료로 변경
+        team.setIsFinished(true);
         teamRepository.save(team);
     }
 }
