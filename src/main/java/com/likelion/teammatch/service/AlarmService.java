@@ -1,14 +1,19 @@
 package com.likelion.teammatch.service;
 
+import com.likelion.teammatch.dto.AlarmDto;
 import com.likelion.teammatch.entity.Alarm;
 import com.likelion.teammatch.entity.User;
 import com.likelion.teammatch.entity.UserTeam;
 import com.likelion.teammatch.repository.AlarmRepository;
 import com.likelion.teammatch.repository.UserRepository;
 import com.likelion.teammatch.repository.team.UserTeamRepository;
+import jakarta.transaction.Transactional;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -63,15 +68,17 @@ public class AlarmService {
     }
 
     // 특정 사용자가 자신에게 전송된 알람을 제거
+    @Transactional
     public void deleteAlarmForUser(Long alarmId) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         Optional<Alarm> optionalAlarm = alarmRepository.findById(alarmId);
         if (optionalAlarm.isPresent()) {
             Alarm alarm = optionalAlarm.get();
 
             // 해당 알람이 사용자에게 전송되었는지 확인
-            if (alarm.getReceiverId().equals(Long.valueOf(username))) {
+            if (alarm.getReceiverId().equals(user.getId())) {
                 alarmRepository.deleteById(alarmId);
             } else {
                 // 해당 알람이 사용자에게 전송되지 않은 경우 예외 처리
@@ -84,13 +91,20 @@ public class AlarmService {
     }
 
     // 특정 사용자에게 전송된 알람 목록을 가져오는 메서드
-    public List<Alarm> getAlarmsForUser() {
+    public List<AlarmDto> getAlarmsForUser() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
         // 현재 사용자의 정보를 기반으로 알람 리스트를 가져옵니다.
         // username 또는 ID를 사용하여 알람 목록을 필터링하도록 변경
-        Long userId = Long.valueOf(username);
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        return alarmRepository.findAllByReceiverId(userId);
+
+        List<Alarm> alarmEntityList = alarmRepository.findAllByReceiverId(user.getId());
+
+        List<AlarmDto> dtoList = new ArrayList<>();
+        for (Alarm entity: alarmEntityList){
+            dtoList.add(AlarmDto.fromEntity(entity));
+        }
+        return dtoList;
     }
 }
