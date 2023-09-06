@@ -1,6 +1,7 @@
 package com.likelion.teammatch.controller.browser;
 
 import com.likelion.teammatch.dto.RecruitInfoDto;
+import com.likelion.teammatch.dto.team.TeamCreateDto;
 import com.likelion.teammatch.dto.team.TeamDraftDto;
 import com.likelion.teammatch.dto.team.TeamInfoDto;
 import com.likelion.teammatch.service.team.TeamService;
@@ -23,6 +24,18 @@ public class TeamController {
         this.teamService = teamService;
     }
 
+    @GetMapping("/createTeam")
+    public String getCreateTeamForm(){
+        return "/html/create";
+    }
+
+    @PostMapping("/createTeam")
+    public String createTeam(TeamCreateDto dto){
+        Long teamId = teamService.createTeam(dto);
+
+        return "redirect:/main";
+    }
+
     // 팀 목록 페이지로 이동
     @GetMapping("/teamlist")
     public String teamList(Model model) {
@@ -32,11 +45,16 @@ public class TeamController {
     }
 
     // 팀 상세보기 페이지로 이동
-    @GetMapping("/team/{teamId}/detail")
+    @GetMapping("/team/{teamId}")
     public String teamDetail(@PathVariable Long teamId, Model model) {
         TeamInfoDto teamInfo = teamService.getTeamInfo(teamId);
         model.addAttribute("teamInfo", teamInfo);
         return "/html/detail_complete";
+    }
+
+    @GetMapping("/team/{teamId}/edit")
+    public String getTeamUpdateForm(@PathVariable("teamId") Long teamId){
+        return "NOTIMPLEMENTED";
     }
 
     // 팀 정보 수정
@@ -54,92 +72,17 @@ public class TeamController {
         }
     }
 
-    // 팀 삭제 (fetch api)
-    @PostMapping("/team/{teamId}/delete")
-    public String deleteTeam(@PathVariable Long teamId) {
-        try {
-            teamService.deleteTeam(teamId);
 
-            return "redirect:/Team_page";
-        } catch (ResponseStatusException e) {
-            return "redirect:/error?message=" + e.getReason();
-        }
-    }
 
-    // 신규 팀원 모집 생성
-    @PostMapping("/team/{teamId}/recruit")
-    public String createAddRecruit(@PathVariable Long teamId, RecruitInfoDto dto) {
-        try {
-            Long recruitId = teamService.createAddRecruit(teamId, dto);
 
-            return "redirect:/recruit/" + recruitId;
-        } catch (ResponseStatusException e) {
-            return "redirect:/error?message=" + e.getReason();
-        }
-    }
-
-    // 신규 팀원 모집 수정
-    @PostMapping("/team/{teamId}/recruit/{recruitId}/edit")
-    public String updateAddRecruit(@PathVariable Long recruitId, RecruitInfoDto dto) {
-        try {
-            teamService.updateAddRecruit(recruitId, dto);
-
-            return "redirect:/recruit/" + recruitId;
-        } catch (ResponseStatusException e) {
-            return "redirect:/error?message=" + e.getReason();
-        }
-    }
-
-    // 신규 팀원 모집 삭제
-    @PostMapping("/team/{teamId}/recruit/{recruitId}/delete")
-    public String deleteAddRecruit(@PathVariable Long teamId, @PathVariable Long recruitId) {
-        try {
-            teamService.deleteAddRecruit(recruitId);
-
-            return "redirect:/team/" + teamId;
-        } catch (ResponseStatusException e) {
-            return "redirect:/error?message=" + e.getReason();
-        }
-    }
+    
 
     // 특정 인원 내보내기
-    @PostMapping("/team/{teamId}/remove-member/{memberId}")
-    public String removeMemberFromTeam(@PathVariable Long teamId, @PathVariable Long memberId) {
-        try {
-            // 서비스 레이어의 특정 인원 내보내기 기능 호출
-            teamService.removeMemberFromTeam(teamId, memberId);
+    // 팀장이 특정 인원을 내보내는 기능은 아직 구현하지 않는다.
 
-            // 성공한 경우 페이지 리다이렉트
-            return "redirect:/team/" + teamId + "/detail";
-        } catch (ResponseStatusException e) {
-            // 실패한 경우 에러 메시지를 포함한 페이지 리다이렉트
-            return "redirect:/error?message=" + e.getReason();
-        }
-    }
 
-    // 팀에서 탈퇴하기 (fetch api)
-    @PostMapping("/team/{teamId}/leave")
-    public String leaveTeam(@PathVariable Long teamId) {
-        try {
-            teamService.leaveTeam(teamId);
 
-            return "redirect:/Team_page";
-        } catch (ResponseStatusException e) {
-            return "redirect:/error?message=" + e.getReason();
-        }
-    }
 
-    // 팀 종료하기 (fetch api)
-    @PostMapping("/team/{teamId}/end")
-    public String endTeam(@PathVariable Long teamId) {
-        try {
-            teamService.endTeam(teamId);
-
-            return "redirect:/Team_page";
-        } catch (ResponseStatusException e) {
-            return "redirect:/error?message=" + e.getReason();
-        }
-    }
 
     // 팀 채팅방으로 이동
     @GetMapping("/team/{teamId}/chatroom")
