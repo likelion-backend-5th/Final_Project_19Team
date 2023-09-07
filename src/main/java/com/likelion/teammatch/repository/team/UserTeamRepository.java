@@ -1,6 +1,7 @@
 package com.likelion.teammatch.repository.team;
 
 import com.likelion.teammatch.entity.UserTeam;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -16,5 +17,6 @@ public interface UserTeamRepository extends JpaRepository<UserTeam, Long> {
     List<UserTeam> findAllByUserId(Long id);
 
     // userId와 teamId를 기반으로 특정 유저를 해당 팀에서 삭제
+    @Transactional
     void deleteByUserIdAndTeamId(Long userId, Long teamId);
 }

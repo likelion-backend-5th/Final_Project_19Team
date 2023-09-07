@@ -9,6 +9,7 @@ import com.likelion.teammatch.entity.*;
 import com.likelion.teammatch.repository.*;
 import com.likelion.teammatch.repository.team.UserTeamRepository;
 import com.likelion.teammatch.repository.team.TeamRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,7 @@ public class TeamService {
     private final TechStackRepository techStackRepository;
     private final TeamTechStackRepository teamTechStackRepository;
     private final ChatRoomRepository chatRoomRepository;
+    private final ApplyRepository applyRepository;
     //Team 생성
     //생성 후 teamId 리턴함
     public Long createTeam(TeamCreateDto dto){
@@ -139,15 +141,17 @@ public class TeamService {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         List<UserTeam> myTeamList = userTeamRepository.findAllByUserId(user.getId());
-
         List<TeamDraftDto> draftList = new ArrayList<>();
         for (UserTeam userTeam : myTeamList){
-            Team currentTeam = teamRepository.findByIdAndDeletedFalse(userTeam.getTeamId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
+            Team currentTeam = teamRepository.findById(userTeam.getTeamId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            if (currentTeam.getDeleted()) continue;
             TeamDraftDto dto = new TeamDraftDto();
             dto.setTeamName(currentTeam.getTeamName());
             dto.setTeamId(currentTeam.getId());
             dto.setIsFinished(currentTeam.getIsFinished());
+            dto.setIsManager(user.getId().equals(currentTeam.getTeamMangerId()));
+            dto.setMemberNum(currentTeam.getMemberNum());
+            dto.setIsOnline(currentTeam.getIsOnline());
             draftList.add(dto);
         }
         return draftList;
@@ -174,15 +178,24 @@ public class TeamService {
     }
 
     // Team 삭제
+    // team 매니저가 악의적인 의도로 팀 삭제 후 튀어버리는 걸 막기 위한 방법이 현재 존재하지 않음.
+    @Transactional
     public void deleteTeam(Long teamId) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
         User user = userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
         Team team = teamRepository.findById(teamId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
         if (!user.getId().equals(team.getTeamMangerId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        
+        //팀 관련 모집 공고 모집 마감
+        List<Recruit> teamRecruitList = recruitRepository.findAllByTeamId(teamId);
 
+        for (Recruit recruit : teamRecruitList){
+            recruit.setIsFinished(true);
+        }
+        //모든 apply 삭제
+        applyRepository.deleteAllByTeamId(teamId);
+        
         team.setDeleted(true);
         teamRepository.save(team);
     }
@@ -259,6 +272,7 @@ public class TeamService {
     }
 
     // 팀에서 탈퇴하기
+    @Transactional
     public void leaveTeam(Long teamId) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
@@ -266,7 +280,9 @@ public class TeamService {
 
         Team team = teamRepository.findById(teamId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        if (!user.getId().equals(team.getTeamMangerId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN, "팀 매니저는 팀에서 탈퇴할 수 없습니다.");
+        if (!userTeamRepository.existsByUserIdAndTeamId(user.getId(), team.getId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN, "팀에 가입된 상태가 아닙니다!");
+        if (user.getId().equals(team.getTeamMangerId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN, "팀 매니저는 팀에서 탈퇴할 수 없습니다.");
+
 
         // 팀에서 유저를 탈퇴시키기
         userTeamRepository.deleteByUserIdAndTeamId(user.getId(), teamId);
@@ -277,7 +293,8 @@ public class TeamService {
     }
 
     // 팀 종료하기
-    public void endTeam(Long teamId) {
+    @Transactional
+    public void finishTeam(Long teamId) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
         User user = userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -288,9 +305,20 @@ public class TeamService {
 
         // 팀에 속한 채팅방 삭제
         chatRoomRepository.deleteAllByTeamId(teamId);
+        // 팀에 속한 모집 공고 종료
+        List<Recruit> teamRecruitList = recruitRepository.findAllByTeamId(teamId);
+
+        for (Recruit recruit : teamRecruitList){
+            recruit.setIsFinished(true);
+        }
+        // 팀에 속한 모집 신청 삭제
+        applyRepository.deleteAllByTeamId(teamId);
+
 
         // 팀의 상태를 종료로 변경
         team.setIsFinished(true);
         teamRepository.save(team);
+
+        log.info("{} 팀 활동 종료", team.getTeamName());
     }
 }

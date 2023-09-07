@@ -14,12 +14,12 @@
 
 
 <div class="main">
-    <form class="createForm slide-in-top" th:action="@{'/recruit/' + ${recruitId} + '/edit'}" th:method="post" id="createForm">
+    <form class="createForm slide-in-top" th:method="post" id="createForm">
         <div class="createFormLogo">
             <div class="createFormLogoText">모집 공고 작성 </div>
             <img class="createFormLogoImg" src="../assets/create/close.svg" alt="#">
         </div>
-        <input class="createTeamName" th:value="${teamName}">
+        <input class="createTeamName" th:value="${teamName}" readonly>
         <div class="teamCreateInputGroup">
             <div class="recruitTitleInfo" id="recruitTitleInfo">
                 <div class="teamTechLabel" title="모집 공고글에 적히게 될 설명을 적어주세요!">Recruit Title</div>
@@ -33,15 +33,22 @@
 
             <div class="teamSingleLineInputGroup">
                 <div class="teamTagLabel" title="몇명의 팀원들을 모집하실 생각인가요?">Many</div>
-                <input class="teamNumberInput" id="memberNum" name="memberNum" required onchange="onlyNumberInput()">
+                <input class="teamNumberInput" id="memberNum" name="memberNum" required onchange="onlyNumberInput(this)">
                 <label class="teamNumberInputLabel" for="memberNum" >명</label>
             </div>
             <script>
-                function onlyNumberInput(){
-                    let inputValue = document.getElementById('memberNum').value;
+                let isEdit = [[${ isEdit }]];
+                if (isEdit){
+                    document.getElementById('createForm').setAttribute("action", '/recruit/' + [[${recruitId}]] + '/edit');
+                }
+                else {
+                    document.getElementById('createForm').setAttribute("action", '/team/' + [[${teamId}]] + '/recruit');
+                }
+                function onlyNumberInput(element){
+                    let inputValue = element.value;
                     if (inputValue !== "" && !isNumeric(inputValue)) {
                         alert('숫자를 입력하세요.');
-                        document.getElementById('memberNum').value = ''; // 값을 지움
+                        element.value = ''; // 값을 지움
                     }
                     function isNumeric(value) {
                         return /^\d+$/.test(value);
@@ -54,6 +61,9 @@
             <button class="singUpButton" id="signUpButton" type="submit">등록</button>
         </div>
     </form>
+
+
+
 </div>
 
 

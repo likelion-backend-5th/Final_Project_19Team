@@ -9,4 +9,7 @@ public class TeamDraftDto {
     private String teamName;
     private Boolean isFinished;
     private Long teamId;
+    private Boolean isManager;
+    private Boolean isOnline;
+    private Integer memberNum;
 }

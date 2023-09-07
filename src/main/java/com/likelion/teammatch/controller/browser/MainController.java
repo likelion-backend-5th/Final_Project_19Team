@@ -1,8 +1,6 @@
 package com.likelion.teammatch.controller.browser;
 
 import com.likelion.teammatch.dto.RecruitDraftDto;
-import com.likelion.teammatch.dto.team.TeamCreateDto;
-import com.likelion.teammatch.service.CommentService;
 import com.likelion.teammatch.service.RecruitService;
 import com.likelion.teammatch.service.team.TeamService;
 import lombok.extern.slf4j.Slf4j;
@@ -38,22 +36,8 @@ public class MainController {
         return "/html/index";
     }
 
-    @GetMapping("/createTeam")
-    public String getCreateTeamForm(){
-        return "/html/create";
-    }
 
-    @PostMapping("/createTeam")
-    public String createTeam(TeamCreateDto dto){
-        Long teamId = teamService.createTeam(dto);
 
-        return "redirect:/main";
-    }
-
-    @GetMapping("/team/{teamId}")
-    public String getTeamInfo(@PathVariable("teamId") Long teamId){
-        return "redirect:/main";//todo 임시로 main으로 보냄.
-    }
 
 
 

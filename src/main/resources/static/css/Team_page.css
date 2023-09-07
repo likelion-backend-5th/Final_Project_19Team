@@ -8,7 +8,7 @@
 .Team{
     margin: 30px auto;
     width: 80vw;
-    height: 39vh;
+    height: 30vh;
     background: #505D68;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
@@ -52,6 +52,11 @@
     font-weight: 500;
     border: 0;
     border-radius: 5px;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .btn_red{
@@ -64,6 +69,11 @@
     font-weight: 500;
     border: 0;
     border-radius: 5px;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .btn_basic{
@@ -76,6 +86,11 @@
     font-weight: 500;
     border: 0;
     border-radius: 5px;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .texts{
@@ -102,4 +117,14 @@
     margin: 10px;
 
 
+}
+
+.neon-soda-button {
+    transition: box-shadow 0.3s; /* 네온 효과 변경 애니메이션 */
+}
+
+.neon-soda-button:hover {
+    color: black;
+    background: rgba(0, 255, 255, 0.8);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.8), 0 0 20px rgba(0, 255, 255, 0.6), 0 0 30px rgba(0, 255, 255, 0.4);
 }
