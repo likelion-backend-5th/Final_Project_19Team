@@ -321,4 +321,14 @@ public class TeamService {
 
         log.info("{} 팀 활동 종료", team.getTeamName());
     }
+
+    public Boolean isMember(Long teamId) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        Team team = teamRepository.findById(teamId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        return userTeamRepository.existsByUserIdAndTeamId(user.getId(), team.getId());
+    }
 }
