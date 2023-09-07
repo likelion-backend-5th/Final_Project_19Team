@@ -16,7 +16,7 @@ public class ChatController {
     public String index(Model model) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("username", username);
-        return "/html/chat-lobby";
+        return "/html/Team_page";
     }
 
     @GetMapping("/{roomId}/{userId}")
