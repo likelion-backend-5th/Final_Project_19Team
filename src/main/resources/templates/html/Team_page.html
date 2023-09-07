@@ -26,7 +26,7 @@
                 <div class="btn_blue" th:if="!${team.getIsFinished()}" th:attr="team-id=${team.getTeamId()}" onclick="goToTeamChat(this)">
                     팀 채팅방 이동
                 </div>
-                <div class="btn_red" th:attr="team-id=${team.getTeamName()}" onclick="goToDetails(this)">
+                <div class="btn_red" th:attr="team-id=${team.getTeamId()}" onclick="goToDetails(this)">
                     상세보기
                 </div>
                 <div class="btn_basic neon-soda-button" th:if="!${team.getIsFinished()} and ${team.getIsManager()}" th:attr="team-id=${team.getTeamId()}" onclick="openRecruit(this)">
@@ -77,6 +77,8 @@
         function goToDetails(element){
             let teamId = element.getAttribute("team-id");
             //팀 상세보기 이동
+
+            window.location.href = '/team/' + teamId;
         }
 
         function openRecruit(element){
