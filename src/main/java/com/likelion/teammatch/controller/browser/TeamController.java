@@ -48,8 +48,11 @@ public class TeamController {
     @GetMapping("/team/{teamId}")
     public String teamDetail(@PathVariable Long teamId, Model model) {
         TeamInfoDto teamInfo = teamService.getTeamInfo(teamId);
-        model.addAttribute("teamInfo", teamInfo);
-        return "/html/detail_complete";
+        model.addAttribute("team", teamInfo);
+        model.addAttribute("isMember", teamService.isMember(teamId));
+        model.addAttribute("isFinished", teamInfo.getIsFinished());
+        model.addAttribute("isManager", teamInfo.getTeamManagerUsername().equals(SecurityContextHolder.getContext().getAuthentication().getName()));
+        return "/html/team_details";
     }
 
     @GetMapping("/team/{teamId}/edit")
