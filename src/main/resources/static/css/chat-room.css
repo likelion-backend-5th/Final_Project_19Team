@@ -1,3 +1,40 @@
+*{
+    font-family: "Noto Sans KR", "Source Sans Pro";
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.out_btn {
+    position: relative;
+    top: 73px;
+    left: 200px;
+    width: 100px;
+    height: 2.5rem;
+    left: 0rem;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: #ffffff;
+    white-space: nowrap;
+    box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
+    background-color: #B73A3A;
+    border-radius: 5px;
+    text-decoration: none;
+}
+.out_link{
+    text-decoration-line: none;
+    font-size: 15px;
+    color: white;
+    font-family: Roboto, 'Source Sans Pro';
+}
+
+.conversationDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .chat_wrap {
     border: 0px solid #999;
     width: 98%;
@@ -8,13 +45,25 @@
 
 /* 채팅 참가자 목록 .participants */
 #participants-list {
-    background-color: #ffffff;
-    border: 1px solid #ccc;
+    position: relative;
+    top: 100px;
+    left: 20px;
+    background-color: white;
     border-radius: 5px;
     padding: 10px;
-    width: 23%;
-    float: right;
-    margin-top: 10px;
+    width: 150px;
+    margin: 10px 0;
+}
+
+.talking_member{
+    text-align: center;
+    color: #1E1E1E;
+    margin: 0;
+}
+
+.chat_list{
+    margin: 5px 15px;
+    padding: 0;
 }
 
 .participants ul {
@@ -27,12 +76,27 @@
     font-size: 14px;
 }
 
+.chat_body{
+    border: #1E1E1E solid 1px;
+    border-radius: 5px;
+    margin: 10px 0;
+    width: fit-content;
+}
+.message{
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+    width: 350px;
+
+}
 
 /* 채팅창 .inner */
 .chat_wrap .inner {
-    background-color: #f0f0f0;
+    background-color: #e6e6e6;
+    margin: 10px 0 10px 10px;
+    width: 350px;
     border-radius: 5px;
-    padding: 10px;
+    padding: 10px 0 10px 10px;
     overflow-y: scroll;
     height: 400px
 }
@@ -110,18 +174,23 @@
     opacity: 1;
 }
 
-input[type="text"] {
+.message_text {
     border: 0;
-    width: 80%;
+    width: 100%;
     background: #ddd;
     border-radius: 5px;
+    padding-left: 10px;
     height: 30px;
-    padding-left: 5px;
+    margin-right: 5px;
     box-sizing: border-box;
-    margin-top: 5px;
-    margin-bottom: 5px
 }
 
-input[type="text"]::placeholder {
-    color: #999
+.message_send{
+    width: 70px;
+    color: white;
+    font-weight: 600;
+    border-radius: 5px;
+    background-color: #B73A3A;
+    border: 0;
+    font-size: 15px;
 }
