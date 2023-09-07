@@ -12,4 +12,7 @@ public interface ApplyRepository extends JpaRepository<Apply, Long> {
 
     @Transactional
     void deleteAllByRecruitId(Long recruitId);
+
+    @Transactional
+    void deleteAllByTeamId(Long teamId);
 }

@@ -44,7 +44,7 @@ public class TeamInfoDto {
         //team member username은 나중에 채울 것
         //team techStackName은 나중에 채울 것
         dto.setCreatedAt(team.getCreatedAt().toString());
-        dto.setFinishedAt(team.getFinishedAt().toString());
+        if(team.getFinishedAt() != null) dto.setFinishedAt(team.getFinishedAt().toString());
         return dto;
 
     }

@@ -104,8 +104,8 @@
             <button class="stars_btn">★</button>
             <div class="grid_report_item_text">
                 <div class="title" th:text="${recruit.getRecruitTitle()}">멋사 19 프로젝트 모집</div>
-                <button th:if="!${recruit.getIsFinished()}" class="status">모집중</button>
-                <button th:if="${recruit.getIsFinished()}" class="status1">모집 완료</button>
+                <button th:if="!${recruit.getIsFinished()}" class="status1">진행중</button>
+                <button th:if="${recruit.getIsFinished()}" class="status">종료</button>
             </div>
             <div class="grid_report_item_text_mid">
                 <div class="stacks">
