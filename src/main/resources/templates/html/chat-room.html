@@ -11,7 +11,9 @@
 <!-- 채팅창 외부 컨테이너-->
 <div id="conversationDiv" class="chat_wrap">
     <div class="out_btn">
-        <a class="out_link" href="/chat">채팅 나가기</a>
+        <span id="username" th:text=${username}></span>
+        <a class="out_link" href="/teamlist">채팅나가기</a>
+        <p></p>
     </div>
 
 
@@ -44,10 +46,10 @@
 <!--<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>-->
 <script src="/js/stomp.js"></script>
 <script type="text/javascript">
-    let stompClient = null;
+    let stompClient;
     const pathname = window.location.pathname;
-    const roomId = parseInt(pathname.split("/")[2]);
-    let username = decodeURI(pathname.split("/")[3]);
+    const roomId = parseInt(pathname.split("/")[2]);    // teamId로 roomId를 생성했음
+    const username = "[[${ username }]]";
 
     //participants 추가
     function addParticipants(participantname) {
@@ -57,20 +59,7 @@
         participantsList.appendChild(listItem);
     }
 
-    function getRoomNameAndUsername() {
-        fetch(`/chat/rooms/${roomId}/name`).then((response) => {
-            response.json().then((responseBody) => {
-                console.log(responseBody);
-                document.getElementById('room-name').innerHTML = responseBody.roomName;
-                const usernameSpan = document.getElementById('username');
-                usernameSpan.textContent = username;
-            })
-        });
-    }
-
     function connect() {
-        getRoomNameAndUsername();
-        addParticipants(username);
         const socket = new WebSocket('ws://localhost:8080/chatting');
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
@@ -84,6 +73,7 @@
         }, function (error) {
             console.error('WebSocket 연결 오류: ' + error);
         });
+        addParticipants(username);
     }
 
     function initialMessages(messageList) {
