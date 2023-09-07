@@ -2,6 +2,7 @@
     box-sizing: border-box;
     font-family: Noto Sans KR, 'Source Sans Pro';
     margin: 0 auto;
+    font-size: 80%;
 }
 
 .router_link {
@@ -10,12 +11,11 @@
 }
 
 span {
-    color: var(--111, #1E1E1E);
-    font-size: 20px;
+    color: #1E1E1E;
+    font-size: 15px;
     font-style: normal;
     font-weight: 500;
     line-height: 32px;
-    /* 160% */
     letter-spacing: 0.25px;
 }
 
@@ -30,7 +30,7 @@ span {
     display: flex;
     flex-direction: column;
     background-color: #e6e6e6;
-    border-radius: 1rem;
+    border-radius: 5px;
     justify-content: center;
 
 }
@@ -47,8 +47,8 @@ span {
 .createFormLogoText {
     margin-right: 80rem;
     display: flex;
-    font-size: 2rem;
-    font-weight: 500;
+    font-size: 20px;
+    font-weight: 700;
     line-height: 1.6;
     letter-spacing: 0.025rem;
     color: #1e1e1e;
@@ -61,6 +61,7 @@ span {
 .createFormLogoImg {
     margin-bottom: 0.2rem;
     position: relative;
+    right: 200px;
     object-fit: contain;
     vertical-align: top;
     flex-shrink: 0;
@@ -71,15 +72,14 @@ span {
     box-sizing: border-box;
     padding: 0.8rem 2rem;
     width: 100%;
-    font-size: 2rem;
+    font-size: 20px;
     font-weight: 500;
-    line-height: 1.6;
-    letter-spacing: 0.025rem;
+    border: 0;
     color: #1e1e1e;
     font-family: Roboto, 'Source Sans Pro';
     white-space: nowrap;
     background-color: #ffffff;
-    border-radius: 1.5rem;
+    border-radius: 5px;
     box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
     flex-shrink: 0;
 }
@@ -87,11 +87,13 @@ span {
 .teamCreateInputGroup {
     flex-direction: column;
     padding: 1rem;
-    width: 75rem;
+    width: 100%;
+    border-radius: 5px;
     background-color: white;
     display: flex;
     gap: 10px; /* Add spacing between group elements */
     justify-content: flex-start;
+    box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
 }
 
 
@@ -100,7 +102,7 @@ span {
 .teamIsOnlineLabel {
     width: 11.4rem;
     height: 3.4rem;
-    font-size: 1.5rem;
+    font-size: 20px;
     font-weight: 700;
     line-height: 1.4475;
     display: flex;
@@ -113,33 +115,30 @@ span {
     white-space: nowrap;
     box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
     background-color: #505c68;
-    border-radius: 0.5rem;
+    border-radius: 5px;
     flex-shrink: 0;
 }
+
 .teamTechLabel {
     width: 11.4rem;
     height: 6.8rem;
-    font-size: 1.5rem;
-    font-weight: 700;
-    line-height: 1.4475;
+    font-size: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 0;
-    margin-right: 0rem;
     color: #ffffff;
     font-family: Noto Sans KR, 'Source Sans Pro';
     white-space: nowrap;
     box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
     background-color: #505c68;
-    border-radius: 0.5rem;
+    border-radius: 5px;
     flex-shrink: 0;
 }
 
 .teamTechLabel-big{
     width: 11.4rem;
     height: 13.6rem;
-    font-size: 1.5rem;
+    font-size: 20px;
     font-weight: 700;
     line-height: 1.4475;
     display: flex;
@@ -152,7 +151,7 @@ span {
     white-space: nowrap;
     box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
     background-color: #505c68;
-    border-radius: 0.5rem;
+    border-radius: 5px;
     flex-shrink: 0;
 }
 
@@ -162,7 +161,7 @@ span {
     height: 3.4rem;
     display: flex;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size:20px;
     font-weight: 700;
     line-height: 1.4475;
     margin: 0;
@@ -182,9 +181,14 @@ span {
 }
 
 .recruitTitleInput {
+    padding: 10px;
+    display: block;
     width: 60rem;
+    white-space: normal;
+    border: 1px solid #1E1E1E;
     height: 6.8rem;
-    font-size: 2rem;
+    font-size: 15px;
+    border-radius: 5px;
     font-weight: 700;
 }
 
@@ -206,10 +210,12 @@ span {
 
 .teamCreateTextarea{
     width: 100%;
+    padding: 10px;
+    border: solid 1px #1E1E1E;
     height: 13.6rem;
     border-radius: 5px;
     margin-left: 0;
-    font-size: 1rem;
+    font-size: 15px;
 }
 
 .singUpButton{
@@ -218,11 +224,12 @@ span {
     align-items: center;
     display: flex;
     background-color: indianred;
-    font-size: 1.5rem;
+    font-size: 20px;
     justify-content: center;
     margin-top: 1rem;
     border: 2px solid indianred; /* Add border for a clear visual separation */
     border-radius: 5px;
+    color: white;
     transition: box-shadow 0.3s;
 }
 
@@ -262,17 +269,18 @@ span {
 }
 
 .teamNumberInput {
+    text-align: center;
+    border: #1E1E1E 1px solid;
     height: 3.4rem;
-    width: 11.8rem;
+    width: 6.8rem;
     border-radius: 5px;
     margin-left: 0;
     margin-right: 0.5rem;
-    font-size: 1.5rem;
-    padding-left: 1rem;
+    font-size: 20px;
 }
 
 .teamNumberInputLabel {
-    font-size: 1.5rem;
+    font-size: 20px;
     margin-left:0;
     justify-content: center;
     padding-bottom: 5px;

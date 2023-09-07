@@ -10,20 +10,22 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro%3A400%2C500%2C700">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans%3A400">
 </head>
+
 <body>
 
 
 <div class="main">
     <form class="createForm slide-in-top" th:method="post" id="createForm">
         <div class="createFormLogo">
-            <div class="createFormLogoText">모집 공고 작성 </div>
-            <img class="createFormLogoImg" src="../assets/create/close.svg" alt="#">
+            <div class="createFormLogoText">Create_recruit</div>
+            <img class="createFormLogoImg" src="../../static/assets/create/close.svg" th:src="@{/assets/create/close.svg}" alt="#" />
+
         </div>
         <input class="createTeamName" th:value="${teamName}" readonly>
         <div class="teamCreateInputGroup">
             <div class="recruitTitleInfo" id="recruitTitleInfo">
                 <div class="teamTechLabel" title="모집 공고글에 적히게 될 설명을 적어주세요!">Recruit Title</div>
-                <input class="recruitTitleInput" type="text" id="teamRecruitName" name="teamRecruitName" th:value="${teamRecruitName}">
+                <textarea class="recruitTitleInput" type="text" id="teamRecruitName" name="teamRecruitName" th:value="${teamRecruitName}"></textarea>
             </div>
 
             <div class="recruitDetailsInfo" id="recruitDetailsInfo">
