@@ -34,7 +34,13 @@
     border-radius: 5px;
     padding: 10px;
     overflow-y: scroll;
-    height: 400px
+    height: 400px;
+
+    /* 스크롤 */
+    display:flex;
+    flex-direction: column-reverse;
+    overflow-y:auto;
+    height:535px;
 }
 
 .chat_wrap .item {
