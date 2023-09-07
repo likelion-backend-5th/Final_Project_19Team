@@ -12,7 +12,7 @@
 <div id="conversationDiv" class="chat_wrap">
     <div>
         <span id="username"></span>
-        <a href="/chat">채팅 나가기</a>
+        <a href="/teamlist">채팅 나가기</a>
         <p></p>
     </div>
 
@@ -43,8 +43,7 @@
 <script type="text/javascript">
     let stompClient = null;
     const pathname = window.location.pathname;
-    const roomId = parseInt(pathname.split("/")[2]);
-    let username = decodeURI(pathname.split("/")[3]);
+    const roomId = parseInt(pathname.split("/")[2]);    // teamId로 roomId를 생성했음
 
     //participants 추가
     function addParticipants(participantname) {
