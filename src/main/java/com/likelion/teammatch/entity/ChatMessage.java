@@ -19,7 +19,4 @@ public class ChatMessage{
     private String message;
 
     private String time;
-
-    @CreatedDate
-    private LocalDateTime createdAt;
 }
