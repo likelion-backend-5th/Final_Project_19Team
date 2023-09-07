@@ -24,7 +24,8 @@ public class ChatRestController {
         return ResponseEntity.ok(chatService.createChatRoom(dto));
     }
 
-    @GetMapping("rooms/{id}/name")
+    @GetMapping("rooms/{id}/chatroom")
+//    @GetMapping("rooms/{id}/name")
     public ResponseEntity<ChatRoomDto> getRoomName(@PathVariable("id") Long roomId) {
         return ResponseEntity.ok(chatService.findRoomById(roomId));
     }
