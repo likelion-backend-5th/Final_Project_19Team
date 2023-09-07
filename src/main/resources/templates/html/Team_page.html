@@ -23,7 +23,7 @@
         <p class="Team_text" th:if="!${team.getIsManager()}">Team page / Member</p>
         <div class="Tema_box">
             <div class="Team_box_detail">
-                <div class="btn_blue" th:if="!${team.getIsFinished()}" onclick="goToTeamChat(this)">
+                <div class="btn_blue" th:if="!${team.getIsFinished()}" th:attr="team-id=${team.getTeamId()}" onclick="goToTeamChat(this)">
                     팀 채팅방 이동
                 </div>
                 <div class="btn_red" th:attr="team-id=${team.getTeamName()}" onclick="goToDetails(this)">
@@ -70,6 +70,7 @@
         function goToTeamChat(element){
             let teamId = element.getAttribute("team-id");
             //팀 챗 이동
+            window.location.href = '/team/'+ teamId + '/chatroom';
         }
 
 
@@ -81,7 +82,7 @@
         function openRecruit(element){
             let teamId = element.getAttribute("team-id");
             //팀 추가모집 공고 열기
-            window.location.href='/team/'+teamId+'/recruit';
+            window.location.href='/team/' + teamId + '/recruit';
         }
 
         async function finishTeam(element) {
