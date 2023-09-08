@@ -13,7 +13,7 @@
   <div class="profileContainer">
     <div class="profileTitleGroup">
       <div class="profileTitleUsername" th:text="${profile.getUsername()}">Username</div>
-      <img class="close-cL9" th:src="@{/assetsdetail_recruiting/close.svg}" src="../../static/assets/detail_recruiting/close.svg" alt="#">
+      <img class="close-cL9" th:src="@{/assets/myprofile_edit/close.svg}" src="../../static/assets/myprofile_edit/close.svg" alt="#">
     </div>
 
     <div class="profileInfoGroup1">
@@ -127,7 +127,7 @@
     <div class="profileInfoGroup3">
       <div class="profileDoubleLineGroup">
         <div class="profileDoubleTagLabel" title="자신에 대한 설명을 적어주세요!">About Me</div>
-        <textarea class="profileAboutMe" th:text="${profile.getIntroduction()}" id="introduction" name="introduction"></textarea>
+        <input class="profileAboutMe" th:text="${profile.getIntroduction()}" id="introduction" name="introduction">
       </div>
     </div>
 

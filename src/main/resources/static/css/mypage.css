@@ -36,7 +36,7 @@
     position: relative;
     object-fit: contain;
     vertical-align: top;
-    left: 300px;
+    left: 337px;
     flex-shrink: 0;
 }
 
@@ -91,6 +91,7 @@
     flex-shrink: 0;
 }
 
+
 .profileTagButton {
     margin-right: 1rem;
     width: 100px;
@@ -116,8 +117,8 @@
 
 .profileTagButton1 {
     margin-right: 1rem;
-    width: 200px;
-    min-width: 5rem;
+    width: fit-content;
+    min-width: 240px;
     height: 40px;
     display: flex;
     align-items: center;
