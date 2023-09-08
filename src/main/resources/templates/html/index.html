@@ -436,7 +436,7 @@
                                         <p class="item--Pih">아이디</p>
                                     </div>
                                     <div class="fdsdf">
-                                        <a class="gmlcjf0000-7eh" th:attr="username=${username}" onclick="goToMyPage(this)" th:text=${username}>username</a>
+                                        <a class="gmlcjf0000-7eh" th:text=${username}>username</a>
                                     </div>
                                 </div>
 
@@ -488,7 +488,7 @@
                         </div>
                         <div class="flex-412">
                             <div class="group-369-PCD">편집</div>
-                            <div class="group-700-PCD">상세보기</div>
+                            <div class="group-700-PCD" th:attr="username=${username}" onclick="goToMyPage(this)">상세보기</div>
                         </div>
 
                         <!-- 회원점수/등급(Toggle visible) -->
