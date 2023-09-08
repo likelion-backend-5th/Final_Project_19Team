@@ -9,35 +9,14 @@
 <body>
 
 <form class="container" id="profileForm" th:action="@{'/profile/' + ${profile.getUsername()} + '/edit'}" method="post">
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark-subtle rounded-1">
-    <div class="container-fluid">
-      <a class="navbar-brand text-dark" href="#">QuickMatch</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link text-dark text-decoration-none" href="#">Main</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white text-decoration-none bg-dark rounded-3">MyPage</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark text-decoration-none" th:href="@{/logout}">logout</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
 
   <div class="profileContainer">
     <div class="profileTitleGroup">
-      <div class="profileTitleUsername" th:text="${profile.getUsername()}">username</div>
-      <img class="close-cL9" src="../assets/detail_recruiting/close.svg" alt="#">
+      <div class="profileTitleUsername" th:text="${profile.getUsername()}">Username</div>
+      <img class="close-cL9" src="../../static/assets/detail_recruiting/close.svg" alt="#">
     </div>
 
-    <div class="profileInfoGroup">
+    <div class="profileInfoGroup1">
       <div class="profileContainerLeft">
 
         <div class="profileSingleLineGroup">
@@ -64,13 +43,13 @@
       </div>
 
       <div class="profileContainerRight">
-        <div class="profileLongLineGroup">
+        <div class="profileLongLineGroup1">
           <div class="profileRightTagLabel">수상경력</div>
           <div class="profileRightDescribe">
             <textarea class="profileRightDescribeBox" th:text="${profile.getPrize()}" id="prize" name="prize"> </textarea>
           </div>
         </div>
-        <div class="profileLongLineGroup">
+        <div class="profileLongLineGroup2">
           <div class="profileRightTagLabel">과거경력</div>
           <div class="profileRightDescribe">
             <textarea class="profileRightDescribeBox" th:text="${profile.getPast()}" id="past" name="past"></textarea>
@@ -79,7 +58,7 @@
       </div>
     </div>
 
-    <div class="profileInfoGroup">
+    <div class="profileInfoGroup2">
       <div class="profileDoubleLineGroup">
         <div class="profileDoubleTagLabel" title="자신의 기술 스택을 골라주세요!">Tech</div>
         <div class="profileTechStackInputGroup">
@@ -145,7 +124,7 @@
 
     </div>
 
-    <div class="profileInfoGroup">
+    <div class="profileInfoGroup3">
       <div class="profileDoubleLineGroup">
         <div class="profileDoubleTagLabel" title="자신에 대한 설명을 적어주세요!">About Me</div>
         <textarea class="profileAboutMe" th:text="${profile.getIntroduction()}" id="introduction" name="introduction"></textarea>
