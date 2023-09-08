@@ -25,7 +25,7 @@ public class ProjectResultService {
         this.userRepository = userRepository;
     }
 
-    //ProjectResult 를 따로 추가하는 메소드
+    //ProjectResult 생성
     public Long createProjectResult(Long teamId, String github, String projectResultDetails){
         //현재 사용자의 username 가져오기
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -37,7 +37,7 @@ public class ProjectResultService {
         Team team = teamRepository.findById(teamId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         //ProjectResult 권한 확인하기
-        if (!team.getTeamMangerId().equals(user.getId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        if (!team.getTeamMangerId().equals(user.getId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN, "팀 관리자만 프로젝트 결과물을 생성할 수 있습니다.");
 
         ProjectResult projectResult = new ProjectResult();
         projectResult.setDescription(projectResultDetails);
@@ -62,7 +62,7 @@ public class ProjectResultService {
         ProjectResult projectResult = projectResultRepository.findById(projectResultId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         //ProjectResult 수정 권한 확인하기
-        if (!projectResult.getTeamManagerId().equals(user.getId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        if (!projectResult.getTeamManagerId().equals(user.getId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN, "프로젝트 결과물의 수정 권한이 없습니다.");
 
         projectResult.setDescription(projectResultDetails);
         projectResult.setGithub(github);
@@ -84,16 +84,15 @@ public class ProjectResultService {
         ProjectResult projectResult = projectResultRepository.findById(projectResultId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         //ProjectResult 삭제 권한 확인하기
-        if (!projectResult.getTeamManagerId().equals(user.getId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        if (!projectResult.getTeamManagerId().equals(user.getId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN, "프로젝트 결과물의 삭제 권한이 없습니다.");
 
         projectResultRepository.deleteById(projectResultId);
     }
 
     //ProjectResult 가져오기
     public ProjectResultInfoDto getProjectResultInfo(Long projectResultId) {
-
         //ProjectResult 가져오기
-        ProjectResult projectResult = projectResultRepository.findById(projectResultId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        ProjectResult projectResult = projectResultRepository.findById(projectResultId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "프로젝트 결과물을 찾을 수 없습니다."));
 
         //해당 ProjectResult 에 연결된 Team 가져오기
         Team team = teamRepository.findById(projectResult.getTeamId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -102,5 +101,44 @@ public class ProjectResultService {
         User user = userRepository.findById(projectResult.getTeamManagerId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         return ProjectResultInfoDto.fromEntity(team, user, projectResult);
+    }
+
+    // GitHub 주소 업로드 기능
+    @Transactional
+    public void uploadGitHubAddress(Long projectResultId, String github) {
+        // 프로젝트 결과물 가져오기
+        ProjectResult projectResult = projectResultRepository.findById(projectResultId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "프로젝트 결과물을 찾을 수 없습니다."));
+
+        // 프로젝트 결과물의 팀 매니저인지 확인
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "사용자를 찾을 수 없습니다."));
+
+        if (!projectResult.getTeamManagerId().equals(user.getId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "팀 매니저만 GitHub 주소를 등록할 수 있습니다.");
+        }
+
+        // GitHub 주소 업로드
+        projectResult.setGithub(github);
+        projectResultRepository.save(projectResult);
+    }
+
+    // GitHub 주소 수정
+    @Transactional
+    public void updateGitHubAddress(Long projectResultId, String newGitHub) {
+        ProjectResult projectResult = projectResultRepository.findById(projectResultId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "프로젝트 결과물을 찾을 수 없습니다."));
+
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "사용자를 찾을 수 없습니다."));
+
+        if (!projectResult.getTeamManagerId().equals(user.getId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "팀 매니저만 GitHub 주소를 수정할 수 있습니다.");
+        }
+
+        projectResult.setGithub(newGitHub);
+        projectResultRepository.save(projectResult);
     }
 }

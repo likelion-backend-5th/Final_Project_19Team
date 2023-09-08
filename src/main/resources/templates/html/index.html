@@ -437,7 +437,7 @@
                                         <p class="item--Pih">아이디</p>
                                     </div>
                                     <div class="fdsdf">
-                                        <p class="gmlcjf0000-7eh">gmlcjf0000</p>
+                                        <p class="gmlcjf0000-7eh" th:text=${username}>username</p>
                                     </div>
                                 </div>
 
@@ -446,7 +446,7 @@
                                         <p class="item--Pih">연락처</p>
                                     </div>
                                     <div class="fdsdf">
-                                        <p class="gmlcjf0000-7eh">010-0000-0000</p>
+                                        <p class="gmlcjf0000-7eh" th:attr="phone=${phone}" th:text="${phone}">없음</p>
                                     </div>
                                 </div>
 
@@ -455,7 +455,7 @@
                                         <p class="item--Pih">이메일</p>
                                     </div>
                                     <div class="fdsdf">
-                                        <p type="" class="gmlcjf0000-7eh">gmlcjf0000@gmail.com</p>
+                                        <p type="" class="gmlcjf0000-7eh" th:attr="email=${email}" th:text=${email}>없음</p>
                                     </div>
                                 </div>
 
@@ -473,7 +473,7 @@
                                         <p class="item--Pih">보유기술</p>
                                     </div>
                                     <div class="fdsdf">
-                                        <p class="gmlcjf0000-7eh">미선택미선택미선택미택선택미선택미선택미선택</p>
+                                        <p class="gmlcjf0000-7eh" th:text="${techStackList}">미선택</p>
                                     </div>
                                 </div>
 
@@ -488,8 +488,8 @@
                             </div>
                         </div>
                         <div class="flex-412">
-                            <div class="group-369-PCD">편집</div>
-                            <div class="group-700-PCD">상세보기</div>
+                            <div class="group-369-PCD" th:attr="username=${username}" onclick="goToEditMyPage(this)">편집</div>
+                            <div class="group-700-PCD" th:attr="username=${username}" onclick="goToMyPage(this)">상세보기</div>
                         </div>
 
                         <!-- 회원점수/등급(Toggle visible) -->
@@ -703,6 +703,16 @@
     </div>
 </body>
 <script>
+    function goToMyPage(element) {
+        let username = element.getAttribute("username");
+        window.location.href = '/profile/' + username;
+    }
+
+    function goToEditMyPage(element) {
+        let username = element.getAttribute("username");
+        window.location.href = '/profile/' + username + '/edit';
+    }
+
     function getRecruitDetails(element) {
         if (!logined) {
             loginModal.style.display = 'block';
@@ -829,15 +839,20 @@
 
     // 메인 마이페이지 버튼 - 토글
     mypageBtn.addEventListener('click', function () {
-        pagedetailHide.style.visibility = 'hidden';
-        pagedetailShow.style.visibility = 'hidden';
-        if (mypagePage.style.visibility == 'visible') {
-            mypagePage.style.visibility = 'hidden';
-            mypageBtn.classList.remove('nav_btn_list_selected');
-        } else {
-            mypagePage.style.visibility = 'visible';
-            pagedetailHide.style.visibility = 'visible';
-            mypageBtn.classList.add('nav_btn_list_selected');
+        if (!logined) {	// 로그인 되어 있지 않다면, 로그인창 띄우기
+            loginModal.style.display = 'block';
+            overlay.style.opacity = '50%';
+        } else {	// 로그인 되어 있다면, 원래 기능 유지
+            pagedetailHide.style.visibility = 'hidden';
+            pagedetailShow.style.visibility = 'hidden';
+            if (mypagePage.style.visibility == 'visible') {
+                mypagePage.style.visibility = 'hidden';
+                mypageBtn.classList.remove('nav_btn_list_selected');
+            } else {
+                mypagePage.style.visibility = 'visible';
+                pagedetailHide.style.visibility = 'visible';
+                mypageBtn.classList.add('nav_btn_list_selected');
+            }
         }
     });
 
