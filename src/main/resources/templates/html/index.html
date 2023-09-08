@@ -436,7 +436,7 @@
                                         <p class="item--Pih">아이디</p>
                                     </div>
                                     <div class="fdsdf">
-                                        <p class="gmlcjf0000-7eh" th:attr="username=${username}" onclick="goToMyPage(this)" th:text=${username}>username</p>
+                                        <a class="gmlcjf0000-7eh" th:attr="username=${username}" onclick="goToMyPage(this)" th:text=${username}>username</a>
                                     </div>
                                 </div>
 
@@ -445,7 +445,7 @@
                                         <p class="item--Pih">연락처</p>
                                     </div>
                                     <div class="fdsdf">
-                                        <p class="gmlcjf0000-7eh">010-0000-0000</p>
+                                        <p class="gmlcjf0000-7eh" th:attr="phone=${phone}" th:text="${phone}">없음</p>
                                     </div>
                                 </div>
 
@@ -454,7 +454,7 @@
                                         <p class="item--Pih">이메일</p>
                                     </div>
                                     <div class="fdsdf">
-                                        <p type="" class="gmlcjf0000-7eh">gmlcjf0000@gmail.com</p>
+                                        <p type="" class="gmlcjf0000-7eh" th:attr="email=${email}" th:text=${email}>없음</p>
                                     </div>
                                 </div>
 
@@ -825,7 +825,6 @@
     let pagedetailHideBtn = document.getElementById("pagedetailHideBtn");
     let pagedetailShowBtn = document.getElementById("pagedetailShowBtn");
 
-    // 메인 마이페이지 버튼 - 토글
     // 메인 마이페이지 버튼 - 토글
     mypageBtn.addEventListener('click', function () {
         if (!logined) {	// 로그인 되어 있지 않다면, 로그인창 띄우기
