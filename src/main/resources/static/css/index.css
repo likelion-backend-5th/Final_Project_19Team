@@ -21,6 +21,16 @@ span {
 
 }
 
+.contents {
+    color: #1E1E1E;
+    font-size: 10px;
+    text-align: left;
+    font-weight: 500;
+    width: 250px;
+    overflow-wrap: break-word;
+}
+
+
 .nav {
     position: relative;
     left: -10px;
@@ -73,8 +83,8 @@ span {
 }
 
 .nav_btn_list {
-    margin-right: 17px;
     display: flex;
+    margin-right: 17px;
     width: 34px;
     height: 34px;
     padding: 10px;
@@ -89,7 +99,24 @@ span {
     padding: 0;
 }
 
+/*즐겨찾기 히든*/
+#starBtn {
+    display: none;
+}
+
+#logoutBtn{
+    padding-left: 2px;
+}
+
 .nav_btn_list_selected {
+    background-color: #B73A3A;
+}
+
+.nav_btn_list:hover{
+    background-color: #B73A3A;
+}
+
+.stars_btn:hover{
     background-color: #B73A3A;
 }
 
@@ -196,8 +223,13 @@ span {
     line-height: 10px;
     font-size: 15px;
     color: white;
+    border: 0;
     background: #3F51B5;
     border-radius: 50%;
+}
+
+.sort_up_btn:hover, .sort_down_btn:hover, .match_making_btn:hover{
+    background: #B73A3A;
 }
 
 .sort_up_btn,
@@ -215,6 +247,7 @@ span {
     line-height: 10px;
     font-size: 10px;
     color: white;
+    border: 0;
     background: #3F51B5;
     border-radius: 50%;
 }
@@ -254,14 +287,11 @@ span {
 }
 
 .stars_btn {
-    position: absolute;
+    position: relative;
     width: 28px;
     height: 28px;
-    /* 버튼의 위치를 설정하기 위해 절대 위치 설정 */
-    top: 12px;
-    /* 원하는 위치로 조절 */
-    right: 12px;
-    /* 원하는 위치로 조절 */
+    top: -91px;
+    right: -112px;
     border: none;
     border-radius: 50%;
     background-color: #6f6f6f;
@@ -280,7 +310,7 @@ span {
 }
 
 .title {
-    margin-top: 10px;
+    margin-top: 5px;
     font-weight: 600;
     text-align: left;
     color: #1E1E1E;
@@ -291,7 +321,7 @@ span {
     width: 50px;
     height: 23px;
     /* 버튼의 위치를 설정하기 위해 절대 위치 설정 */
-    top: -5px;
+    top: -20px;
     /* 원하는 위치로 조절 */
     right: 5px;
     /* 원하는 위치로 조절 */
@@ -317,7 +347,7 @@ span {
     width: 50px;
     height: 23px;
     /* 버튼의 위치를 설정하기 위해 절대 위치 설정 */
-    top: -5px;
+    top: -20px;
     /* 원하는 위치로 조절 */
     right: 5px;
     /* 원하는 위치로 조절 */
@@ -342,7 +372,7 @@ span {
     display: flex;
     flex-wrap: wrap;
     overflow: hidden;
-    margin-top: 5px;
+    margin: 10px 10px;
 }
 
 .stacks_button {

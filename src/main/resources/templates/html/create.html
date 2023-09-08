@@ -20,7 +20,8 @@
     <form class="createForm slide-in-top" th:action="@{/createTeam}" th:method="post" id="createForm">
         <div class="createFormLogo">
             <div class="createFormLogoText">Create Team </div>
-            <img class="createFormLogoImg" src="../assets/create/close.svg" alt="#">
+            <img class="createFormLogoImg" src="../../static/assets/create/close.svg" th:src="@{/assets/create/close.svg}"  alt="#">
+
         </div>
         <input class="createTeamName" name="teamName" id="teamName" placeholder="팀 이름을 입력하세요" required>
         <div class="teamCreateInputGroup">
@@ -78,7 +79,7 @@
                 <div class="teamTechLabel" title="해당 팀의 핵심 기술 스택을 최대 4가지까지 골라주세요!">Tech</div>
                 <div class="teamTechStackInputGroup">
                     <div class="teamTechStackInputWithSearchGroup" id="teamTechStackInputWithSearchGroup">
-                        <input class="teamTechStackInput" id="teamTechStackInput">
+                        <input class="teamTechStackInput" id="teamTechStackInput" placeholder="기술스택입력 하세요(java, react, vue, spring...)">
                         <div class="teamTechStackInputSearch"  onclick="techStackInputEntered()">Search</div>
                     </div>
 
@@ -141,7 +142,7 @@
 
             <div class="teamDoubleLineInputGroup">
                 <div class="teamTechLabel" title="팀에 대한 설명을 적어주세요!">Team Info</div>
-                <textarea class="teamCreateTextarea" name="teamDescribe" id="teamDescribe"></textarea>
+                <textarea class="teamCreateTextarea" name="teamDescribe" id="teamDescribe" placeholder="팀정보를 입력해주세요"></textarea>
             </div>
 
             <div class="teamSingleLineInputGroup">
@@ -164,7 +165,7 @@
 
             <div class="teamSingleLineInputGroup">
                 <div class="teamTagLabel" title="팀을 만들면서 같이 공고글도 작성하실 생각인가요?">Recruit</div>
-                <label class="teamRecruitCheckLabel" for="recruitCheck">팀을 만들면서 같이 공고글도 작성하실 생각인가요? </label>
+                <label class="teamRecruitCheckLabel" for="recruitCheck">공고글 추가(선택)</label>
                 <input class="teamRecruitCheck" type="checkbox" id="recruitCheck" name="recruitCheck" onclick="checkRecruit()">
             </div>
 
@@ -184,25 +185,19 @@
 
             <div class="recruitTitleInfo" id="recruitTitleInfo">
                 <div class="teamTechLabel" title="모집 공고글에 적히게 될 설명을 적어주세요!">Recruit Title</div>
-                <input class="recruitTitleInput" type="text" id="teamRecruitName" name="teamRecruitName">
+                <textarea class="recruitTitleInput" type="text" id="teamRecruitName" name="teamRecruitName" placeholder="모집 공고글 제목입력"></textarea>
             </div>
 
             <div class="recruitDetailsInfo" id="recruitDetailsInfo">
                 <div class="teamTechLabel" title="모집 공고글에 적히게 될 설명을 적어주세요!">Recruit Info</div>
-                <textarea class="teamCreateTextarea" name="teamRecruitDetails" id="teamRecruitDetails"></textarea>
+                <textarea class="teamCreateTextarea" name="teamRecruitDetails" id="teamRecruitDetails" placeholder="모집 공고글 내용입력"></textarea>
             </div>
-
-
-
 
         </div>
         <div class="singUpButtonGroup">
             <button class="singUpButton" id="signUpButton" type="submit">등록</button>
         </div>
 
-        <script>
-
-        </script>
     </form>
 </div>
 </body>
