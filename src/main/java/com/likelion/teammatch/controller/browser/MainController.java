@@ -29,7 +29,7 @@ public class MainController {
 
     @GetMapping("/main")
     public String getMainPage(
-            @RequestParam(value = "page", required = false, defaultValue = "0") Integer page, UserProfileDto dto,
+            @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
             Model model
     ){
         List<RecruitDraftDto> recruitInfoList = recruitService.getRecruitDraftList(page);
@@ -41,6 +41,7 @@ public class MainController {
         model.addAttribute("username", username);
         model.addAttribute("phone", profileOfUser.getPhone());
         model.addAttribute("email", profileOfUser.getEmail());
+        model.addAttribute("techStackList", profileOfUser.getTechStackList());
         if (SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser")) model.addAttribute("logined", false);
         else model.addAttribute("logined", true);
 
