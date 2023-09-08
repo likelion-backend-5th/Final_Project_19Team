@@ -313,7 +313,7 @@
         <!-- login.html -->
     </div>
     <form class="item--cUZ" id="loginModal" th:action="@{/login}" th:method="post">
-        <img src="../assets/login/logo.png" class="image-9-CWd" alt="logo">
+        <img th:src="@{/assets/login/logo.png}" src="../../static/assets/login/logo.png" class="image-9-CWd" alt="logo">
         <p class="login-page-7AR">Login page</p>
         <div class="line"></div>
 
@@ -344,7 +344,7 @@
 
                     <div class="auto-group-ptnd-fwX">
                         <div class="alarm-oH3">Alarm</div>
-                        <img id="alarmClose" class="close-uqs" src="../assets/alarm/close.svg" alt="X" />
+                        <img id="alarmClose" class="close-uqs" th:src="@{/assets/alarm/close.svg}" src="../../static/assets/alarm/close.svg" alt="X" />
                     </div>
 
                     <!-- Team Reader -->
@@ -363,7 +363,7 @@
     </div>
     <!-- mypage.html -->
     <div id="mypagePage" class="item--Fa1">
-        <img id="mypageClose" class="close-N2M" src="../assets/mypage/close.svg" alt="X" />
+        <img id="mypageClose" class="close-N2M" th:src="@{/assets/mypage/close.svg}" src="../../static/assets/mypage/close.svg" alt="X" />
         <div class="profile-gQR">My profile</div>
         <div class="group-372-UbB">
             <div class="group-371-PCM">
@@ -372,7 +372,7 @@
                         <!-- 프로필 -->
                         <div class="group-347-ETs">
                             <div class="mat-avatar-wt5">person</div>
-                            <img id="helpBtn" class="help-B1j" src="../assets/mypage/help.svg" alt="help" />
+                            <img id="helpBtn" class="help-B1j" th:src="@{/assets/mypage/help.svg}" src="../../static/assets/mypage/help.svg" alt="help" />
                         </div>
 
                         <!-- 회원점수/등급(Toggle hidden) -->
@@ -383,7 +383,7 @@
 
                                         <div class="group-354-Pn1">
                                             <div class="group-348-6wK">
-                                                <img class="person-add-dwF" src="../assets/mypage/stroke.svg"
+                                                <img class="person-add-dwF" src="../../static/mypage/stroke.svg" th:src="@{/assets/mypage/stroke.svg}"
                                                      alt="회원점수" />
                                                 <p class="item--mGm">회원점수</p>
                                             </div>
@@ -397,7 +397,7 @@
 
                                         <div class="group-354-Pn1">
                                             <div class="group-348-6wK">
-                                                <img class="person-add-dwF" src="../assets/mypage/happy-face.svg"
+                                                <img class="person-add-dwF"src="../../static/assets/mypage/happy-face.svg" th:src="@{/assets/mypage/happy-face.svg}"
                                                      alt="회원등급" />
                                                 <p class="item--mGm">회원등급</p>
                                             </div>
@@ -410,7 +410,7 @@
 
                                         <div class="group-354-Pn1">
                                             <div class="group-348-6wK">
-                                                <img class="person-add-dwF" src="../assets/mypage/error.svg"
+                                                <img class="person-add-dwF" src="../../static/assets/mypage/error.svg" th:src="@{/assets/mypage/error.svg}"
                                                      alt="중도포기" />
                                                 <p class="item--mGm">중도포기</p>
                                             </div>
@@ -425,7 +425,8 @@
                                     </div>
                                 </div>
                                 <img id="pagedetailShowBtn" class="chevron-right-M7o"
-                                     src="../assets/mypage/chevron-down.svg" alt="#" />
+                                     src="../../static/assets/mypage/chevron-down.svg" th:src="@{/assets/mypage/chevron-down.svg}"
+                                     alt="#" />
                             </div>
                         </div>
                         <!-- 회원정보 -->
@@ -498,7 +499,8 @@
                                     <div class="auto-group-esqh-TtM">
                                         <div class="group-354-Pn1">
                                             <div class="group-348-6wK">
-                                                <img class="person-add-dwF" src="../assets/mypage/stroke.svg"
+                                                <img class="person-add-dwF" src="../../static/assets/mypage/stroke.svg" th:src="@{/assets/mypage/stroke.svg}"
+
                                                      alt="회원점수" />
                                                 <p class="item--mGm">회원점수</p>
                                             </div>
@@ -511,7 +513,7 @@
                                         </div>
                                         <div class="group-354-Pn1">
                                             <div class="group-348-6wK">
-                                                <img class="person-add-dwF" src="../assets/mypage/happy-face.svg"
+                                                <img class="person-add-dwF" src="../../static/assets/mypage/happy-face.svg" th:src="@{/assets/mypage/happy-face.svg}"
                                                      alt="회원등급" />
                                                 <p class="item--mGm">회원등급</p>
                                             </div>
@@ -523,7 +525,7 @@
                                         </div>
                                         <div class="group-354-Pn1">
                                             <div class="group-348-6wK">
-                                                <img class="person-add-dwF" src="../assets/mypage/error.svg"
+                                                <img class="person-add-dwF" src="../../static/assets/mypage/error.svg" th:src="@{/assets/mypage/error.svg}"
                                                      alt="중도포기" />
                                                 <p class="item--mGm">중도포기</p>
                                             </div>
@@ -544,20 +546,24 @@
                                     <div class="group-319-YBj">
                                         <div class="auto-group-fvdt-j1K">
                                             <div class="group-320-Eim">
-                                                <img class="calendar-sE1" src="../assets/mypage/calendar.svg"
+                                                <img class="calendar-sE1" src="../../static/assets/mypage/calendar.svg" th:src="@{/assets/mypage/calendar.svg}"
+
                                                      alt="#">
                                                 <p class="item--CGH">날짜</p>
                                             </div>
                                             <div class="group-320-Eim">
-                                                <img class="calendar-sE1" src="../assets/mypage/people.svg" alt="#">
+                                                <img class="calendar-sE1" src="../../static/assets/mypage/people.svg" th:src="@{/assets/mypage/people.svg}" alt="#">
+
                                                 <p class="item--CGH">활동내역</p>
                                             </div>
                                             <div class="group-320-Eim">
-                                                <img class="calendar-sE1" src="../assets/mypage/heart.svg" alt="#">
+                                                <img class="calendar-sE1" src="../../static/assets/mypage/heart.svg" th:src="@{/assets/mypage/heart.svg}"
+                                                     alt="#">
                                                 <p class="item--CGH">추천수</p>
                                             </div>
                                             <div class="group-320-Eim">
-                                                <img class="calendar-sE1" src="../assets/mypage/search.svg" alt="#">
+                                                <img class="calendar-sE1" src="../../static/assets/mypage/search.svg" th:src="@{/assets/mypage/search.svg}"
+                                                     alt="#">
                                                 <p class="item--CGH">상세보기</p>
                                             </div>
                                         </div>
@@ -620,7 +626,8 @@
 
                                 </div>
                                 <img id="pagedetailHideBtn" class="chevron-right-M7o"
-                                     src="../assets/mypage/chevron-up.svg" alt="up" />
+                                     src="../../static/assets/mypage/chevron-up.svg" th:src="@{/assets/mypage/chevron-up.svg}"
+                                     alt="up" />
                             </div>
                         </div>
                     </div>
