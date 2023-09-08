@@ -5,10 +5,13 @@
 }
 
 .out_btn {
+    display: flex;
+    flex-direction: column;
     position: relative;
+    padding: 0 10px;
     top: 73px;
     left: 200px;
-    width: 100px;
+    width: fit-content;
     height: 2.5rem;
     left: 0rem;
     margin: 0;
@@ -51,7 +54,8 @@
     background-color: white;
     border-radius: 5px;
     padding: 10px;
-    width: 150px;
+    width: 125px;
+    height: fit-content;
     margin: 10px 0;
 }
 
@@ -88,6 +92,20 @@
     margin: 10px;
     width: 350px;
 
+}
+
+
+.response_class {
+    margin: 10px;
+}
+
+
+.massege_box {
+    align-items: end;
+    flex-direction: column;
+    justify-content: end;
+    display: flex;
+    margin: 15px 5px;
 }
 
 /* 채팅창 .inner */
@@ -141,22 +159,26 @@
 /*내가 보낸 메시지*/
 .chat_wrap .mymsg_sender_time {
     top: 2px;
+    left: 100px;
     position: relative;
-    bottom: 4px;
-    float: right;
 }
 
 .chat_wrap .mymsg {
-    top: 4px;
-    bottom: 11px;
+    left: -8px;
+    top: 10px;
+    bottom: 10px;
+    margin: 0;
     position: relative;
-    float: right;
+    width: fit-content;
+    max-width: 151px;
     background: #ffefc4;
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 4px;
-    display: inline-block;
-    max-width: 60%;
+    display: flex;
+    justify-content: center;
+    word-break: break-all;
 }
+
 
 /*애니메이션*/
 .chat_wrap .item .box {

@@ -4,7 +4,6 @@
     left: 1079px;
     top: 100px;
     display: flex;
-    cursor: pointer;
     overflow: hidden;
 }
 
@@ -19,7 +18,7 @@
 
 .profile-gQR {
     position: relative;
-    left: 90px;
+    left: 118px;
     top: 10px;
     font-size: 20px;
     font-weight: 500;
@@ -33,7 +32,7 @@
     position: relative;
     width: 22px;
     height: 22px;
-    left: 32rem;
+    left: 33.5rem;
     top: 1rem;
 }
 .group-372-UbB {
@@ -270,6 +269,7 @@
     position: relative;
     top: 10px;
     width: 2rem;
+    cursor: pointer;
     height: 2rem;
 }
 .group-367-cpR {
@@ -365,11 +365,6 @@
     border-radius: 0.4rem;
     flex-shrink: 0;
 }
-
-
-
-
-
 
 .line-75-4P3 {
     margin-top: 1.3rem;

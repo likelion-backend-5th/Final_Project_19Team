@@ -1,6 +1,5 @@
 * {
     box-sizing: border-box;
-    font-family: Noto Sans KR, 'Source Sans Pro';
     margin: 0 auto;
     font-size: 80%;
 }
@@ -36,7 +35,7 @@ span {
 }
 
 .createFormLogo {
-    margin: 0rem 0.004rem 0.9rem 0.2rem;
+    margin: 0 0.004rem 0.9rem 0.2rem;
     width: calc(100% - 0.2045rem);
     display: flex;
     align-items: center;
@@ -52,7 +51,6 @@ span {
     line-height: 1.6;
     letter-spacing: 0.025rem;
     color: #1e1e1e;
-    font-family: Roboto, 'Source Sans Pro';
     white-space: nowrap;
     flex-shrink: 0;
     justify-content: flex-start;
@@ -61,7 +59,7 @@ span {
 .createFormLogoImg {
     margin-bottom: 0.2rem;
     position: relative;
-    right: 200px;
+    right: 210px;
     object-fit: contain;
     vertical-align: top;
     flex-shrink: 0;
@@ -76,7 +74,6 @@ span {
     font-weight: 500;
     border: 0;
     color: #1e1e1e;
-    font-family: Roboto, 'Source Sans Pro';
     white-space: nowrap;
     background-color: #ffffff;
     border-radius: 5px;
@@ -111,7 +108,6 @@ span {
     margin-left: 0;
     margin-right: 0;
     color: #ffffff;
-    font-family: Noto Sans KR, 'Source Sans Pro';
     white-space: nowrap;
     box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
     background-color: #505c68;
@@ -127,7 +123,6 @@ span {
     align-items: center;
     justify-content: center;
     color: #ffffff;
-    font-family: Noto Sans KR, 'Source Sans Pro';
     white-space: nowrap;
     box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
     background-color: #505c68;
@@ -145,9 +140,8 @@ span {
     align-items: center;
     justify-content: center;
     margin-left: 0;
-    margin-right: 0rem;
+    margin-right: 0;
     color: #ffffff;
-    font-family: Noto Sans KR, 'Source Sans Pro';
     white-space: nowrap;
     box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
     background-color: #505c68;

@@ -76,9 +76,5 @@ public class AuthController {
 
         return "redirect:/main";
     }
-    @GetMapping("/declare")
-    public String showDeclarePage() {
-        return "html/declare";
-    }
 
 }

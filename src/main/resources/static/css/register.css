@@ -155,7 +155,7 @@ input {
     border: solid 0.05rem #471d1d;
     box-sizing: border-box;
     background-color: #ffffff;
-    border-radius: 1rem;
+    border-radius: 5px;
 }
 
 .id-PkV {
@@ -212,10 +212,15 @@ input {
     font-size: 2rem;
     font-weight: 700;
     color: #ffffff;
+    border: 0;
     font-family: Noto Sans KR, 'Source Sans Pro';
     background-color: #b63939;
-    border-radius: 1rem;
+    border-radius: 5px;
     box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
+}
+
+.singupbutton-Quo:hover{
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
 }
 
 .searchBtn{
@@ -227,11 +232,15 @@ input {
     line-height: 1.4475;
     color: #ffffff;
     font-family: Noto Sans KR, 'Source Sans Pro';
-    background: black;
+    background: #3f51b5;
     width: 5rem;
     height: 3rem;
     align-items: center;
     display: flex;
     justify-content: center;
-    border-radius: 1rem;
+    border-radius: 5px;
+}
+
+.searchBtn:hover {
+    box-shadow: 0 0 10px #3f51b5;
 }

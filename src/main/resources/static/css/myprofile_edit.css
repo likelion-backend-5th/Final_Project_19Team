@@ -1,3 +1,12 @@
+*{
+    font-size: 70%;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.container{
+
+}
 .profileContainer {
     box-sizing: border-box;
     padding: 1.3rem 2rem 1.7rem 2rem;
@@ -7,11 +16,12 @@
     flex-direction: column;
     background-color: #e6e6e6;
     border-radius: 1rem;
-    margin-top: 2rem;
 }
 
 .profileTitleGroup {
-    margin: 0rem 0.004rem 0.9rem 0.2rem;
+    position: relative;
+    top: -5px;
+    margin: 0 0.004rem 0.9rem 0.2rem;
     width: calc(100% - 0.2045rem);
     display: flex;
     align-items: center;
@@ -19,14 +29,13 @@
 }
 
 .profileTitleUsername {
-    margin-right: 50.8rem;
+    margin-right: 66rem;
     display: flex;
-    font-size: 2rem;
-    font-weight: 500;
+    font-size: 20px;
+    font-weight: 700;
     line-height: 1.6;
     letter-spacing: 0.025rem;
     color: #1e1e1e;
-    font-family: Roboto, 'Source Sans Pro';
     white-space: nowrap;
     flex-shrink: 0;
 }
@@ -39,11 +48,11 @@
     flex-shrink: 0;
 }
 
-.profileInfoGroup{
+.profileInfoGroup1{
     margin-bottom: 1.7rem;
-    box-sizing: border-box;
-    padding: 2.2rem 1.9rem 2.5rem 2rem;
+    padding: 20px 20px 10px 20px;
     width: 100%;
+    height: fit-content;
     row-gap: 1rem;
     display: flex;
     flex-direction: row;
@@ -53,9 +62,42 @@
     flex-shrink: 0;
 }
 
+
+
+.profileInfoGroup2{
+    margin-bottom: 1.7rem;
+    padding: 20px 20px 10px 20px;
+    width: 100%;
+    height: 143px;
+    row-gap: 1rem;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
+    background-color: #ffffff;
+    border-radius: 1rem;
+    flex-shrink: 0;
+}
+
+.profileInfoGroup3{
+    margin-bottom: 1.7rem;
+    padding: 20px 20px 10px 20px;
+    width: 100%;
+    height: fit-content;
+    row-gap: 1rem;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
+    background-color: #ffffff;
+    border-radius: 1rem;
+    flex-shrink: 0;
+}
+
+
+
 .profileContainerLeft,
 .profileContainerRight {
-    width: 50%;
+    width: fit-content;
+    height: fit-content;
 }
 
 .profileSingleLineGroup {
@@ -63,23 +105,22 @@
     display: flex;
     align-items: center;
     flex-shrink: 0;
-    margin-top: 0.5rem;
+    margin: 0 0 12px 0;
 }
 
 
 
 .profileTagLabel {
-    margin-right: 2.1rem;
-    width: 5rem;
+    margin-right: 1rem;
+    width: 100px;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1rem;
+    font-size: 15px;
     font-weight: 700;
     line-height: 1.4475;
     color: #ffffff;
-    font-family: Noto Sans KR, 'Source Sans Pro';
     white-space: nowrap;
     box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
     background-color: #505c68;
@@ -89,7 +130,7 @@
 
 .profileTagButton {
     margin-right: 1.8rem;
-    width: fit-content;
+    width: 245px;
     min-width: 5rem;
     height: 100%;
     display: flex;
@@ -99,37 +140,45 @@
     font-weight: 700;
     line-height: 1.4475;
     color: #424b5a;
-    font-family: Noto Sans KR, 'Source Sans Pro';
     white-space: nowrap;
     box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
-    background-color: #d9d9d9;
+    background-color: white;
+    border: #1E1E1E 1px solid;
     border-radius: 0.5rem;
     flex-shrink: 0;
     padding-left: 1rem;
     padding-right: 1rem;
 }
 
-.profileLongLineGroup {
+.profileLongLineGroup1 {
     width: 100%;
-    height: 8rem;
+    height: 90px;
+    margin-bottom: 6px;
     display: flex;
     align-items: center;
     flex-shrink: 0;
-    margin-top: 1rem;
 }
+
+.profileLongLineGroup2 {
+    width: 100%;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
 
 .profileRightTagLabel{
     min-width: 5rem;
-    width: fit-content;
+    width: 100px;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 15px;
     font-weight: 700;
     line-height: 1.4475;
     color: #ffffff;
-    font-family: Noto Sans KR, 'Source Sans Pro';
     white-space: nowrap;
     box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
     background-color: #505c68;
@@ -144,12 +193,12 @@
     flex-shrink: 0;
 }
 .profileRightDescribeBox {
-    box-sizing: border-box;
     padding: 0.8rem 0.7rem 1.9rem 0.7rem;
     width: 30rem;
-    height: 8rem;
-    background-color: #d9d9d9;
+    height: 90px;
+    background-color: white;
     border-radius: 0.5rem;
+    border: #1E1E1E 1px solid;
     box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
     overflow: auto;
     font-size: 1rem;
@@ -173,15 +222,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem;
-    font-weight: 400;
-    line-height: 1.4475;
+    font-size: 20px;
+    font-weight: 700;
     color: #ffffff;
-    font-family: Noto Sans KR, 'Source Sans Pro';
     white-space: nowrap;
     box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
     background-color: #979797;
-    border-radius: 1rem;
+    border-radius: 5px;
+    border: 0;
     text-decoration: none;
 }
 
@@ -190,10 +238,10 @@
 }
 
 .neon-soda-button:hover {
-    color: black;
-    background: rgba(0, 255, 255, 0.8);
-    box-shadow: 0 0 10px rgba(0, 255, 255, 0.8), 0 0 20px rgba(0, 255, 255, 0.6), 0 0 30px rgba(0, 255, 255, 0.4);
+    box-shadow: 0 0 10px #979797;
+    transition: box-shadow 0.3s; /* 네온 효과 변경 애니메이션 */
 }
+
 
 .profileTechStackInputGroup{
     width: 100%;
@@ -201,37 +249,49 @@
 
 .profileTechStackInputWithSearchGroup{
     width: 100%;
-    height: 3.4rem;
+    position: relative;
     display: flex;
 }
 
-.profileTechStackInput{
+.profileTechStackInput {
     margin-left: 0;
-    width: 50rem;
-    height: 3.4rem;
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-    margin-right: 1rem;
+    width: 609px;
+    height: 80px;
+    font-size: 15px;
+    margin-right: 5px;
+    border-radius: 5px;
+    border: 1px #1E1E1E solid;
+    box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
 }
 
 .profileTechStackInputSearch{
-    background: #43b0be;
-    border: 1px solid #ccc; /* Add border for a clear visual separation */
+    display: flex;
+    background: #3f51b5;
     border-radius: 5px;
-    width: fit-content;
-    height: 3rem;
-    font-size: 1.5rem;
+    width: 97px;
+    text-align: center;
+    font-weight: 700;
+    align-items: center;
+    height: 80px;
+    font-size: 15px;
     margin-left: 0;
-    padding-top: 5px;
     justify-content: center;
     color: white;
+    box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
 }
+
+.profileTechStackInputSearch:hover{
+    box-shadow: 0 0 10px #3f51b5;
+    transition: box-shadow 0.3s; /* 네온 효과 변경 애니메이션 */
+}
+
 
 .profileTechStackLabelGroup{
     margin-top: 1rem;
     width: 100%;
     display: flex;
     flex-direction: row;
+
 }
 
 .profileTechStackLabel {
@@ -242,31 +302,29 @@
     display:flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid #ccc; /* Add border for a clear visual separation */
+    border: #1E1E1E 1px solid;
     border-radius: 5px;
+    font-size: 10px;
     background-color: white;
 }
 
 .profileDoubleLineGroup{
-    height: 6.6rem;
+    height: 80px;
     display: flex;
-    align-items: center;
+    margin: 0 0 10px 0;
     flex-shrink: 0;
-    margin-top: 0.5rem;
 }
 
 .profileDoubleTagLabel{
-    margin-right: 2.1rem;
-    width: 5rem;
+    margin-right: 1.1rem;
+    width: 100px;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1rem;
+    font-size: 15px;
     font-weight: 700;
-    line-height: 1.4475;
     color: #ffffff;
-    font-family: Noto Sans KR, 'Source Sans Pro';
     white-space: nowrap;
     box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
     background-color: #505c68;
@@ -275,9 +333,12 @@
 }
 
 .profileAboutMe {
-    width: 50rem;
+    width: 711px;
     height: 100%;
-    font-size: 1rem;
-    font-family: Noto Sans KR, 'Source Sans Pro';
+    font-size: 15px;
+    align-items: center;
+    border: #1E1E1E 1px solid;
+    border-radius: 5px;
+    box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
     white-space: pre-wrap;
 }
