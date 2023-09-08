@@ -436,7 +436,7 @@
                                         <p class="item--Pih">아이디</p>
                                     </div>
                                     <div class="fdsdf">
-                                        <p class="gmlcjf0000-7eh">gmlcjf0000</p>
+                                        <p class="gmlcjf0000-7eh" th:attr="username=${username}" onclick="goToMyPage(this)" th:text=${username}>username</p>
                                     </div>
                                 </div>
 
@@ -696,6 +696,11 @@
     </div>
 </body>
 <script>
+    function goToMyPage(element){
+        let username = element.getAttribute("username");
+        window.location.href = '/profile/'+ username;
+    }
+
     function getRecruitDetails(element) {
         if (!logined) {
             loginModal.style.display = 'block';

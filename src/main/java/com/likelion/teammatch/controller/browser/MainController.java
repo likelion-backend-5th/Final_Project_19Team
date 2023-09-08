@@ -30,6 +30,7 @@ public class MainController {
     ){
         List<RecruitDraftDto> recruitInfoList = recruitService.getRecruitDraftList(page);
         model.addAttribute("recruitList", recruitInfoList);
+        model.addAttribute("username", SecurityContextHolder.getContext().getAuthentication().getName());
         if (SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser")) model.addAttribute("logined", false);
         else model.addAttribute("logined", true);
 
