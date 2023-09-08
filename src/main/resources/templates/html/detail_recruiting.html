@@ -17,8 +17,8 @@
 <div class="mainContainer">
     <div class="recruitContainer">
         <div class="auto-group-y3v9-Nwb">
-            <div class="new-create-hU5">모집공고</div>
-            <img class="close-cL9" src="../assets/detail_recruiting/close.svg" alt="#">
+            <div class="new-create-hU5">Recruiting</div>
+            <img class="close-cL9" src="../static/assets/detail_recruiting/close.svg" th:src="@{/assets/detail_recruiting/close.svg}" alt="#">
         </div>
         <div class="singupbutton-jvZ" th:text="${recruit.getRecruitTitle()}">Title : </div>
 
@@ -67,25 +67,25 @@
                 <div class="recruitRecruitDescribeGroup">
                     <div class="recruitRightTagLabel">모집 정보</div>
                     <div class="recruitRightRecruitDescribe">
-                        <div class="recruitRightRecruitDescribeBox" th:text="${recruit.getTeamRecruitDetails()}">
+                        <textarea class="recruitRightRecruitDescribeBox" th:text="${recruit.getTeamRecruitDetails()}">
                             안녕하세요!
-                        </div>
+                        </textarea>
                     </div>
                 </div>
             </div>
         </div>
         <div class="teamDescribeContainer">
             <div class="teamDescribeLabel">팀 정보</div>
-            <div class="teamDescribeBox" th:text="${recruit.getTeamDescribe()}">팀 설명 와다다다</div>
+            <textarea class="teamDescribeBox" th:text="${recruit.getTeamDescribe()}">팀 설명 와다다다</textarea>
         </div>
         <div class="buttonGroup">
 
             <!-- 1. 모집중/등록자 View-->
-            <a class="grayButton neon-soda-button" th:if="${isManager}" th:href="@{'/recruit/' + ${recruitId} + '/edit'}">수정</a>
+            <a class="grayButton neon-gray-button" th:if="${isManager}" th:href="@{'/recruit/' + ${recruitId} + '/edit'}">수정</a>
             <div class="redButton neon-red-button" th:if="!${isFinished} and ${isManager}" onclick="closeRecruit()">모집마감</div>
 
             <!-- 2. 모집중/참여자 View-->
-            <div class="grayButton neon-soda-button" th:if="!${isManager} and !${isFinished}" onclick="createApply()">참여신청</div>
+            <div class="redButton neon-red-button" th:if="!${isManager} and !${isFinished}" onclick="createApply()">참여신청</div>
 
         </div>
     </div>
@@ -169,12 +169,12 @@
             <label class="commentFormLabel" >댓글 작성:</label>
             <div class="commentFormInputWithButton">
                 <textarea class="commentInput" id="commentInput" name="commentInput" required></textarea>
-                <button class="commentButton neon-gray-button" type="submit">작성</button>
+                <button class="commentButton neon-soda-button" type="submit">작성</button>
             </div>
         </form>
     </div>
 
-    <div class="commentContainer">
+    <div id="hidden" class="commentContainers">
         <div class="commentSection">
             <div class="commentEach" th:each="comment : ${comments}">
                 <div class="commentTop">

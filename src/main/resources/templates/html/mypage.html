@@ -9,32 +9,12 @@
 <body>
 
 <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark-subtle rounded-1">
-        <div class="container-fluid">
-            <a class="navbar-brand text-dark" href="#">QuickMatch</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark text-decoration-none" href="#">Main</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white text-decoration-none bg-dark rounded-3">MyPage</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark text-decoration-none" th:href="@{/logout}">logout</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 
     <div class="profileContainer">
         <div class="profileTitleGroup">
-            <div class="profileTitleUsername" th:text="${profile.getUsername()}">username</div>
-            <img class="close-cL9" src="../assets/detail_recruiting/close.svg" alt="#">
+            <div class="profileTitleUsername" th:text="${profile.getUsername()}">Username</div>
+            <img class="close-cL9" src="../../static/assets/mypage/close.svg" th:src="@{/assets/mypage/close.svg}" alt="#">
+
         </div>
 
         <div class="profileInfoGroup">
@@ -95,8 +75,8 @@
 
         <div class="buttonGroup">
             <!-- 1. 모집중/등록자 View-->
-            <a class="grayButton neon-soda-button" th:if="${isOwner}" th:href="@{'/profile/' + ${profile.getUsername()} + '/edit'}">수정</a>
-            <a class="grayButton neon-soda-button" th:href="@{/teamlist}">팀 목록</a>
+            <a class="redButton neon-red-button" th:if="${isOwner}" th:href="@{'/profile/' + ${profile.getUsername()} + '/edit'}">수정</a>
+            <a class="grayButton neon-gray-button" th:href="@{/teamlist}">팀 목록</a>
         </div>
 
 

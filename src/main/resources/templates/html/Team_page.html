@@ -23,22 +23,22 @@
         <p class="Team_text" th:if="!${team.getIsManager()}">Team page / Member</p>
         <div class="Tema_box">
             <div class="Team_box_detail">
-                <div class="btn_blue" th:if="!${team.getIsFinished()}" th:attr="team-id=${team.getTeamId()}" onclick="goToTeamChat(this)">
+                <div class="btn_blue neon-soda-button" th:if="!${team.getIsFinished()}" th:attr="team-id=${team.getTeamId()}" onclick="goToTeamChat(this)">
                     팀 채팅방 이동
                 </div>
-                <div class="btn_red" th:attr="team-id=${team.getTeamName()}" onclick="goToDetails(this)">
+                <div class="btn_red neon-red-button" th:attr="team-id=${team.getTeamName()}" onclick="goToDetails(this)">
                     상세보기
                 </div>
-                <div class="btn_basic neon-soda-button" th:if="!${team.getIsFinished()} and ${team.getIsManager()}" th:attr="team-id=${team.getTeamId()}" onclick="openRecruit(this)">
+                <div class="btn_basic neon-gray-button" th:if="!${team.getIsFinished()} and ${team.getIsManager()}" th:attr="team-id=${team.getTeamId()}" onclick="openRecruit(this)">
                     추가모집
                 </div>
-                <div class="btn_basic neon-soda-button" th:if="!${team.getIsFinished()} and ${team.getIsManager()}" th:attr="team-id=${team.getTeamId()}" onclick="finishTeam(this)">
+                <div class="btn_basic neon-gray-button" th:if="!${team.getIsFinished()} and ${team.getIsManager()}" th:attr="team-id=${team.getTeamId()}" onclick="finishTeam(this)">
                     팀 종료
                 </div>
-                <div class="btn_basic neon-soda-button" th:if="${team.getIsManager()}" th:attr="team-id=${team.getTeamId()}" onclick="deleteTeam(this)">
+                <div class="btn_basic neon-gray-button" th:if="${team.getIsManager()}" th:attr="team-id=${team.getTeamId()}" onclick="deleteTeam(this)">
                     팀 삭제
                 </div>
-                <div class="btn_basic neon-soda-button" th:if="!${team.getIsManager()}" th:attr="team-id=${team.getTeamId()}" onclick="leaveTeam(this)">
+                <div class="btn_basic neon-gray-button" th:if="!${team.getIsManager()}" th:attr="team-id=${team.getTeamId()}" onclick="leaveTeam(this)">
                     팀 탈퇴하기
                 </div>
             </div>

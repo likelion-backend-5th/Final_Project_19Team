@@ -10,30 +10,35 @@
 
 <!-- 채팅창 외부 컨테이너-->
 <div id="conversationDiv" class="chat_wrap">
-    <div>
+    <div class="out_btn">
         <span id="username" th:text=${username}></span>
-        <a href="/teamlist">채팅나가기</a>
+        <a class="out_link" href="/teamlist">채팅나가기</a>
         <p></p>
     </div>
 
-    <!-- 실시간 참가자 목록 -->
-    <div id="participants-list">
-        <h4>현재 대화 멤버</h4>
-        <ul id="participants"></ul>
+
+    <div class="flexing">
+        <!-- 실시간 참가자 목록 -->
+        <div id="participants-list">
+            <h4 class="talking_member">현재 대화 멤버</h4>
+            <ul class="chat_list" id="participants"></ul>
+        </div>
+        <div class="chat_body">
+            <!-- 채팅 내용 박스 -->
+            <div class="inner">
+                <!--받은 응답을 표시하는 부분-->
+                <p id="response"></p>
+            </div>
+
+            <!-- 메시지 입력/전송 양식-->
+            <form class="message" id="message-form">
+                <input class="message_text" type="text" id="message" placeholder="메시지를 입력하세요."/>
+                <button class="message_send" type="submit">Send</button>
+            </form>
+
+        </div>
+
     </div>
-
-    <!-- 채팅 내용 박스 -->
-    <div class="inner">
-        <!--받은 응답을 표시하는 부분-->
-        <p id="response"></p>
-
-
-    </div>
-    <!-- 메시지 입력/전송 양식-->
-    <form id="message-form">
-        <input type="text" id="message" placeholder="메시지를 입력하세요."/>
-        <button type="submit">Send</button>
-    </form>
 
 
 </div>
