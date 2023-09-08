@@ -44,9 +44,9 @@
                 <button id="mypageBtn" class='nav_btn_list'>
                     <img src="../../static/assets/index/mypage.svg" th:src="@{/assets/index/mypage.svg}" alt="마이페이지" />
                 </button>
-            <!-- 신고페이지버튼  -->
-                <button id="sinrenBtn" class='nav_btn_list'>
-                    <img src="../../static/assets/index/siren.svg" th:src="@{/assets/index/siren.svg}" alt="신고" />
+            <!-- 로그아웃버튼  -->
+                <button id="logoutBtn" class='nav_btn_list'>
+                    <img src="../../static/assets/index/logout.svg" th:src="@{/assets/index/logout.svg}" alt="로그아웃" />
                 </button>
             </div>
         </div>
@@ -115,9 +115,9 @@
                 </div>
             </div>
             <div class="grid_report_item_text_low1">
-                <div class="contents" th:text="${recruit.getRecruitDetails()}">
-                    asdfghkjsdjfalsdfasdfasdfasdfasdfasdfasdfasdfasdfsadfsadfsadfsadfsadfsadfsadfsdafsdafasdfsdaf
-                </div>
+                <p class="contents" th:text="${recruit.getRecruitDetails()}">
+                    asdfghkjsdjfalsdfasdfasdfasdfasdfasdfasdfasdfasdfsadasdfghkjsdjfalsdfasdfasdfasdfasdfasdfasdfasdfasfsdafsdafasdfsdaf
+                </p>
             </div>
         </div>
     </div>
@@ -332,7 +332,8 @@
             <button class="singupbutton-SA5" type="submit">Login</button>
             <a class="singupbutton-Jxy" th:href="@{/register}">Sign up</a>
         </div>
-        <img class="close-PDj" src="../assets/login/close.svg" alt="x" onclick="closeLoginPage()">
+        <img class="close-PDj" src="../../static/assets/login/close.svg" th:src="@{/assets/login/close.svg}" alt="x" onclick="closeLoginPage()">
+
     </form>
 
     <!-- alarm.html -->
@@ -457,32 +458,32 @@
                                     </div>
                                 </div>
 
-                                <div class="group-360-t1F">
-                                    <div class="clatss">
-                                        <p class="item--Pih">수상이력</p>
-                                    </div>
-                                    <div class="fdsdf">
-                                        <p class="gmlcjf0000-7eh">미선택</p>
-                                    </div>
-                                </div>
+<!--                                <div class="group-360-t1F">-->
+<!--                                    <div class="clatss">-->
+<!--                                        <p class="item&#45;&#45;Pih">수상이력</p>-->
+<!--                                    </div>-->
+<!--                                    <div class="fdsdf">-->
+<!--                                        <p class="gmlcjf0000-7eh">미선택</p>-->
+<!--                                    </div>-->
+<!--                                </div>-->
 
                                 <div class="group-360-t1F">
                                     <div class="clatss">
                                         <p class="item--Pih">보유기술</p>
                                     </div>
                                     <div class="fdsdf">
-                                        <p class="gmlcjf0000-7eh">미선택</p>
+                                        <p class="gmlcjf0000-7eh">미선택미선택미선택미택선택미선택미선택미선택</p>
                                     </div>
                                 </div>
 
-                                <div class="group-360-t1F">
-                                    <div class="clatss">
-                                        <p class="item--Pih">자기소개</p>
-                                    </div>
-                                    <div class="fdsdf">
-                                        <p class="gmlcjf0000-7eh">미선택</p>
-                                    </div>
-                                </div>
+<!--                                <div class="group-360-t1F">-->
+<!--                                    <div class="clatss">-->
+<!--                                        <p class="item&#45;&#45;Pih">자기소개</p>-->
+<!--                                    </div>-->
+<!--                                    <div class="fdsdf">-->
+<!--                                        <p class="gmlcjf0000-7eh">미선택</p>-->
+<!--                                    </div>-->
+<!--                                </div>-->
                             </div>
                         </div>
                         <div class="flex-412">
@@ -868,6 +869,7 @@
     });
 
     // let sinrenBtn = document.getElementById("sinrenBtn");
+
     // let starBtn = document.getElementById("starBtn");
 
 

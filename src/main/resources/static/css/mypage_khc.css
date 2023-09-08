@@ -1,7 +1,7 @@
 .item--Fa1 {
     visibility: hidden;
     position: absolute;
-    left: 1150px;
+    left: 1079px;
     top: 100px;
     display: flex;
     cursor: pointer;
@@ -40,14 +40,14 @@
     box-sizing: border-box;
     padding: 3rem 1.5rem 0rem 1.5rem;
     width: 28.9rem;
-    height: 53.6rem;
+    height: 51.6rem;
     background-color: #505c68;
     border-radius: 0.5rem;
 }
 .group-371-PCM {
     box-sizing: border-box;
     width: 100%;
-    height: 97%;
+    height: 750px;
     box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
     background-color: #e5e5e5;
     border-radius: 0.5rem;
@@ -103,6 +103,7 @@
     width: 100px;
 }
 
+
 .group-359-KNq {
     position: relative;
     left: -140px;
@@ -124,9 +125,9 @@
 .group-366-dsf {
     visibility: hidden;
     margin: 20px auto;
-    position: relative;
-    top: -591px;
-    right: 140px;
+    position: absolute;
+    top: 168px;
+    right: 41px;
     box-sizing: border-box;
     padding: 10px;
     width: 380px;
@@ -314,12 +315,9 @@
 }
 
 .gmlcjf0000-7eh {
-    font-size: 20px;
     width: 200px;
     font-weight: 400;
     color: #1e1e1e;
-    font-family: Inter, 'Source Sans Pro';
-    white-space: nowrap;
 }
 
 .flex-412{

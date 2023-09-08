@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,11 +27,13 @@ public class TeamInfoDto {
 
     private String teamManagerUsername;
 
+    private String teamType;
+
     private List<String> teamMemberUsername = new ArrayList<>();
     private List<String> teamTechStackName = new ArrayList<>();
 
-    private String createdAt;
-    private String finishedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime finishedAt;
 
     public static TeamInfoDto fromEntity(Team team) {
         TeamInfoDto dto = new TeamInfoDto();
@@ -40,11 +43,12 @@ public class TeamInfoDto {
         dto.setMemberNum(team.getMemberNum());
         dto.setIsOnline(team.getIsOnline());
         dto.setTeamDescribe(team.getTeamDescribe());
+        dto.setTeamType(team.getTeamType().name());
         //teamManagerUsername은 나중에 채울 것
         //team member username은 나중에 채울 것
         //team techStackName은 나중에 채울 것
-        dto.setCreatedAt(team.getCreatedAt().toString());
-        if(team.getFinishedAt() != null) dto.setFinishedAt(team.getFinishedAt().toString());
+        dto.setCreatedAt(team.getCreatedAt());
+        if(team.getFinishedAt() != null) dto.setFinishedAt(team.getFinishedAt());
         return dto;
 
     }
