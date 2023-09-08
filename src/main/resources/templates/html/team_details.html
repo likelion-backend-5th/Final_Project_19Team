@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Team Details</title>
+    <link rel="stylesheet" th:href="@{../css/team_details.css}" href="../../static/css/team_details.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons%3A400">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+KR%3A700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%3A400%2C500%2C700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro%3A400%2C500%2C700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans%3A400">
+</head>
+<body>
+<div class="mainContainer">
+    <div class="teamInfoContainer">
+        <div class="auto-group-y3v9-Nwb">
+            <div class="new-create-hU5">팀 상세보기</div>
+            <img class="close-cL9" src="../assets/detail_recruiting/close.svg" alt="#">
+        </div>
+        <div class="singupbutton-jvZ" th:text="${team.getTeamName()}">Team Name </div>
+
+        <div class="teamCreateInputGroup">
+            <div class="teamContainerLeft">
+                <div class="teamSingleLineInputGroup">
+                    <div class="teamTagLabel">Type</div>
+                    <div class="teamTagButton" th:text="${team.getTeamType()}">프로젝트</div>
+                </div>
+
+
+                <div class="teamSingleLineInputGroup">
+                    <div class="teamTagLabel">Where</div>
+                    <div class="teamTagButton" th:if="${team.getIsOnline()}">온라인</div>
+                    <div class="teamTagButton" th:if="!${team.getIsOnline()}">오프라인</div>
+                </div>
+                <div class="teamSingleLineInputGroup">
+                    <div class="teamTagLabel">Tech</div>
+                    <div class="teamTagButton" th:each="tech : ${team.getTeamTechStackName()}" th:text="${tech}">HTML</div>
+                </div>
+
+                <div class="teamSingleLineInputGroup">
+                    <div class="teamTagLabel">모집인원</div>
+                    <div class="teamTagButton" th:text="${team.getMemberNum()}">3</div>
+                </div>
+
+                <div class="teamSingleLineInputGroup">
+                    <div class="teamTagLabel">작성일자</div>
+                    <div class="teamTagButton" th:utext="${#temporals.format(team.getCreatedAt(), 'yyyy.MM.dd')}">2022.08.31</div>
+                </div>
+
+                <div class="teamSingleLineInputGroup">
+                    <div class="teamTagLabel">매니저</div>
+                    <div class="teamTagButton" th:attr="memberName=${team.getTeamManagerUsername()}" th:text="${team.getTeamManagerUsername()}" onclick="getProfile(this)">Moon</div>
+                </div>
+
+                <div class="teamSingleLineInputGroup">
+                    <div class="teamTagLabel">멤버 목록</div>
+                    <div class="teamTagButton" th:attr="memberName=${team.getTeamManagerUsername()}" th:each="member : ${team.getTeamMemberUsername()}" th:text="${member}" onclick="getProfile(this)">Moon</div>
+                </div>
+
+                <div class="teamSingleLineInputGroup">
+                    <div class="teamTagLabel">종료 여부</div>
+                    <div class="teamTagButton" th:if="${team.getIsFinished()}">종료됨</div>
+                    <div class="teamTagButton" th:if="!${team.getIsFinished()}">진행중</div>
+                </div>
+
+            </div>
+
+            <div class="teamContainerRight">
+                <div class="teamDescribeContainer">
+                    <div class="teamRightTagLabel">팀 정보</div>
+                    <div class="teamRightTeamDescribe">
+                        <div class="teamRightTeamDescribeBox" th:text="${team.getTeamDescribe()}">안녕하세요!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="buttonGroup">
+
+            <!-- 1. 모집중/등록자 View-->
+            <a class="grayButton black-shadow-button" th:if="${isManager}" th:href="@{'/team/' + ${team.getId()} + '/chatroom'}">팀 채팅방 이동</a>
+            <div class="grayButton black-shadow-button" th:if="!${isFinished} and ${isManager}" onclick="openRecruit()">추가모집</div>
+            <div class="redButton neon-red-button" th:if="${isManager} and !${isFinished}" onclick="finishTeam()">팀 종료</div>
+            <div class="redButton neon-red-button" th:if="${isManager}" onclick="deleteTeam()">팀 삭제</div>
+            <div class="redButton neon-red-button" th:if="!${isManager}" onclick="leaveTeam()">팀 탈퇴하기</div>
+
+        </div>
+    </div>
+
+    <script>
+        let teamId = [[${ team.getId() }]];
+
+        function getProfile(element){
+            let memberName = element.getAttribute("memberName");
+
+            window.location.href = '/profile/' + memberName;
+        }
+        function openRecruit(){
+            //팀 추가모집 공고 열기
+            window.location.href='/team/' + teamId + '/recruit';
+        }
+
+        async function finishTeam() {
+            //팀 종료하기
+            let response = await fetch('/api/team/' + teamId + '/finish', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include' // 인증정보를 포함하는 옵션
+            });
+
+            if (response.ok) {
+                window.location.reload();
+            }
+            else {
+                alert("해당 요청이 처리되지 않았습니다! 에러코드:" + response.status);
+            }
+        }
+
+        async function deleteTeam() {
+            //팀 삭제하기
+            let response = await fetch('/api/team/' + teamId + '/delete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include' // 인증정보를 포함하는 옵션
+            });
+
+            if (response.ok) {
+                window.location.href='/teamlist';
+            } else {
+                alert("해당 요청이 처리되지 않았습니다! 에러코드:" + response.status);
+            }
+        }
+
+        async function leaveTeam() {
+            //팀 탈퇴하기
+            let response = await fetch('/api/team/' + teamId + '/leave', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include' // 인증정보를 포함하는 옵션
+            });
+
+            if (response.ok) {
+                window.location.href='/teamlist';
+            } else {
+                alert("해당 요청이 처리되지 않았습니다! 에러코드:" + response.status);
+            }
+        }
+    </script>
+
+
+
+
+
+</div>
+</body>
+</html>

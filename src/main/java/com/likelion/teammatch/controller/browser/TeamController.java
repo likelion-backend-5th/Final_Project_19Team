@@ -5,6 +5,7 @@ import com.likelion.teammatch.dto.team.TeamDraftDto;
 import com.likelion.teammatch.dto.team.TeamInfoDto;
 import com.likelion.teammatch.service.team.TeamService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,8 +48,11 @@ public class TeamController {
     @GetMapping("/team/{teamId}")
     public String teamDetail(@PathVariable Long teamId, Model model) {
         TeamInfoDto teamInfo = teamService.getTeamInfo(teamId);
-        model.addAttribute("teamInfo", teamInfo);
-        return "/html/detail_complete";
+        model.addAttribute("team", teamInfo);
+        model.addAttribute("isMember", teamService.isMember(teamId));
+        model.addAttribute("isFinished", teamInfo.getIsFinished());
+        model.addAttribute("isManager", teamInfo.getTeamManagerUsername().equals(SecurityContextHolder.getContext().getAuthentication().getName()));
+        return "/html/team_details";
     }
 
     @GetMapping("/team/{teamId}/edit")
@@ -91,6 +95,7 @@ public class TeamController {
 
         // chatRoomUrl 을 모델에 추가
         model.addAttribute("chatRoomUrl", chatRoomUrl);
+        model.addAttribute("username", SecurityContextHolder.getContext().getAuthentication().getName());
 
         // ChatRoom 템플릿 페이지로 이동
         return "/html/chat-room";
