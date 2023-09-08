@@ -826,16 +826,22 @@
     let pagedetailShowBtn = document.getElementById("pagedetailShowBtn");
 
     // 메인 마이페이지 버튼 - 토글
+    // 메인 마이페이지 버튼 - 토글
     mypageBtn.addEventListener('click', function () {
-        pagedetailHide.style.visibility = 'hidden';
-        pagedetailShow.style.visibility = 'hidden';
-        if (mypagePage.style.visibility == 'visible') {
-            mypagePage.style.visibility = 'hidden';
-            mypageBtn.classList.remove('nav_btn_list_selected');
-        } else {
-            mypagePage.style.visibility = 'visible';
-            pagedetailHide.style.visibility = 'visible';
-            mypageBtn.classList.add('nav_btn_list_selected');
+        if (!logined) {	// 로그인 되어 있지 않다면, 로그인창 띄우기
+            loginModal.style.display = 'block';
+            overlay.style.opacity = '50%';
+        } else {	// 로그인 되어 있다면, 원래 기능 유지
+            pagedetailHide.style.visibility = 'hidden';
+            pagedetailShow.style.visibility = 'hidden';
+            if (mypagePage.style.visibility == 'visible') {
+                mypagePage.style.visibility = 'hidden';
+                mypageBtn.classList.remove('nav_btn_list_selected');
+            } else {
+                mypagePage.style.visibility = 'visible';
+                pagedetailHide.style.visibility = 'visible';
+                mypageBtn.classList.add('nav_btn_list_selected');
+            }
         }
     });
 
