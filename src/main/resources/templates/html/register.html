@@ -17,8 +17,8 @@
 <form class="flexmain" th:action="@{/register}" th:method="post">
     <div>
         <div class="image-9-KdT">
-            <img src="../assets/register/logo.png" class="image-9-CWd" alt="logo">
-            <a href="http://localhost:8080/main" ><img class="close-PDj" src="../assets/register/close.svg" alt="x"></a>
+            <img src="../../static/assets/register/logo.png" th:src="@{/assets/register/logo.png}" class="image-9-CWd" alt="logo">
+            <a href="http://localhost:8080/main"><img class="close-PDj" src="../../static/assets/register/close.svg" th:src="@{/assets/register/close.svg}" alt="x"></a>
         </div>
 
         <p class="sign-up-page-QZo">Sign-up page</p>
