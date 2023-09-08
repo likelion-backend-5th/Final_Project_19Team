@@ -45,7 +45,7 @@
                     <img src="../../static/assets/index/mypage.svg" th:src="@{/assets/index/mypage.svg}" alt="마이페이지" />
                 </button>
             <!-- 로그아웃버튼  -->
-                <button id="logoutBtn" class='nav_btn_list'>
+                <button onclick="logout(this)" id="logoutBtn" class='nav_btn_list'>
                     <img src="../../static/assets/index/logout.svg" th:src="@{/assets/index/logout.svg}" alt="로그아웃" />
                 </button>
             </div>
@@ -364,7 +364,7 @@
     <!-- mypage.html -->
     <div id="mypagePage" class="item--Fa1">
         <img id="mypageClose" class="close-N2M" src="../assets/mypage/close.svg" alt="X" />
-        <div class="profile-gQR">Profile</div>
+        <div class="profile-gQR">My profile</div>
         <div class="group-372-UbB">
             <div class="group-371-PCM">
                 <div class="group-370-j1K">
@@ -867,6 +867,11 @@
     helpBtn.addEventListener('mouseleave', function () {
         tooltipPop.style.visibility = 'hidden';
     });
+
+    function logout(emement){
+        window.location.href = '/logout';
+    }
+
 
     // let sinrenBtn = document.getElementById("sinrenBtn");
 
