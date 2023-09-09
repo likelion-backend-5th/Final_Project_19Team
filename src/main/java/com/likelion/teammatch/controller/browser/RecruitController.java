@@ -67,7 +67,7 @@ public class RecruitController {
     //모집 공고 수정하기
     @PostMapping("/recruit/{recruitId}/edit")
     public String updateRecruit(@PathVariable("recruitId") Long recruitId, CreateRecruitDto dto){
-        recruitService.updateRecruit(recruitId, dto.getTeamRecruitName(), dto.getMemberNum(),dto.getTeamRecruitDetails());
+        recruitService.updateRecruit(recruitId, dto.getTeamRecruitName(), dto.getMemberNum(),dto.getTeamRecruitDetails(), dto.getTechStackWanted());
 
         return "redirect:/recruit/" + recruitId;
     }
@@ -84,8 +84,8 @@ public class RecruitController {
     //팀에 모집 공고 추가하기
     @PostMapping("/team/{teamId}/recruit")
     public String createRecruit(@PathVariable("teamId") Long teamId, CreateRecruitDto dto){
-        Long recruitId = recruitService.createRecruit(teamId, dto.getTeamRecruitName(), dto.getMemberNum(), dto.getTeamRecruitDetails());
-        return "redirect:/recruit" + recruitId;
+        Long recruitId = recruitService.createRecruit(teamId, dto.getTeamRecruitName(), dto.getMemberNum(), dto.getTeamRecruitDetails(), dto.getTechStackWanted());
+        return "redirect:/recruit/" + recruitId;
     }
 
     //모집 공고 신청하기
