@@ -57,6 +57,71 @@
                     }
                 }
             </script>
+            <div class="teamSingleLineInputGroup" id="recruitTechStackInfo">
+                <div class="teamTechLabel" title="이번에 모집할 기술 스택을 최대 4가지까지 골라주세요!">Wanted</div>
+                <div class="teamTechStackInputGroup">
+                    <div class="teamTechStackInputWithSearchGroup" id="recruitTechStackInputWithSearchGroup">
+                        <input class="teamTechStackInput" id="recruitTechStackInput" placeholder="기술스택입력 하세요(java, react, vue, spring...)">
+                        <div class="teamTechStackInputSearch"  onclick="recruitTechStackInputEntered()">Search</div>
+                    </div>
+
+                    <div class="teamTechStackLabelGroup" id="recruitTechStackLabelGroup"></div>
+                    <input hidden="hidden" type="text" id="recruitTechStackList" name="techStackWanted">
+
+                    <script>
+                        let recruitTechStackNum = 0;
+                        let recruitTechStackInput = document.getElementById("recruitTechStackInput");
+
+                        let recruitTechStackLabelGroup = document.getElementById("recruitTechStackLabelGroup");
+                        let recruitTechStackForm = document.getElementById('recruitTechStackList');
+                        async function recruitTechStackInputEntered(){
+                            let techStackValue = recruitTechStackInput.value;
+                            let response = await fetch('/api/techStackExists', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: techStackValue,
+                                credentials: 'include' // 인증정보를 포함하는 옵션
+                            });
+
+                            if (await response.text() === 'true'){
+                                let techStackName = techStackValue.toLowerCase();
+                                if (checkTechStackAlreadyIncluded(techStackName)){
+                                    alert('이미 포함된 techStack 이름입니다.');
+                                }
+                                else if (recruitTechStackNum >= 4) {
+                                    alert('최대 4개까지 기술 스택을 고를 수 있습니다!');
+                                }
+                                else {
+                                    let newDiv = document.createElement('div');
+                                    newDiv.classList.add("recruitTechStackLabel");
+                                    newDiv.innerText = techStackName;
+                                    recruitTechStackLabelGroup.appendChild(newDiv);
+                                    recruitTechStackForm.value = techStackName + "/" + recruitTechStackForm.value ;
+                                    recruitTechStackNum = recruitTechStackNum + 1;
+                                }
+                            }
+                            else {
+                                alert('서버에서 관리하지 않는 techStack 이름입니다.');
+                            }
+                        }
+
+                        function checkTechStackAlreadyIncluded(name){
+                            let divList = document.getElementsByClassName('recruitTechStackLabel');
+                            // 가져온 div 요소들을 순회하면서 조건을 확인합니다.
+                            for (let i = 0; i < divList.length; i++){
+                                if (divList[i].innerText === name){
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+
+                    </script>
+                </div>
+            </div>
+
         </div>
 
         <div class="singUpButtonGroup">

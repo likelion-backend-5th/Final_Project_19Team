@@ -127,7 +127,7 @@
     <div class="profileInfoGroup3">
       <div class="profileDoubleLineGroup">
         <div class="profileDoubleTagLabel" title="자신에 대한 설명을 적어주세요!">About Me</div>
-        <input class="profileAboutMe" th:text="${profile.getIntroduction()}" id="introduction" name="introduction">
+        <input class="profileAboutMe" th:value="${profile.getIntroduction()}" id="introduction" name="introduction">
       </div>
     </div>
 

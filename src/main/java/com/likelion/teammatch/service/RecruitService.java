@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -46,7 +47,7 @@ public class RecruitService {
     }
     
     //모집 공고를 따로 추가하는 메소드
-    public Long createRecruit(Long teamId, String title,Integer recruitMemberNum, String recruitDetails){
+    public Long createRecruit(Long teamId, String title,Integer recruitMemberNum, String recruitDetails, String techStackWanted){
         //현재 사용자의 username 가져오기
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
@@ -66,13 +67,14 @@ public class RecruitService {
         recruit.setTeamManagerId(user.getId());
         recruit.setTeamId(team.getId());
         recruit.setIsFinished(false);
+        recruit.setTechStackWanted(techStackWanted);
         recruit = recruitRepository.save(recruit);
 
         return recruit.getId();//이 모집 공고 상세보기를 하고 싶다.
     }
 
     //모집 공고 수정
-    public Long updateRecruit(Long recruitId, String title, Integer recruitMemberNum, String recruitDetails){
+    public Long updateRecruit(Long recruitId, String title, Integer recruitMemberNum, String recruitDetails, String techStackWanted){
         //현재 사용자의 username 가져오기
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
@@ -88,6 +90,7 @@ public class RecruitService {
         recruit.setTitle(title);
         recruit.setRecruitMemberNum(recruitMemberNum);
         recruit.setTeamRecruitDetails(recruitDetails);
+        recruit.setTechStackWanted(techStackWanted);
         recruit = recruitRepository.save(recruit);
 
         return recruit.getId();
@@ -146,12 +149,8 @@ public class RecruitService {
         RecruitInfoDto recruitInfoDto = RecruitInfoDto.fromEntity(team, recruit);
         
         //TechStack 채우기
-        List<String> techStackNameList = new ArrayList<>();
-        List<TeamTechStack> techStackList = teamTechStackRepository.findAllByTeamId(team.getId());
-        for (TeamTechStack teamTechStack : techStackList){
-            String techStackName = techStackRepository.findById(teamTechStack.getTechStackId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)).getName();
-            techStackNameList.add(techStackName);
-        }
+        List<String> techStackNameList = Arrays.stream(recruit.getTechStackWanted().split("/")).toList();
+
         recruitInfoDto.setTechStackName(techStackNameList);
 
         //teamManagerUsername 채우기
@@ -178,11 +177,8 @@ public class RecruitService {
 
             //TechStack 채우기
             List<String> techStackNameList = new ArrayList<>();
-            List<TeamTechStack> techStackList = teamTechStackRepository.findAllByTeamId(team.getId());
-            for (TeamTechStack teamTechStack : techStackList){
-                String techStackName = techStackRepository.findById(teamTechStack.getTechStackId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)).getName();
-                techStackNameList.add(techStackName);
-            }
+
+            if (recruit.getTechStackWanted() != null) techStackNameList = Arrays.stream(recruit.getTechStackWanted().split("/")).toList();
             dto.setTechStackList(techStackNameList);
 
             //comment 채우기 미구현
@@ -274,6 +270,32 @@ public class RecruitService {
             dtoList.add(dto);
 
         }
+        return dtoList;
+    }
+
+    public List<RecruitDraftDto> getRecruitDraftListBySearch(Integer page, String searchTerm) {
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        Page<Recruit> pageOfEntity = recruitRepository.searchByTechStackWantedOrTitle(pageRequest, searchTerm);
+
+        List<Recruit> recruitList = pageOfEntity.getContent();
+        List<RecruitDraftDto> dtoList = new ArrayList<>();
+        for (Recruit recruit : recruitList){
+            Long teamId = recruit.getTeamId();
+            Team team = teamRepository.findById(teamId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+            RecruitDraftDto dto = RecruitDraftDto.fromEntity(team, recruit);
+
+            //TechStack 채우기
+            List<String> techStackNameList = new ArrayList<>();
+
+            if (recruit.getTechStackWanted() != null) techStackNameList = Arrays.stream(recruit.getTechStackWanted().split("/")).toList();
+            dto.setTechStackList(techStackNameList);
+
+            //comment 채우기 미구현
+            dto.setCommentNum(0);
+            dtoList.add(dto);
+        }
+
         return dtoList;
     }
 

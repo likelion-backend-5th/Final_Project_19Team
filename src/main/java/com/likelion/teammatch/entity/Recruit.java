@@ -28,5 +28,9 @@ public class Recruit extends BaseTimeEntity {
 
     //모집 종료되었는지 여부
     private Boolean isFinished;
+
+
+    //모집 공고 관련 techStack.
+    private String techStackWanted;
 //    private Boolean badge;
 }
