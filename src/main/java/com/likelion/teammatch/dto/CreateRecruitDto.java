@@ -13,4 +13,5 @@ public class CreateRecruitDto {
     private String teamRecruitName;
     private String teamRecruitDetails;
     private Integer memberNum;
+    private String techStackWanted;
 }

@@ -44,6 +44,8 @@ public class TeamCreateDto {
     // (ex: "우리는 XX 공모전에 대비해서 진행할 생각입니다! 백엔드 부분에서 경험 많으신 분을 위주로 모집합니다! 서울에서 진행할 생각입니다!))
     private String teamRecruitDetails;
 
+    private String techStackWanted;
+
 
 
 
@@ -69,6 +71,7 @@ public class TeamCreateDto {
         recruit.setTeamRecruitDetails(dto.getTeamRecruitDetails());
         recruit.setRecruitMemberNum(dto.getMemberNum());
         recruit.setIsFinished(false);
+        recruit.setTechStackWanted(dto.getTechStackWanted());
         return recruit;
     }
 }
