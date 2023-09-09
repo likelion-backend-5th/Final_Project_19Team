@@ -29,7 +29,21 @@
             <div class="nav_search">
                 <img class="nav_search_img" src="../../static/assets/index/search.svg"
                     th:src="@{/assets/index/search.svg}" alt="#" />
-                <input type="text" class="nav_search_input" placeholder="Search" />
+                <input type="text" class="nav_search_input" placeholder="Search" id="searchInput"/>
+                <script>
+                    let searchInput = document.getElementById('searchInput');
+                    searchInput.addEventListener('keyup', function(event) {
+                        if (event.key === 'Enter') {
+                            event.preventDefault(); // 엔터 키의 기본 동작(페이지 새로고침)을 막음
+
+                            // 입력 내용 가져오기
+                            const searchTerm = searchInput.value;
+
+                            // URL에 쿼리 매개변수 추가하여 새로 고침
+                            window.location.href = `/main?search=${encodeURIComponent(searchTerm)}`;
+                        }
+                    });
+                </script>
             </div>
             <div class="nav_btn">
             <!-- 알람버튼  -->
