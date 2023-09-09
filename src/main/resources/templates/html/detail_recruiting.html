@@ -67,7 +67,7 @@
                 <div class="recruitRecruitDescribeGroup">
                     <div class="recruitRightTagLabel">모집 정보</div>
                     <div class="recruitRightRecruitDescribe">
-                        <textarea class="recruitRightRecruitDescribeBox" th:text="${recruit.getTeamRecruitDetails()}">
+                        <textarea class="recruitRightRecruitDescribeBox" th:text="${recruit.getTeamRecruitDetails()}" readonly>
                             안녕하세요!
                         </textarea>
                     </div>
@@ -76,7 +76,7 @@
         </div>
         <div class="teamDescribeContainer">
             <div class="teamDescribeLabel">팀 정보</div>
-            <textarea class="teamDescribeBox" th:text="${recruit.getTeamDescribe()}">팀 설명 와다다다</textarea>
+            <textarea class="teamDescribeBox" th:text="${recruit.getTeamDescribe()}" readonly>팀 설명 와다다다</textarea>
         </div>
         <div class="buttonGroup">
 
