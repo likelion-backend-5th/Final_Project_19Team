@@ -145,7 +145,109 @@
                 <textarea class="teamCreateTextarea" name="teamDescribe" id="teamDescribe" placeholder="팀정보를 입력해주세요"></textarea>
             </div>
 
+
+
             <div class="teamSingleLineInputGroup">
+                <div class="teamTagLabel" title="팀을 만들면서 같이 공고글도 작성하실 생각인가요?">Recruit</div>
+                <label class="teamRecruitCheckLabel" for="recruitCheck">공고글 추가(선택)</label>
+                <input class="teamRecruitCheck" type="checkbox" id="recruitCheck" name="recruitCheck" onclick="checkRecruit()">
+            </div>
+
+            <script>
+                let recruitCheckInput = document.getElementById('recruitCheck');
+
+                function checkRecruit() {
+                    if (recruitCheckInput.checked) {
+                        document.getElementById('recruitTitleInfo').style.display = 'flex';
+                        document.getElementById('recruitDetailsInfo').style.display = 'flex';
+                        document.getElementById('recruitTechStackInfo').style.display = 'flex';
+                        document.getElementById('recruitNumberInput').style.display = 'flex';
+                    } else {
+                        document.getElementById('recruitTitleInfo').style.display = 'none';
+                        document.getElementById('recruitDetailsInfo').style.display = 'none';
+                        document.getElementById('recruitTechStackInfo').style.display = 'none';
+                        document.getElementById('recruitNumberInput').style.display = 'none';
+                    }
+                }
+            </script>
+
+            <div class="recruitTitleInfo" id="recruitTitleInfo">
+                <div class="teamTechLabel" title="모집 공고글에 적히게 될 설명을 적어주세요!">Recruit Title</div>
+                <textarea class="recruitTitleInput" type="text" id="teamRecruitName" name="teamRecruitName" placeholder="모집 공고글 제목입력"></textarea>
+            </div>
+
+            <div class="recruitDetailsInfo" id="recruitDetailsInfo">
+                <div class="teamTechLabel" title="모집 공고글에 적히게 될 설명을 적어주세요!">Recruit Info</div>
+                <textarea class="teamCreateTextarea" name="teamRecruitDetails" id="teamRecruitDetails" placeholder="모집 공고글 내용입력"></textarea>
+            </div>
+
+
+            <div class="recruitDoubleLineInputGroup" id="recruitTechStackInfo">
+                <div class="teamTechLabel" title="해당 팀의 핵심 기술 스택을 최대 4가지까지 골라주세요!">Wanted</div>
+                <div class="teamTechStackInputGroup">
+                    <div class="teamTechStackInputWithSearchGroup" id="recruitTechStackInputWithSearchGroup">
+                        <input class="teamTechStackInput" id="recruitTechStackInput" placeholder="기술스택입력 하세요(java, react, vue, spring...)">
+                        <div class="teamTechStackInputSearch"  onclick="recruitTechStackInputEntered()">Search</div>
+                    </div>
+
+                    <div class="teamTechStackLabelGroup" id="recruitTechStackLabelGroup"></div>
+                    <input hidden="hidden" type="text" id="recruitTechStackList" name="techStackWanted">
+
+                    <script>
+                        let recruitTechStackNum = 0;
+                        let recruitTechStackInput = document.getElementById("recruitTechStackInput");
+
+                        let recruitTechStackLabelGroup = document.getElementById("recruitTechStackLabelGroup");
+                        let recruitTechStackForm = document.getElementById('recruitTechStackList');
+                        async function recruitTechStackInputEntered(){
+                            let techStackValue = recruitTechStackInput.value;
+                            let response = await fetch('/api/techStackExists', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: techStackValue,
+                                credentials: 'include' // 인증정보를 포함하는 옵션
+                            });
+
+                            if (await response.text() === 'true'){
+                                let techStackName = techStackValue.toLowerCase();
+                                if (checkTechStackAlreadyIncluded(techStackName)){
+                                    alert('이미 포함된 techStack 이름입니다.');
+                                }
+                                else if (recruitTechStackNum >= 4) {
+                                    alert('최대 4개까지 기술 스택을 고를 수 있습니다!');
+                                }
+                                else {
+                                    let newDiv = document.createElement('div');
+                                    newDiv.classList.add("recruitTechStackLabel");
+                                    newDiv.innerText = techStackName;
+                                    recruitTechStackLabelGroup.appendChild(newDiv);
+                                    recruitTechStackForm.value = techStackName + "/" + recruitTechStackForm.value ;
+                                    recruitTechStackNum = recruitTechStackNum + 1;
+                                }
+                            }
+                            else {
+                                alert('서버에서 관리하지 않는 techStack 이름입니다.');
+                            }
+                        }
+
+                        function checkTechStackAlreadyIncluded(name){
+                            let divList = document.getElementsByClassName('recruitTechStackLabel');
+                            // 가져온 div 요소들을 순회하면서 조건을 확인합니다.
+                            for (let i = 0; i < divList.length; i++){
+                                if (divList[i].innerText === name){
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+
+                    </script>
+                </div>
+            </div>
+
+            <div class="recruitSingleLineInputGroup" id="recruitNumberInput">
                 <div class="teamTagLabel" title="몇명의 팀원들을 모집하실 생각인가요?">Many</div>
                 <input class="teamNumberInput" id="memberNum" name="memberNum" required onchange="onlyNumberInput()">
                 <label class="teamNumberInputLabel" for="memberNum" >명</label>
@@ -162,36 +264,6 @@
                     }
                 }
             </script>
-
-            <div class="teamSingleLineInputGroup">
-                <div class="teamTagLabel" title="팀을 만들면서 같이 공고글도 작성하실 생각인가요?">Recruit</div>
-                <label class="teamRecruitCheckLabel" for="recruitCheck">공고글 추가(선택)</label>
-                <input class="teamRecruitCheck" type="checkbox" id="recruitCheck" name="recruitCheck" onclick="checkRecruit()">
-            </div>
-
-            <script>
-                let recruitCheckInput = document.getElementById('recruitCheck');
-
-                function checkRecruit() {
-                    if (recruitCheckInput.checked) {
-                        document.getElementById('recruitTitleInfo').style.display = 'flex';
-                        document.getElementById('recruitDetailsInfo').style.display = 'flex';
-                    } else {
-                        document.getElementById('recruitTitleInfo').style.display = 'none';
-                        document.getElementById('recruitDetailsInfo').style.display = 'none';
-                    }
-                }
-            </script>
-
-            <div class="recruitTitleInfo" id="recruitTitleInfo">
-                <div class="teamTechLabel" title="모집 공고글에 적히게 될 설명을 적어주세요!">Recruit Title</div>
-                <textarea class="recruitTitleInput" type="text" id="teamRecruitName" name="teamRecruitName" placeholder="모집 공고글 제목입력"></textarea>
-            </div>
-
-            <div class="recruitDetailsInfo" id="recruitDetailsInfo">
-                <div class="teamTechLabel" title="모집 공고글에 적히게 될 설명을 적어주세요!">Recruit Info</div>
-                <textarea class="teamCreateTextarea" name="teamRecruitDetails" id="teamRecruitDetails" placeholder="모집 공고글 내용입력"></textarea>
-            </div>
 
         </div>
         <div class="singUpButtonGroup">

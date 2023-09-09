@@ -280,5 +280,68 @@ span {
     padding-bottom: 5px;
 }
 
+.recruitDoubleLineInputGroup{
+    display: flex;
+    width: 70rem;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+}
+
+.teamTechStackInputWithSearchGroup{
+    width: 100%;
+    height: 2.4rem;
+    margin-bottom: 5px;
+    margin-top: 3rem;
+    display: flex;
+}
+
+.teamTechStackInput {
+    border: 1px solid #1E1E1E; /* Add border for a clear visual separation */
+    margin-left: 0;
+    padding: 0 10px;
+    width: 50rem;
+    border-radius: 5px;
+    height: 2.4rem;
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+
+.teamTechStackInputSearch {
+    display: flex;
+    background: #B73A3A;
+    align-items: center;
+    border-radius: 5px;
+    width: 7.4rem;
+    height: 2.4rem;
+    font-size: 20px;
+    margin-left: 5px;
+    justify-content: center;
+    color: white;
+}
+
+.teamTechStackInputSearch:hover{
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+}
+
+.teamTechStackLabelGroup {
+    width: 100%;
+    height: 6.8rem;
+    display: flex;
+    flex-direction: row;
+}
+
+.recruitTechStackLabel {
+    margin-left: 0;
+    margin-right: 1rem;
+    width: 5rem;
+    height: 2rem;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #1e1e1e; /* Add border for a clear visual separation */
+    border-radius: 5px;
+    background-color: white;
+}
 
 
