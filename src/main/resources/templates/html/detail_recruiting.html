@@ -209,10 +209,10 @@
             window.location.reload();
         }
 
-        function deleteComment(element){
+        async function deleteComment(element) {
             let commentId = element.getAttribute("comment-id");
             let recruitId = [[${ recruitId }]];
-            fetch('/api/recruit/' + recruitId + '/comment/' + commentId, {
+            await fetch('/api/recruit/' + recruitId + '/comment/' + commentId, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
