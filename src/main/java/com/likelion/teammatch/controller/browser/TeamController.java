@@ -26,7 +26,7 @@ public class TeamController {
 
     @GetMapping("/createTeam")
     public String getCreateTeamForm(){
-        return "/html/create";
+        return "html/create";
     }
 
     @PostMapping("/createTeam")
@@ -41,7 +41,7 @@ public class TeamController {
     public String teamList(Model model) {
         List<TeamDraftDto> teamList = teamService.getMyTeamList();
         model.addAttribute("teamList", teamList);
-        return "/html/Team_page";
+        return "html/Team_page";
     }
 
     // 팀 상세보기 페이지로 이동
@@ -52,7 +52,7 @@ public class TeamController {
         model.addAttribute("isMember", teamService.isMember(teamId));
         model.addAttribute("isFinished", teamInfo.getIsFinished());
         model.addAttribute("isManager", teamInfo.getTeamManagerUsername().equals(SecurityContextHolder.getContext().getAuthentication().getName()));
-        return "/html/team_details";
+        return "html/team_details";
     }
 
     @GetMapping("/team/{teamId}/edit")
@@ -98,6 +98,6 @@ public class TeamController {
         model.addAttribute("username", SecurityContextHolder.getContext().getAuthentication().getName());
 
         // ChatRoom 템플릿 페이지로 이동
-        return "/html/chat-room";
+        return "html/chat-room";
     }
 }

@@ -59,12 +59,12 @@ public class AuthController {
     public String getTest(Model model) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("username", username);
-        return "/html/test";
+        return "html/test";
     }
 
     @GetMapping("/register")
     public String getRegisterForm() {
-        return "/html/register";
+        return "html/register";
     }
 
     @PostMapping("/register")

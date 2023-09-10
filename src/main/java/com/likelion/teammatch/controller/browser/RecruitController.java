@@ -38,7 +38,7 @@ public class RecruitController {
         model.addAttribute("isManager", username.equals(recruitDto.getTeamManagerUsername()));
         model.addAttribute("isFinished", recruitDto.getIsRecruitFinished());
         model.addAttribute("applyList", recruitService.getApplyListForRecruit(recruitId));
-        return "/html/detail_recruiting";
+        return "html/detail_recruiting";
     }
 
     //모집 공고 댓글 달기
@@ -61,7 +61,7 @@ public class RecruitController {
         model.addAttribute("teamRecruitName", dto.getRecruitTitle());
         model.addAttribute("teamRecruitDetails", dto.getTeamRecruitDetails());
 
-        return "/html/create_recruit";
+        return "html/create_recruit";
     }
 
     //모집 공고 수정하기
@@ -79,7 +79,7 @@ public class RecruitController {
         model.addAttribute("isEdit", false);
         model.addAttribute("teamId", teamId);
         model.addAttribute("teamName", teamInfo.getTeamName());
-        return "/html/create_recruit";
+        return "html/create_recruit";
     }
     //팀에 모집 공고 추가하기
     @PostMapping("/team/{teamId}/recruit")

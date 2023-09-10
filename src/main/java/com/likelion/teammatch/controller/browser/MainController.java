@@ -57,7 +57,7 @@ public class MainController {
             model.addAttribute("logined", true);
         }
 
-        return "/html/index";
+        return "html/index";
     }
 
 

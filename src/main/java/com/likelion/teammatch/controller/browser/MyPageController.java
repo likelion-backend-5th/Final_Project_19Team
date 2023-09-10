@@ -42,7 +42,7 @@ public class MyPageController {
         else
             model.addAttribute("isOwner", false);
 
-        return "/html/mypage";
+        return "html/mypage";
     }
 
     @GetMapping("/profile/{username}/edit")
@@ -54,7 +54,7 @@ public class MyPageController {
 
         model.addAttribute("profile", profileOfUser);
 
-        return "/html/myprofile_edit";
+        return "html/myprofile_edit";
     }
 
     @PostMapping("/profile/{username}/edit")
