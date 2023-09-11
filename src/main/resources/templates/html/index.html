@@ -76,18 +76,31 @@
                     <span class='quick_filter_text'>Quick Filter</span>
                 </div>
                 <div>
-                    <button class="quick_filter_btn">HTML</button>
-                    <button class="quick_filter_btn">CSS</button>
-                    <button class="quick_filter_btn">Javascript</button>
-                    <button class="quick_filter_btn">React</button>
-                    <button class="quick_filter_btn">Vue</button>
-                    <button class="quick_filter_btn">Svelte</button>
-                    <button class="quick_filter_btn">Nextjs</button>
-                    <button class="quick_filter_btn">Nodejs</button>
-                    <button class="quick_filter_btn">Java</button>
-                    <button class="quick_filter_btn selected">Spring</button>
-                    <button class="quick_filter_btn selected">Python</button>
+                    <button class="quick_filter_btn" onclick="quickSearch(this)">HTML</button>
+                    <button class="quick_filter_btn" onclick="quickSearch(this)">CSS</button>
+                    <button class="quick_filter_btn" onclick="quickSearch(this)">Javascript</button>
+                    <button class="quick_filter_btn" onclick="quickSearch(this)">React</button>
+                    <button class="quick_filter_btn" onclick="quickSearch(this)">Vue</button>
+                    <button class="quick_filter_btn" onclick="quickSearch(this)">Svelte</button>
+                    <button class="quick_filter_btn" onclick="quickSearch(this)">Nextjs</button>
+                    <button class="quick_filter_btn" onclick="quickSearch(this)">Nodejs</button>
+                    <button class="quick_filter_btn" onclick="quickSearch(this)">Java</button>
+                    <button class="quick_filter_btn" onclick="quickSearch(this)">Spring</button>
+                    <button class="quick_filter_btn" onclick="quickSearch(this)">Python</button>
                 </div>
+                <script>
+                    function quickSearch(element){
+                        let quickTech = element.textContent;
+                        document.getElementById('searchInput').value = quickTech.toLowerCase();
+
+                        let quickFilterButtons = document.getElementsByClassName('quick_filter_btn');
+                        for (let i = 0; i < quickFilterButtons.length; i++){
+                            quickFilterButtons[i].classList.remove('selected');
+                        }
+
+                        element.classList.add('selected');
+                    }
+                </script>
             </div>
         </div>
     </div>
