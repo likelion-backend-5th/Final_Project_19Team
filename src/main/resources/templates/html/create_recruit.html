@@ -25,12 +25,12 @@
         <div class="teamCreateInputGroup">
             <div class="recruitTitleInfo" id="recruitTitleInfo">
                 <div class="teamTechLabel" title="모집 공고글에 적히게 될 설명을 적어주세요!">Recruit Title</div>
-                <textarea class="recruitTitleInput" type="text" id="teamRecruitName" name="teamRecruitName" th:value="${teamRecruitName}"></textarea>
+                <textarea class="recruitTitleInput" type="text" id="teamRecruitName" name="teamRecruitName" th:attr="teamRecruitName=${teamRecruitName}" th:text="${teamRecruitName}"></textarea>
             </div>
 
             <div class="recruitDetailsInfo" id="recruitDetailsInfo">
                 <div class="teamTechLabel-big" title="모집 공고글에 적히게 될 설명을 적어주세요!">Recruit Info</div>
-                <textarea class="teamCreateTextarea" name="teamRecruitDetails" id="teamRecruitDetails" th:value="${teamRecruitDetails}"></textarea>
+                <textarea class="teamCreateTextarea" name="teamRecruitDetails" id="teamRecruitDetails" th:attr="teamRecruitDetails=${teamRecruitDetails}" th:text="${teamRecruitDetails}"></textarea>
             </div>
 
             <div class="teamSingleLineInputGroup">
