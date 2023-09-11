@@ -1,8 +1,10 @@
 .item--Fa1 {
+    width: 1024px;
+    margin: 0 auto;
     visibility: hidden;
-    position: absolute;
-    left: 1079px;
-    top: 100px;
+    position: relative;
+    left: 198px;
+    top: -1800px;
     display: flex;
     overflow: hidden;
 }
@@ -18,7 +20,7 @@
 
 .profile-gQR {
     position: relative;
-    left: 118px;
+    left: 268px;
     top: 10px;
     font-size: 20px;
     font-weight: 500;
@@ -28,13 +30,15 @@
     font-family: Roboto, 'Source Sans Pro';
     white-space: nowrap;
 }
+
 .close-N2M {
     position: relative;
     width: 22px;
     height: 22px;
-    left: 33.5rem;
+    left: 52rem;
     top: 1rem;
 }
+
 .group-372-UbB {
     box-sizing: border-box;
     padding: 3rem 1.5rem 0rem 1.5rem;
@@ -126,7 +130,7 @@
     margin: 20px auto;
     position: absolute;
     top: 168px;
-    right: 41px;
+    right: 115px;
     box-sizing: border-box;
     padding: 10px;
     width: 380px;
