@@ -1,9 +1,10 @@
+# ec2에서 실제로 쓰이는 단계.
 spring:
   datasource:
-    url: jdbc:sqlite:db.sqlite
-    driver-class-name: org.sqlite.JDBC
-    username: sa
-    password: password
+    url: jdbc:mysql://localhost:3306/team-match-db?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    username: root
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     show-sql : true
     hibernate:
@@ -19,5 +20,4 @@ spring:
       filter:
         enabled: true
 jwt:
-  secret: ZXhlcmNpc2Vjb2x1bW5lZGdlc2xlZXBzcG9ydGNvb2xmb3J0eW1hbnRoZXJlbHVja3ltZWNvbXBvc2l0aW9uYw==
-
+  secret: QF2plCk4pMQZysgPC0hSOjNY6rnkmfEGFpJ1EawBM92/L0hp+a99RR4mWAN4WCO32nTsa5Bjaz82B5nuW4IaAg==
