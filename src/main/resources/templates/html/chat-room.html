@@ -60,7 +60,7 @@
     }
 
     function connect() {
-        const socket = new WebSocket('ws://localhost:8080/chatting');
+        const socket = new WebSocket('ws:ec2-54-180-26-79.ap-northeast-2.compute.amazonaws.com:8080/chatting');
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
