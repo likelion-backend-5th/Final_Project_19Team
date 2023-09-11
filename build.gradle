@@ -40,10 +40,8 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
 	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
-
-	//sqlite
-	implementation 'org.xerial:sqlite-jdbc:3.41.2.2'
-	runtimeOnly 'org.hibernate.orm:hibernate-community-dialects:6.2.4.Final'
+	//mysql
+	runtimeOnly 'com.mysql:mysql-connector-j'
 
 	// websocket
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
