@@ -23,6 +23,9 @@ public class UserProfileDto {
     private String github;
     private Long id;
     private List<String> techStackList;
+    private Integer grade;
+    private Integer tier;
+    private Integer giveUpCount;
 
     public static UserProfileDto fromEntity(User user){
         UserProfileDto dto = new UserProfileDto();
@@ -36,6 +39,14 @@ public class UserProfileDto {
         dto.setPast(user.getPast());
         dto.setGithub(user.getGithub());
 
+        Integer grade = user.getGrade();
+        dto.setGrade(grade);
+        if (grade <= 1000) dto.setTier(1);
+        else if (grade <= 2000) dto.setTier(2);
+        else if (grade <= 3000) dto.setTier(3);
+        else if (grade <= 4000) dto.setTier(4);
+        else if (grade <= 5000) dto.setTier(5);
+        dto.setGiveUpCount(user.getGiveUpCount());
         //techStackList는 알아서 채워라.
         return dto;
     }
