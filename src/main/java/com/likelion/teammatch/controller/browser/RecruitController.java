@@ -61,6 +61,7 @@ public class RecruitController {
         model.addAttribute("teamRecruitName", dto.getRecruitTitle());
         model.addAttribute("teamRecruitDetails", dto.getTeamRecruitDetails());
         model.addAttribute("memberNum", dto.getRecruitMemberNum());
+        model.addAttribute("techStackList", dto.getTechStackName());
 
         return "html/create_recruit";
     }
