@@ -275,7 +275,7 @@ public class RecruitService {
 
     public List<RecruitDraftDto> getRecruitDraftListBySearch(Integer page, String searchTerm) {
         PageRequest pageRequest = PageRequest.of(page, 10);
-        Page<Recruit> pageOfEntity = recruitRepository.searchByTechStackWantedOrTitleOOrderByIdDesc(pageRequest, searchTerm);
+        Page<Recruit> pageOfEntity = recruitRepository.searchByTechStackWantedOrTitleOrderByIdDesc(pageRequest, searchTerm);
 
         List<Recruit> recruitList = pageOfEntity.getContent();
         List<RecruitDraftDto> dtoList = new ArrayList<>();
