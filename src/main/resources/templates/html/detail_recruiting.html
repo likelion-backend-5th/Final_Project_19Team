@@ -18,7 +18,12 @@
     <div class="recruitContainer">
         <div class="auto-group-y3v9-Nwb">
             <div class="new-create-hU5">Detail recruiting</div>
-            <img class="close-cL9" src="../../static/assets/myprofile_edit/close.svg" th:src="@{/assets/myprofile_edit/close.svg}" alt="#">
+            <img class="close-cL9" src="../../static/assets/myprofile_edit/close.svg" th:src="@{/assets/myprofile_edit/close.svg}" alt="#" onclick="closePage()">
+            <script>
+                function closePage(){
+                    window.location.href = '/main';
+                }
+            </script>
         </div>
         <div class="singupbutton-jvZ" th:text="${recruit.getRecruitTitle()}">Title : </div>
 
@@ -58,7 +63,7 @@
 
                 <div class="teamSingleLineInputGroup">
                     <div class="teamTagLabel">매니저</div>
-                    <div class="teamTagButton" th:text="${recruit.getTeamManagerUsername()}">Moon</div>
+                    <div class="teamTagButton" th:attr="username=${recruit.getTeamManagerUsername()}" th:text="${recruit.getTeamManagerUsername()}" onclick="getProfile(this)">Moon</div>
                 </div>
 
             </div>
@@ -81,7 +86,7 @@
         <div class="buttonGroup">
 
             <!-- 1. 모집중/등록자 View-->
-            <a class="grayButton neon-gray-button" th:if="${isManager}" th:href="@{'/recruit/' + ${recruitId} + '/edit'}">수정</a>
+            <a class="grayButton neon-gray-button" th:if="${isManager} and !${isFinished}" th:href="@{'/recruit/' + ${recruitId} + '/edit'}">수정</a>
             <div class="redButton neon-red-button" th:if="!${isFinished} and ${isManager}" onclick="closeRecruit()">모집마감</div>
 
             <!-- 2. 모집중/참여자 View-->
@@ -95,7 +100,7 @@
         <div class="applySection">
             <div class="commentEach" th:each="applyDto : ${applyList}">
                 <div class="commentTop">
-                    <div class="commentUsername" th:text="${applyDto.getUsername()}">username</div>
+                    <div class="commentUsername" th:attr="username=${applyDto.getUsername()}" th:text="${applyDto.getUsername()}" onclick="getProfile(this)">username</div>
                     <div class="commentButtonGroup">
                         <button class="commentEditButton" th:attr="apply-id=${applyDto.getId()}" onclick="acceptApply(this)">수락</button>
                         <button class="commentDeleteButton" th:attr="apply-id=${applyDto.getId()}" onclick="denyApply(this)">거절</button>
@@ -178,9 +183,9 @@
         <div class="commentSection">
             <div class="commentEach" th:each="comment : ${comments}">
                 <div class="commentTop">
-                    <div class="commentUsername" th:text="${comment.getUsername()}">username</div>
+                    <div class="commentUsername" th:attr="username=${comment.getUsername()}" th:text="${comment.getUsername()}" onclick="getProfile(this)">username</div>
                     <div class="commentButtonGroup">
-                        <button class="commentEditButton" th:attr="comment-id=${comment.getCommentId()}" onclick="editComment(this)">수정</button>
+                        <button class="commentEditButton" th:attr="comment-id=${comment.getCommentId()}, comment-text=${comment.getContent()}" onclick="editComment(this)">수정</button>
                         <button class="commentDeleteButton" th:attr="comment-id=${comment.getCommentId()}" onclick="deleteComment(this)">삭제</button>
                     </div>
                 </div>
@@ -193,11 +198,11 @@
 
     <script>
         async function editComment(element) {
-            let editedComment = window.prompt("수정된 댓글을 입력해주세요!");
+            let editedComment = window.prompt("수정된 댓글을 입력해주세요!", element.getAttribute("comment-text"));
 
             let commentId = element.getAttribute("comment-id");
             let recruitId = [[${ recruitId }]];
-            await fetch('/api/recruit/' + recruitId + '/comment/' + commentId, {
+            let response = await fetch('/api/recruit/' + recruitId + '/comment/' + commentId, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -206,13 +211,16 @@
                 credentials: 'include' // 인증정보를 포함하는 옵션
             });
 
+            if (response.status === 403){
+                alert("본인이 작성한 댓글이 아닙니다.")
+            }
             window.location.reload();
         }
 
         async function deleteComment(element) {
             let commentId = element.getAttribute("comment-id");
             let recruitId = [[${ recruitId }]];
-            await fetch('/api/recruit/' + recruitId + '/comment/' + commentId, {
+            let response = await fetch('/api/recruit/' + recruitId + '/comment/' + commentId, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
@@ -220,7 +228,17 @@
                 credentials: 'include' // 인증정보를 포함하는 옵션
             });
 
+            if (response.status === 403){
+                alert("본인이 작성한 댓글이 아닙니다.")
+            }
+
             window.location.reload();
+        }
+
+        function getProfile(element){
+            let username = element.getAttribute("username");
+
+            window.location.href = '/profile/' + username;
         }
     </script>
 

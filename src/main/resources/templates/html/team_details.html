@@ -15,7 +15,12 @@
     <div class="teamInfoContainer">
         <div class="auto-group-y3v9-Nwb">
             <div class="new-create-hU5">Team detail</div>
-            <img class="close-cL9" th:src="@{/assets/detail_recruiting/close.svg}" src="../../static/assets/detail_recruiting/close.svg" alt="#">
+            <img class="close-cL9" th:src="@{/assets/detail_recruiting/close.svg}" src="../../static/assets/detail_recruiting/close.svg" alt="#" onclick="closePage()">
+            <script>
+                function closePage(){
+                    window.location.href = '/teamlist';
+                }
+            </script>
         </div>
         <div class="singupbutton-jvZ" th:text="${team.getTeamName()}">Team Name </div>
 
@@ -82,6 +87,7 @@
             <a class="grayButton black-shadow-button" th:if="${isManager}" th:href="@{'/team/' + ${team.getId()} + '/chatroom'}">팀 채팅방 이동</a>
             <div class="grayButton black-shadow-button" th:if="!${isFinished} and ${isManager}" onclick="openRecruit()">추가모집</div>
             <div class="redButton neon-red-button" th:if="${isManager} and !${isFinished}" onclick="finishTeam()">팀 종료</div>
+            <div class="redButton neon-red-button" th:if="${isManager} and !${isFinished}" onclick="editTeam()">팀 수정</div>
             <div class="redButton neon-red-button" th:if="${isManager}" onclick="deleteTeam()">팀 삭제</div>
             <div class="redButton neon-red-button" th:if="!${isManager}" onclick="leaveTeam()">팀 탈퇴하기</div>
 
@@ -95,6 +101,10 @@
             let memberName = element.getAttribute("memberName");
 
             window.location.href = '/profile/' + memberName;
+        }
+
+        function editTeam(){
+            window.location.href = '/team/' + teamId + '/edit';
         }
         function openRecruit(){
             //팀 추가모집 공고 열기

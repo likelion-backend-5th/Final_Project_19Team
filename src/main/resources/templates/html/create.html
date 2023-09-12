@@ -20,8 +20,12 @@
     <form class="createForm slide-in-top" th:action="@{/createTeam}" th:method="post" id="createForm">
         <div class="createFormLogo">
             <div class="createFormLogoText">Create Team </div>
-            <img class="createFormLogoImg" src="../../static/assets/create/close.svg" th:src="@{/assets/create/close.svg}"  alt="#">
-
+            <img class="createFormLogoImg" src="../../static/assets/create/close.svg" th:src="@{/assets/create/close.svg}"  alt="#" onclick="closePage()"/>
+            <script>
+                function closePage(){
+                    window.location.href = '/main';
+                }
+            </script>
         </div>
         <input class="createTeamName" name="teamName" id="teamName" placeholder="팀 이름을 입력하세요" required>
         <div class="teamCreateInputGroup">
@@ -249,7 +253,7 @@
 
             <div class="recruitSingleLineInputGroup" id="recruitNumberInput">
                 <div class="teamTagLabel" title="몇명의 팀원들을 모집하실 생각인가요?">Many</div>
-                <input class="teamNumberInput" id="memberNum" name="memberNum" required onchange="onlyNumberInput()">
+                <input class="teamNumberInput" id="memberNum" name="memberNum" onchange="onlyNumberInput()">
                 <label class="teamNumberInputLabel" for="memberNum" >명</label>
             </div>
             <script>
