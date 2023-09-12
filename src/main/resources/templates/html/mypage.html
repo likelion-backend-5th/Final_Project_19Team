@@ -48,6 +48,14 @@
                     <div class="profileTagLabel">GITHUB</div>
                     <div class="profileTagButton1" th:text="${profile.getGithub()}">https://github.com</div>
                 </div>
+                <div class="profileSingleLineGroup">
+                    <div class="profileTagLabel">Grade</div>
+                    <div class="profileTagButton" th:text="${profile.getGrade() + '점'}">1000점</div>
+                </div>
+                <div class="profileSingleLineGroup">
+                    <div class="profileTagLabel">GiveUpCount</div>
+                    <div class="profileTagButton" th:text="${profile.getGiveUpCount() + '건'}">0건</div>
+                </div>
             </div>
 
             <div class="profileContainerRight">
