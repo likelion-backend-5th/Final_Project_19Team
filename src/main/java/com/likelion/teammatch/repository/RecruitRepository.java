@@ -15,5 +15,5 @@ public interface RecruitRepository extends JpaRepository<Recruit, Long> {
     List<Recruit> findAllByTeamId(Long teamId);
 
     @Query("SELECT e FROM Recruit e WHERE e.techStackWanted LIKE %:searchTerm% OR e.title LIKE %:searchTerm%")
-    Page<Recruit> searchByTechStackWantedOrTitle(PageRequest pageRequest, @Param("searchTerm") String searchTerm);
+    Page<Recruit> searchByTechStackWantedOrTitleOOrderByIdDesc(PageRequest pageRequest, @Param("searchTerm") String searchTerm);
 }

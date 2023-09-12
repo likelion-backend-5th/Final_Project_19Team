@@ -13,8 +13,12 @@
     <div class="profileContainer">
         <div class="profileTitleGroup">
             <div class="profileTitleUsername" th:text="${profile.getUsername()}">Username</div>
-            <img class="close-cL9" src="../../static/assets/mypage/close.svg" th:src="@{/assets/mypage/close.svg}" alt="#">
-
+            <img class="close-cL9" src="../../static/assets/mypage/close.svg" th:src="@{/assets/mypage/close.svg}" alt="#" onclick="closePage()">
+            <script>
+                function closePage(){
+                    window.location.href = '/main';
+                }
+            </script>
         </div>
 
         <div class="profileInfoGroup">

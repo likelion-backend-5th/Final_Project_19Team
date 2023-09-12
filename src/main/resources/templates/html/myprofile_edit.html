@@ -13,7 +13,13 @@
   <div class="profileContainer">
     <div class="profileTitleGroup">
       <div class="profileTitleUsername" th:text="${profile.getUsername()}">Username</div>
-      <img class="close-cL9" th:src="@{/assets/myprofile_edit/close.svg}" src="../../static/assets/myprofile_edit/close.svg" alt="#">
+      <img class="close-cL9" th:src="@{/assets/myprofile_edit/close.svg}" th:attr="username=${profile.getUsername()}" src="../../static/assets/myprofile_edit/close.svg" alt="#" onclick="closePage(this)">
+      <script>
+        function closePage(element){
+          let usernameForClose = element.getAttribute("username");
+          window.location.href = '/profile/' + usernameForClose;
+        }
+      </script>
     </div>
 
     <div class="profileInfoGroup1">

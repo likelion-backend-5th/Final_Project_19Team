@@ -159,7 +159,8 @@ public class TeamService {
 
 
     // Team 정보 수정
-    public void updateTeamInfo(Long teamId, TeamInfoDto dto) {
+    @Transactional
+    public void updateTeamInfo(Long teamId, TeamCreateDto dto) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
         User user = userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -170,9 +171,18 @@ public class TeamService {
 
         team.setTeamName(dto.getTeamName());
         team.setIsOnline(dto.getIsOnline());
-        team.setMemberNum(dto.getMemberNum());
-        team.setIsFinished(dto.getIsFinished());
         team.setTeamDescribe(dto.getTeamDescribe());
+
+        teamTechStackRepository.deleteByTeamId(team.getId());
+        String[] techList = dto.getTechStackList().split("/");
+        for (String techStackName : techList){
+            TechStack techStack = techStackRepository.findByName(techStackName).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+            TeamTechStack teamTechStack = new TeamTechStack();
+            teamTechStack.setTechStackId(techStack.getId());
+            teamTechStack.setTeamId(team.getId());
+            teamTechStackRepository.save(teamTechStack);
+        }
 
         teamRepository.save(team);
     }

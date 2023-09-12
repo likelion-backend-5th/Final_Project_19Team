@@ -56,23 +56,17 @@ public class TeamController {
     }
 
     @GetMapping("/team/{teamId}/edit")
-    public String getTeamUpdateForm(@PathVariable("teamId") Long teamId){
-        return "NOTIMPLEMENTED";
+    public String getTeamUpdateForm(@PathVariable("teamId") Long teamId, Model model){
+        TeamInfoDto teamInfo = teamService.getTeamInfo(teamId);
+        model.addAttribute("team", teamInfo);
+        return "html/edit_team";
     }
 
     // 팀 정보 수정
     @PostMapping("/team/{teamId}/edit")
-    public String updateTeamInfo(@PathVariable Long teamId, TeamInfoDto dto) {
-        try {
-            // 서비스 레이어의 팀 정보 수정 기능 호출
-            teamService.updateTeamInfo(teamId, dto);
-
-            // 성공한 경우 페이지 리다이렉트
-            return "redirect:/create.html";
-        } catch (ResponseStatusException e) {
-            // 실패한 경우 에러 메시지를 포함한 페이지 리다이렉트
-            return "redirect:/error?message=" + e.getReason();
-        }
+    public String updateTeamInfo(@PathVariable Long teamId, TeamCreateDto dto) {
+        teamService.updateTeamInfo(teamId, dto);
+        return "redirect:/team/" + teamId;
     }
 
 
