@@ -35,7 +35,7 @@ public class TeamService {
     //Team 생성
     //생성 후 teamId 리턴함
     public Long createTeam(TeamCreateDto dto){
-        log.info("팀 생성");
+        log.info("팀 생성 : {}", dto.getTeamName());
         //현재 로그인한 유저의 이름 가져오기
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         //유저 엔티티 가져오기
@@ -293,7 +293,10 @@ public class TeamService {
         if (!userTeamRepository.existsByUserIdAndTeamId(user.getId(), team.getId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN, "팀에 가입된 상태가 아닙니다!");
         if (user.getId().equals(team.getTeamMangerId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN, "팀 매니저는 팀에서 탈퇴할 수 없습니다.");
 
-
+        //탈퇴한 user 점수 -1000점.
+        user.setGiveUpCount(user.getGiveUpCount() + 1);
+        user.setGrade(user.getGrade() - 1000);
+        userRepository.save(user);
         // 팀에서 유저를 탈퇴시키기
         userTeamRepository.deleteByUserIdAndTeamId(user.getId(), teamId);
 
@@ -324,7 +327,16 @@ public class TeamService {
         // 팀에 속한 모집 신청 삭제
         applyRepository.deleteAllByTeamId(teamId);
 
+        //팀에 속한 멤버들 +500점 / 매니저는 +1000점.
+        List<UserTeam> memberList = userTeamRepository.findAllByTeamId(teamId);
+        for (UserTeam userTeam : memberList){
+            User member = userRepository.findById(userTeam.getUserId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            if (member.getId().equals(team.getTeamMangerId())) member.setGrade(member.getGrade() + 1000);
+            else member.setGrade(member.getGrade() + 500);
+            userRepository.save(member);
+        }
 
+        
         // 팀의 상태를 종료로 변경
         team.setIsFinished(true);
         teamRepository.save(team);
