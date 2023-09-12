@@ -47,7 +47,7 @@
                     <div class="teamTagButton" th:if="!${recruit.getIsOnline()}">오프라인</div>
                 </div>
                 <div class="teamSingleLineInputGroup">
-                    <div class="teamTagLabel">Tech</div>
+                    <div class="teamTagLabel">Wanted</div>
                     <div class="teamTagButton" th:each="tech : ${recruit.getTechStackName()}" th:text="${tech}">HTML</div>
                 </div>
 
@@ -70,7 +70,7 @@
 
             <div class="recruitContainerRight">
                 <div class="recruitRecruitDescribeGroup">
-                    <div class="recruitRightTagLabel">모집 정보</div>
+                    <div class="recruitRightTagLabel">모집내용</div>
                     <div class="recruitRightRecruitDescribe">
                         <textarea class="recruitRightRecruitDescribeBox" th:text="${recruit.getTeamRecruitDetails()}" readonly>
                             안녕하세요!

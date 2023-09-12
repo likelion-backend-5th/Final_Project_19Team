@@ -2,9 +2,9 @@
     width: 1024px;
     margin: 0 auto;
     visibility: hidden;
-    position: relative;
-    left: 198px;
-    top: -1500px;
+    position: absolute;
+    left: 641px;
+    top: 100px;
     display: flex;
     overflow: hidden;
 }
