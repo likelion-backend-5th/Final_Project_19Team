@@ -71,7 +71,8 @@ span {
     padding: 0.8rem 2rem;
     width: 100%;
     font-size: 20px;
-    font-weight: 500;
+    font-weight: 700;
+    font-family: "Noto Sans KR", "Source Sans Pro";
     border: 0;
     color: #1e1e1e;
     white-space: nowrap;
@@ -178,6 +179,7 @@ span {
     padding: 10px;
     display: block;
     width: 60rem;
+    font-family: 'Noto Sans KR';
     white-space: normal;
     border: 1px solid #1E1E1E;
     height: 6.8rem;
@@ -205,6 +207,8 @@ span {
 .teamCreateTextarea{
     width: 100%;
     padding: 10px;
+    font-family: "Noto Sans KR", "Source Sans Pro";
+    font-weight: 700;
     border: solid 1px #1E1E1E;
     height: 13.6rem;
     border-radius: 5px;
@@ -217,8 +221,10 @@ span {
     height: 3.4rem;
     align-items: center;
     display: flex;
-    background-color: indianred;
+    background-color: #B73A3A;
     font-size: 20px;
+    font-weight: 700;
+    font-family: "Noto Sans KR", "Source Sans Pro";
     justify-content: center;
     margin-top: 1rem;
     border: 2px solid indianred; /* Add border for a clear visual separation */
@@ -265,17 +271,21 @@ span {
 .teamNumberInput {
     text-align: center;
     border: #1E1E1E 1px solid;
+    font-weight: 700;
     height: 3.4rem;
+    font-family: "Noto Sans KR", "Source Sans Pro";
     width: 6.8rem;
     border-radius: 5px;
     margin-left: 0;
     margin-right: 0.5rem;
-    font-size: 20px;
+    font-size: 15px;
 }
 
 .teamNumberInputLabel {
-    font-size: 20px;
     margin-left:0;
+    font-family: "Noto Sans KR", "Source Sans Pro";
+    font-size: 20px;
+    font-weight: 700;
     justify-content: center;
     padding-bottom: 5px;
 }
@@ -297,13 +307,15 @@ span {
 }
 
 .teamTechStackInput {
-    border: 1px solid #1E1E1E; /* Add border for a clear visual separation */
+    border: 1px solid #1E1E1E;
     margin-left: 0;
     padding: 0 10px;
     width: 50rem;
     border-radius: 5px;
-    height: 2.4rem;
+    height: 40px;
     font-size: 15px;
+    font-family: "Noto Sans KR", "Source Sans Pro";
+    font-weight: 700;
     margin-bottom: 5px;
 }
 
@@ -313,7 +325,7 @@ span {
     align-items: center;
     border-radius: 5px;
     width: 7.4rem;
-    height: 2.4rem;
+    height: 40px;
     font-size: 20px;
     margin-left: 5px;
     justify-content: center;
@@ -332,16 +344,19 @@ span {
 }
 
 .recruitTechStackLabel {
+    position: relative;
     margin-left: 0;
+    top: 10px;
     margin-right: 1rem;
     width: 5rem;
-    height: 2rem;
-    display:flex;
+    font-family: 'Noto Sans KR';
+    font-size: 12px;
+    height: 40px;
+    display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid #1e1e1e; /* Add border for a clear visual separation */
+    border: 0px;
     border-radius: 5px;
-    background-color: white;
+    color: white;
+    background-color: #2137fc;
 }
-
-
