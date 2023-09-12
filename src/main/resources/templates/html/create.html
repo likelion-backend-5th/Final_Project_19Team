@@ -20,8 +20,12 @@
     <form class="createForm slide-in-top" th:action="@{/createTeam}" th:method="post" id="createForm">
         <div class="createFormLogo">
             <div class="createFormLogoText">Create Team </div>
-            <img class="createFormLogoImg" src="../../static/assets/create/close.svg" th:src="@{/assets/create/close.svg}"  alt="#">
-
+            <img class="createFormLogoImg" src="../../static/assets/create/close.svg" th:src="@{/assets/create/close.svg}"  alt="#" onclick="closePage()"/>
+            <script>
+                function closePage(){
+                    window.location.href = '/main';
+                }
+            </script>
         </div>
         <input class="createTeamName" name="teamName" id="teamName" placeholder="팀 이름을 입력하세요" required>
         <div class="teamCreateInputGroup">

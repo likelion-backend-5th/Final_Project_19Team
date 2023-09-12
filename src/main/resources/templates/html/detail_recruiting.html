@@ -18,7 +18,12 @@
     <div class="recruitContainer">
         <div class="auto-group-y3v9-Nwb">
             <div class="new-create-hU5">Detail recruiting</div>
-            <img class="close-cL9" src="../../static/assets/myprofile_edit/close.svg" th:src="@{/assets/myprofile_edit/close.svg}" alt="#">
+            <img class="close-cL9" src="../../static/assets/myprofile_edit/close.svg" th:src="@{/assets/myprofile_edit/close.svg}" alt="#" onclick="closePage()">
+            <script>
+                function closePage(){
+                    window.location.href = '/main';
+                }
+            </script>
         </div>
         <div class="singupbutton-jvZ" th:text="${recruit.getRecruitTitle()}">Title : </div>
 

@@ -20,8 +20,12 @@
     <form class="createForm slide-in-top" th:action="@{'/team/' + ${team.getId()} + '/edit'}" th:method="post" id="editForm">
         <div class="createFormLogo">
             <div class="createFormLogoText">Edit Team </div>
-            <img class="createFormLogoImg" src="../../static/assets/create/close.svg" th:src="@{/assets/create/close.svg}"  alt="#">
-
+            <img class="createFormLogoImg" src="../../static/assets/create/close.svg" th:src="@{/assets/create/close.svg}"  alt="#" onclick="closePage()">
+            <script>
+                function closePage(){
+                    window.location.href = '/team/' + [[${team.getId()}]];
+                }
+            </script>
         </div>
         <input class="createTeamName" name="teamName" id="teamName" placeholder="팀 이름을 입력하세요" th:value="${team.getTeamName()}" required>
         <div class="teamCreateInputGroup">

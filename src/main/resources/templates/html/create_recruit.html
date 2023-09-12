@@ -18,8 +18,12 @@
     <form class="createForm slide-in-top" th:method="post" id="createForm">
         <div class="createFormLogo">
             <div class="createFormLogoText">Create_recruit</div>
-            <img class="createFormLogoImg" src="../../static/assets/create/close.svg" th:src="@{/assets/create/close.svg}" alt="#" />
-
+            <img class="createFormLogoImg" src="../../static/assets/create/close.svg" th:src="@{/assets/create/close.svg}" alt="#" onclick="closePage()"/>
+            <script>
+                function closePage(){
+                    window.location.href = '/main';
+                }
+            </script>
         </div>
         <input class="createTeamName" th:value="${teamName}" readonly>
         <div class="teamCreateInputGroup">
