@@ -185,7 +185,7 @@ span {
     align-items: center;
     border-radius: 5px;
     width: 7.4rem;
-    height: 2.4rem;
+    height: 3.4rem;
     font-size: 20px;
     margin-left: 5px;
     justify-content: center;
@@ -219,16 +219,18 @@ span {
 }
 
 .recruitTechStackLabel {
+    position: relative;
+    top: 14px;
     margin-left: 0;
     margin-right: 1rem;
     width: 5rem;
-    height: 2rem;
-    display:flex;
+    height: 3rem;
+    display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid #1e1e1e; /* Add border for a clear visual separation */
+    color: white;
     border-radius: 5px;
-    background-color: white;
+    background-color: #3f51b5;
 }
 
 .teamCreateTextarea {
