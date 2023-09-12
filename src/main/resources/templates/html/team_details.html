@@ -59,7 +59,7 @@
 
                 <div class="teamSingleLineInputGroup">
                     <div class="teamTagLabel">멤버 목록</div>
-                    <div class="teamTagButton" th:attr="memberName=${team.getTeamManagerUsername()}" th:each="member : ${team.getTeamMemberUsername()}" th:text="${member}" onclick="getProfile(this)">Moon</div>
+                    <div class="teamTagButton" th:attr="memberName=${member}" th:each="member : ${team.getTeamMemberUsername()}" th:text="${member}" onclick="getProfile(this)">Moon</div>
                 </div>
 
                 <div class="teamSingleLineInputGroup">
