@@ -28,18 +28,19 @@
         <input class="createTeamName" th:value="${teamName}" readonly>
         <div class="teamCreateInputGroup">
             <div class="recruitTitleInfo" id="recruitTitleInfo">
+
                 <div class="teamTechLabel" title="모집 공고글에 적히게 될 설명을 적어주세요!">모집공고 제목</div>
-                <textarea class="recruitTitleInput" type="text" id="teamRecruitName" name="teamRecruitName" th:value="${teamRecruitName}"></textarea>
+                <textarea class="recruitTitleInput" type="text" id="teamRecruitName" name="teamRecruitName" th:text="${teamRecruitName}"></textarea>
             </div>
 
             <div class="recruitDetailsInfo" id="recruitDetailsInfo">
                 <div class="teamTechLabel-big" title="모집 공고글에 적히게 될 설명을 적어주세요!">모집내용</div>
-                <textarea class="teamCreateTextarea" name="teamRecruitDetails" id="teamRecruitDetails" th:value="${teamRecruitDetails}"></textarea>
+                <textarea class="teamCreateTextarea" name="teamRecruitDetails" id="teamRecruitDetails" th:text="${teamRecruitDetails}"></textarea>
             </div>
 
             <div class="teamSingleLineInputGroup">
                 <div class="teamTagLabel" title="몇명의 팀원들을 모집하실 생각인가요?">모집인원</div>
-                <input class="teamNumberInput" id="memberNum" name="memberNum" required onchange="onlyNumberInput(this)">
+                <input type="text" class="teamNumberInput" id="memberNum" name="memberNum" th:value="${memberNum}" required onchange="onlyNumberInput(this)">
                 <label class="teamNumberInputLabel" for="memberNum" >명</label>
             </div>
             <script>
@@ -65,11 +66,12 @@
                 <div class="teamTechLabel" title="이번에 모집할 기술 스택을 최대 4가지까지 골라주세요!">Wanted</div>
                 <div class="teamTechStackInputGroup">
                     <div class="teamTechStackInputWithSearchGroup" id="recruitTechStackInputWithSearchGroup">
-                        <input class="teamTechStackInput" id="recruitTechStackInput" placeholder="기술스택입력 하세요(java, react, vue, spring...)">
+                        <input class="teamTechStackInput" id="recruitTechStackInput" placeholder="기술스택을 입력 하세요(java, react, vue, spring...)">
                         <div class="teamTechStackInputSearch"  onclick="recruitTechStackInputEntered()">Search</div>
                     </div>
 
                     <div class="teamTechStackLabelGroup" id="recruitTechStackLabelGroup"></div>
+                    <label class="teamTechStatus">현재 기술 스택: </label><text class="teamTechStatus" id="techStackList" th:text="${techStackList}"></text>
                     <input hidden="hidden" type="text" id="recruitTechStackList" name="techStackWanted">
 
                     <script>
