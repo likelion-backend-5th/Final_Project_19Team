@@ -54,6 +54,9 @@ public class MainController {
             model.addAttribute("phone", profileOfUser.getPhone());
             model.addAttribute("email", profileOfUser.getEmail());
             model.addAttribute("techStackList", profileOfUser.getTechStackList());
+            model.addAttribute("grade", profileOfUser.getGrade());
+            model.addAttribute("tier", profileOfUser.getTier());
+            model.addAttribute("giveUpCount", profileOfUser.getGiveUpCount());
             model.addAttribute("logined", true);
         }
 
