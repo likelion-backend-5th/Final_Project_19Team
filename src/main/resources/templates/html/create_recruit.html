@@ -28,17 +28,17 @@
         <input class="createTeamName" th:value="${teamName}" readonly>
         <div class="teamCreateInputGroup">
             <div class="recruitTitleInfo" id="recruitTitleInfo">
-                <div class="teamTechLabel" title="모집 공고글에 적히게 될 설명을 적어주세요!">Recruit Title</div>
+                <div class="teamTechLabel" title="모집 공고글에 적히게 될 설명을 적어주세요!">모집공고 제목</div>
                 <textarea class="recruitTitleInput" type="text" id="teamRecruitName" name="teamRecruitName" th:value="${teamRecruitName}"></textarea>
             </div>
 
             <div class="recruitDetailsInfo" id="recruitDetailsInfo">
-                <div class="teamTechLabel-big" title="모집 공고글에 적히게 될 설명을 적어주세요!">Recruit Info</div>
+                <div class="teamTechLabel-big" title="모집 공고글에 적히게 될 설명을 적어주세요!">모집내용</div>
                 <textarea class="teamCreateTextarea" name="teamRecruitDetails" id="teamRecruitDetails" th:value="${teamRecruitDetails}"></textarea>
             </div>
 
             <div class="teamSingleLineInputGroup">
-                <div class="teamTagLabel" title="몇명의 팀원들을 모집하실 생각인가요?">Many</div>
+                <div class="teamTagLabel" title="몇명의 팀원들을 모집하실 생각인가요?">모집인원</div>
                 <input class="teamNumberInput" id="memberNum" name="memberNum" required onchange="onlyNumberInput(this)">
                 <label class="teamNumberInputLabel" for="memberNum" >명</label>
             </div>
