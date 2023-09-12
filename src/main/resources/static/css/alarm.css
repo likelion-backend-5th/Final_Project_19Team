@@ -1,11 +1,12 @@
 .item--tFK {
+  width: 1024px;
   visibility: hidden;
-  margin: 0;
+  margin: 0 auto;
   box-sizing: border-box;
   overflow: hidden;
-  position: absolute;
-  left: 1300px;
-  top: 100px;
+  position: relative;
+  left: 817px;
+  top: -159px;
   display: flex;
   align-items: center;
 }
