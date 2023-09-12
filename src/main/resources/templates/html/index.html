@@ -416,7 +416,7 @@
                                             </div>
                                             <div class="group-351-Uws">
                                                 <div class="mat-avatar-D8m">
-                                                    <p class="item-900-j77">900점</p>
+                                                    <p class="item-900-j77" th:text="${grade + '점'}">900점</p>
 
                                                 </div>
                                             </div>
@@ -429,8 +429,20 @@
                                                 <p class="item--mGm">회원등급</p>
                                             </div>
                                             <div class="group-351-Uws">
-                                                <div class="mat-avatar-ddd">
+                                                <div class="mat-avatar-ddd" th:if="${tier} == 1">
                                                     <p class="item-1232">브론즈</p>
+                                                </div>
+                                                <div class="mat-avatar-ddd silver" th:if="${tier} == 2">
+                                                    <p class="item-1232">실버</p>
+                                                </div>
+                                                <div class="mat-avatar-ddd gold" th:if="${tier} == 3">
+                                                    <p class="item-1232">골드</p>
+                                                </div>
+                                                <div class="mat-avatar-ddd platinum" th:if="${tier} == 4">
+                                                    <p class="item-1232">플레티넘</p>
+                                                </div>
+                                                <div class="mat-avatar-5 diamond" th:if="${tier} == 5">
+                                                    <p class="item-1232">다이아</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -443,7 +455,7 @@
                                             </div>
                                             <div class="group-351-Uws">
                                                 <div class="mat-avatar-D8m">
-                                                    <p class="item-900-j77">1건</p>
+                                                    <p class="item-900-j77" th:text="${giveUpCount +'건'}">1건</p>
 
                                                 </div>
                                             </div>
@@ -451,9 +463,6 @@
 
                                     </div>
                                 </div>
-                                <img id="pagedetailShowBtn" class="chevron-right-M7o"
-                                     src="../../static/assets/mypage/chevron-down.svg" th:src="@{/assets/mypage/chevron-down.svg}"
-                                     alt="#" />
                             </div>
                         </div>
                         <!-- 회원정보 -->
@@ -566,95 +575,6 @@
                                 </div>
                                 <div class="line-75-4P3"></div>
                             </div>
-                            <!-- 회원정보 -->
-                            <p class="item--Uhf">회원상세</p>
-                            <div class="auto-group-3btm-wxd">
-                                <div class="group-323-Bry">
-                                    <div class="group-319-YBj">
-                                        <div class="auto-group-fvdt-j1K">
-                                            <div class="group-320-Eim">
-                                                <img class="calendar-sE1" src="../../static/assets/mypage/calendar.svg" th:src="@{/assets/mypage/calendar.svg}"
-
-                                                     alt="#">
-                                                <p class="item--CGH">날짜</p>
-                                            </div>
-                                            <div class="group-320-Eim">
-                                                <img class="calendar-sE1" src="../../static/assets/mypage/people.svg" th:src="@{/assets/mypage/people.svg}" alt="#">
-
-                                                <p class="item--CGH">활동내역</p>
-                                            </div>
-                                            <div class="group-320-Eim">
-                                                <img class="calendar-sE1" src="../../static/assets/mypage/heart.svg" th:src="@{/assets/mypage/heart.svg}"
-                                                     alt="#">
-                                                <p class="item--CGH">추천수</p>
-                                            </div>
-                                            <div class="group-320-Eim">
-                                                <img class="calendar-sE1" src="../../static/assets/mypage/search.svg" th:src="@{/assets/mypage/search.svg}"
-                                                     alt="#">
-                                                <p class="item--CGH">상세보기</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="group-334-2wT">
-                                    <div class="group-325-8jb">
-                                        <div class="auto-group-dg4y-fUd">
-                                            <p class="item-230817-QBK">230817</p>
-                                            <p class="a--uds">프로젝트A 완료</p>
-                                            <p class="item-100-2yP">100회</p>
-                                            <div class="group-141-Lz5">확인</div>
-                                        </div>
-                                    </div>
-                                    <div class="line-73-oMs">
-                                    </div>
-                                    <div class="group-325-8jb">
-                                        <div class="auto-group-dg4y-fUd">
-                                            <p class="item-230817-QBK">230817</p>
-                                            <p class="a--uds">프로젝트A 완료</p>
-                                            <p class="item-100-2yP">100회</p>
-                                            <div class="group-141-Lz5">확인</div>
-                                        </div>
-                                    </div>
-                                    <div class="line-73-oMs">
-                                    </div>
-
-                                    <div class="group-325-8jb">
-                                        <div class="auto-group-dg4y-fUd">
-                                            <p class="item-230817-QBK">230817</p>
-                                            <p class="a--uds">프로젝트A 완료</p>
-                                            <p class="item-100-2yP">100회</p>
-                                            <div class="group-141-Lz5">확인</div>
-                                        </div>
-                                    </div>
-                                    <div class="line-73-oMs">
-                                    </div>
-
-                                    <div class="group-325-8jb">
-                                        <div class="auto-group-dg4y-fUd">
-                                            <p class="item-230817-QBK">230817</p>
-                                            <p class="a--uds">프로젝트A 완료</p>
-                                            <p class="item-100-2yP">100회</p>
-                                            <div class="group-141-Lz5">확인</div>
-                                        </div>
-                                    </div>
-                                    <div class="line-73-oMs">
-                                    </div>
-
-                                    <div class="group-325-8jb">
-                                        <div class="auto-group-dg4y-fUd">
-                                            <p class="item-230817-QBK">230817</p>
-                                            <p class="a--uds">프로젝트A 완료</p>
-                                            <p class="item-100-2yP">100회</p>
-                                            <div class="group-141-Lz5">확인</div>
-                                        </div>
-                                    </div>
-                                    <div class="line-73-oMs">
-                                    </div>
-
-                                </div>
-                                <img id="pagedetailHideBtn" class="chevron-right-M7o"
-                                     src="../../static/assets/mypage/chevron-up.svg" th:src="@{/assets/mypage/chevron-up.svg}"
-                                     alt="up" />
                             </div>
                         </div>
                     </div>
@@ -859,10 +779,7 @@
     let mypageClose = document.getElementById("mypageClose");
     let mypageBtn = document.getElementById("mypageBtn");
     let mypagePage = document.getElementById("mypagePage");
-    let pagedetailHide = document.getElementById("pagedetailHide");
-    let pagedetailShow = document.getElementById("pagedetailShow");
-    let pagedetailHideBtn = document.getElementById("pagedetailHideBtn");
-    let pagedetailShowBtn = document.getElementById("pagedetailShowBtn");
+
 
     // 메인 마이페이지 버튼 - 토글
     mypageBtn.addEventListener('click', function () {
@@ -897,15 +814,6 @@
         mypageBtn.classList.remove('nav_btn_list_selected');
     });
 
-    // 마이페이지의 ▼ ▲ 토글버튼 클릭시 팝업
-    pagedetailShowBtn.addEventListener('click', function () {
-        pagedetailHide.style.visibility = 'hidden';
-        pagedetailShow.style.visibility = 'visible';
-    });
-    pagedetailHideBtn.addEventListener('click', function () {
-        pagedetailHide.style.visibility = 'visible';
-        pagedetailShow.style.visibility = 'hidden';
-    });
 
     // 마우스 mouseenter 시 팝업, mouseleave 팝업 닫기
     let helpBtn = document.getElementById('helpBtn');
