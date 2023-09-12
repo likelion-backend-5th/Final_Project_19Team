@@ -39,7 +39,7 @@
 
             <div class="teamSingleLineInputGroup">
                 <div class="teamTagLabel" title="몇명의 팀원들을 모집하실 생각인가요?">Many</div>
-                <input class="teamNumberInput" id="memberNum" name="memberNum" required onchange="onlyNumberInput(this)">
+                <input type="text" class="teamNumberInput" id="memberNum" name="memberNum" th:attr="memberNum=${memberNum}" th:value="${memberNum}" required onchange="onlyNumberInput(this)">
                 <label class="teamNumberInputLabel" for="memberNum" >명</label>
             </div>
             <script>
