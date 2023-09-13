@@ -269,6 +269,22 @@
     border-radius: 10rem;
 }
 
+.silver {
+    background-color: #616E7A
+}
+
+.gold {
+    background-color: #AC7E46
+}
+
+.platinum {
+    background-color: #218E77;
+}
+
+.diamond {
+    background-color: #5356A0;
+}
+
 .chevron-right-M7o {
     position: relative;
     top: 10px;

@@ -46,40 +46,6 @@
     color: #000000;
 }
 
-/* 채팅 참가자 목록 .participants */
-#participants-list {
-    position: relative;
-    top: 100px;
-    left: 20px;
-    background-color: white;
-    border-radius: 5px;
-    padding: 10px;
-    width: 125px;
-    height: fit-content;
-    margin: 10px 0;
-}
-
-.talking_member{
-    text-align: center;
-    color: #1E1E1E;
-    margin: 0;
-}
-
-.chat_list{
-    margin: 5px 15px;
-    padding: 0;
-}
-
-.participants ul {
-    list-style: none;
-    padding: 0;
-}
-
-.participants li {
-    margin: 5px 0;
-    font-size: 14px;
-}
-
 .chat_body{
     border: #1E1E1E solid 1px;
     border-radius: 5px;

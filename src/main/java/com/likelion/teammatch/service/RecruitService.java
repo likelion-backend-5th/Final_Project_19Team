@@ -1,5 +1,7 @@
 package com.likelion.teammatch.service;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
 import com.likelion.teammatch.dto.ApplyDto;
 import com.likelion.teammatch.dto.RecruitDraftDto;
 import com.likelion.teammatch.dto.RecruitInfoDto;
@@ -15,8 +17,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,17 +33,19 @@ public class RecruitService {
     private final TeamRepository teamRepository;
     private final TeamTechStackRepository teamTechStackRepository;
     private final UserTeamRepository userTeamRepository;
+    private final S3UploadService s3UploadService;
 
     private final TechStackRepository techStackRepository;
     private final TeamService teamService;
     private final ApplyRepository applyRepository;
     private final AlarmService alarmService;
-    public RecruitService(RecruitRepository recruitRepository, UserRepository userRepository, TeamRepository teamRepository, TeamTechStackRepository teamTechStackRepository, UserTeamRepository userTeamRepository, TechStackRepository techStackRepository, TeamService teamService, ApplyRepository applyRepository, AlarmService alarmService) {
+    public RecruitService(RecruitRepository recruitRepository, UserRepository userRepository, TeamRepository teamRepository, TeamTechStackRepository teamTechStackRepository, UserTeamRepository userTeamRepository, S3UploadService s3UploadService, TechStackRepository techStackRepository, TeamService teamService, ApplyRepository applyRepository, AlarmService alarmService) {
         this.recruitRepository = recruitRepository;
         this.userRepository = userRepository;
         this.teamRepository = teamRepository;
         this.teamTechStackRepository = teamTechStackRepository;
         this.userTeamRepository = userTeamRepository;
+        this.s3UploadService = s3UploadService;
         this.techStackRepository = techStackRepository;
         this.teamService = teamService;
         this.applyRepository = applyRepository;
@@ -47,7 +53,7 @@ public class RecruitService {
     }
     
     //모집 공고를 따로 추가하는 메소드
-    public Long createRecruit(Long teamId, String title,Integer recruitMemberNum, String recruitDetails, String techStackWanted){
+    public Long createRecruit(Long teamId, String title,Integer recruitMemberNum, String recruitDetails, String techStackWanted, MultipartFile imageFile){
         //현재 사용자의 username 가져오기
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
@@ -56,6 +62,21 @@ public class RecruitService {
 
         //Team entity 가져오기
         Team team = teamRepository.findById(teamId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        // 이미지를 S3에 업로드하고 업로드된 이미지 URL을 반환
+        String imageUrl;
+
+        if (imageFile.isEmpty()){
+            imageUrl = "/assets/index/sample_img.png";
+        }
+        else {
+            try {
+                imageUrl = s3UploadService.upload(imageFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to upload image.");
+            }
+        }
 
         //모집 공고 권한 확인하기
         if (!team.getTeamMangerId().equals(user.getId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
@@ -68,13 +89,14 @@ public class RecruitService {
         recruit.setTeamId(team.getId());
         recruit.setIsFinished(false);
         recruit.setTechStackWanted(techStackWanted);
+        recruit.setImageFileName(imageUrl);
         recruit = recruitRepository.save(recruit);
 
         return recruit.getId();//이 모집 공고 상세보기를 하고 싶다.
     }
 
     //모집 공고 수정
-    public Long updateRecruit(Long recruitId, String title, Integer recruitMemberNum, String recruitDetails, String techStackWanted){
+    public Long updateRecruit(Long recruitId, String title, Integer recruitMemberNum, String recruitDetails, String techStackWanted, MultipartFile imageFile){
         //현재 사용자의 username 가져오기
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
@@ -84,6 +106,21 @@ public class RecruitService {
         //recruitEntity 가져오기
         Recruit recruit = recruitRepository.findById(recruitId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
+        // 이미지를 S3에 업로드하고 업로드된 이미지 URL을 반환
+        String imageUrl;
+
+        if (imageFile.isEmpty()){
+            imageUrl = "/assets/index/sample_img.png";
+        }
+        else {
+            try {
+                imageUrl = s3UploadService.upload(imageFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to upload image.");
+            }
+        }
+
         //모집 공고 수정 권한 확인하기
         if (!recruit.getTeamManagerId().equals(user.getId())) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 
@@ -91,6 +128,7 @@ public class RecruitService {
         recruit.setRecruitMemberNum(recruitMemberNum);
         recruit.setTeamRecruitDetails(recruitDetails);
         recruit.setTechStackWanted(techStackWanted);
+        recruit.setImageFileName(imageUrl);
         recruit = recruitRepository.save(recruit);
 
         return recruit.getId();
@@ -181,6 +219,10 @@ public class RecruitService {
             if (recruit.getTechStackWanted() != null) techStackNameList = Arrays.stream(recruit.getTechStackWanted().split("/")).toList();
             dto.setTechStackList(techStackNameList);
 
+            // 이미지 URL 채우기
+            if (dto.getImageUrl().equals("/assets/index/sample_img.png")) dto.setImageUrl(recruit.getImageFileName());
+            else dto.setImageUrl(getImageUrlForRecruit(recruit));
+
             //comment 채우기 미구현
             dto.setCommentNum(0);
             dtoList.add(dto);
@@ -188,7 +230,44 @@ public class RecruitService {
 
         return dtoList;
     }
-    
+
+    // Recruit 객체로부터 이미지 URL을 얻는 메서드
+    private String getImageUrlForRecruit(Recruit recruit) {
+        // S3 버킷 정보
+        String bucketName = "19team-s3-bucket"; // S3 버킷 이름
+        String region = "ap-northeast-2"; // AWS 리전 (예: "us-east-1")
+
+        // 이미지 파일 이름
+        String imageFileName = recruit.getImageFileName(); // 이미지 파일 이름을 가져오는 로직을 적용
+
+        // S3 클라이언트 생성
+        AmazonS3 amazonS3 = AmazonS3Client.builder()
+                .withRegion(region)
+                .build();
+
+        // 이미지 URL 생성
+        String imageUrl = amazonS3.getUrl(bucketName, imageFileName).toString();
+
+        return imageUrl;
+    }
+
+    public String uploadAndProcessImage(MultipartFile file, Long recruitId) throws IOException {
+        Recruit recruit = recruitRepository.findById(recruitId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Recruit not found"));
+
+        // 이미지 업로드 및 URL 얻기
+        String imageUrl = s3UploadService.upload(file);
+
+        // recruit 엔티티에 이미지 URL 설정
+        recruit.setImageFileName(imageUrl);
+
+        // recruit 엔티티 저장
+        recruitRepository.save(recruit);
+
+        String imageUrlForRecruit = getImageUrlForRecruit(recruit);
+
+        return imageUrlForRecruit;
+    }
     
     //사용자 기술 스택에 포함된 기술 스택을 가지고 있는 프로젝트 가져오기
     //나와 관련된 기술 스택
@@ -290,6 +369,10 @@ public class RecruitService {
 
             if (recruit.getTechStackWanted() != null) techStackNameList = Arrays.stream(recruit.getTechStackWanted().split("/")).toList();
             dto.setTechStackList(techStackNameList);
+
+            // 이미지 URL 채우기
+            if (dto.getImageUrl().equals("/assets/index/sample_img.png")) dto.setImageUrl(recruit.getImageFileName());
+            else dto.setImageUrl(getImageUrlForRecruit(recruit));
 
             //comment 채우기 미구현
             dto.setCommentNum(0);
