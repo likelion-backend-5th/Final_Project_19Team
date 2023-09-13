@@ -7,10 +7,14 @@ import com.likelion.teammatch.service.CommentService;
 import com.likelion.teammatch.service.RecruitService;
 import com.likelion.teammatch.service.team.TeamService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 
 @Controller
@@ -68,9 +72,8 @@ public class RecruitController {
 
     //모집 공고 수정하기
     @PostMapping("/recruit/{recruitId}/edit")
-    public String updateRecruit(@PathVariable("recruitId") Long recruitId, CreateRecruitDto dto){
-        recruitService.updateRecruit(recruitId, dto.getTeamRecruitName(), dto.getMemberNum(),dto.getTeamRecruitDetails(), dto.getTechStackWanted());
-
+    public String updateRecruit(@PathVariable("recruitId") Long recruitId, CreateRecruitDto dto, @RequestParam("imageFile") MultipartFile file){
+        recruitService.updateRecruit(recruitId, dto.getTeamRecruitName(), dto.getMemberNum(),dto.getTeamRecruitDetails(), dto.getTechStackWanted(), file);
         return "redirect:/recruit/" + recruitId;
     }
 
@@ -85,8 +88,8 @@ public class RecruitController {
     }
     //팀에 모집 공고 추가하기
     @PostMapping("/team/{teamId}/recruit")
-    public String createRecruit(@PathVariable("teamId") Long teamId, CreateRecruitDto dto){
-        Long recruitId = recruitService.createRecruit(teamId, dto.getTeamRecruitName(), dto.getMemberNum(), dto.getTeamRecruitDetails(), dto.getTechStackWanted());
+    public String createRecruit(@PathVariable("teamId") Long teamId, CreateRecruitDto dto, @RequestParam("imageFile") MultipartFile file){
+        Long recruitId = recruitService.createRecruit(teamId, dto.getTeamRecruitName(), dto.getMemberNum(), dto.getTeamRecruitDetails(), dto.getTechStackWanted(), file);
         return "redirect:/recruit/" + recruitId;
     }
 
@@ -114,4 +117,19 @@ public class RecruitController {
         recruitService.recruitFinish(recruitId);
         return "redirect:/main";
     }
+
+    @PostMapping("/recruit/{recruitId}/uploadImage")
+    public ResponseEntity<String> uploadAndProcessImage(
+            @PathVariable Long recruitId,
+            @RequestParam("file") MultipartFile file) {
+        try {
+            String imageUrl = recruitService.uploadAndProcessImage(file, recruitId);
+            return ResponseEntity.ok(imageUrl);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Failed to upload image.");
+        }
+    }
 }
+
+

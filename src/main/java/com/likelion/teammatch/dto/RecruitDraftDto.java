@@ -23,6 +23,7 @@ public class RecruitDraftDto {
     private String recruitDetails;
 
     private Integer commentNum;
+    private String imageUrl;
 
     public static RecruitDraftDto fromEntity(Team team, Recruit recruit){
         RecruitDraftDto dto = new RecruitDraftDto();
@@ -33,6 +34,7 @@ public class RecruitDraftDto {
         dto.setIsFinished(recruit.getIsFinished());
         dto.setRecruitDetails(recruit.getTeamRecruitDetails().substring(0, Math.min(recruit.getTeamRecruitDetails().length(), 30)) + "...");
         //commnetNum은 알아서 채워라
+        dto.setImageUrl(recruit.getImageFileName());
         return dto;
     }
 }

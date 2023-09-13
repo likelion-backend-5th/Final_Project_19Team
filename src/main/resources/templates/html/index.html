@@ -138,7 +138,7 @@
         <div th:each="recruit : ${recruitList}" class="grid_report_item"
             th:attr="data-recruitId=${recruit.getRecruitId()}" onclick="getRecruitDetails(this)">
             <img class='grid_report_item_img_img' src="../../static/assets/index/sample_img.png"
-                th:src="@{/assets/index/sample_img.png}" alt="이미지" />
+                 th:src="${recruit.getImageUrl()}" alt="이미지" />
             <button class="stars_btn">★</button>
             <div class="grid_report_item_text">
                 <div class="title" th:text="${recruit.getRecruitTitle()}">멋사 19 프로젝트 모집</div>

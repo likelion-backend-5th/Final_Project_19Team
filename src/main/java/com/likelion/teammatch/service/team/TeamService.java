@@ -9,14 +9,17 @@ import com.likelion.teammatch.entity.*;
 import com.likelion.teammatch.repository.*;
 import com.likelion.teammatch.repository.team.UserTeamRepository;
 import com.likelion.teammatch.repository.team.TeamRepository;
+import com.likelion.teammatch.service.S3UploadService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,14 +35,30 @@ public class TeamService {
     private final TeamTechStackRepository teamTechStackRepository;
     private final ChatRoomRepository chatRoomRepository;
     private final ApplyRepository applyRepository;
+    private final S3UploadService s3UploadService;
     //Team 생성
     //생성 후 teamId 리턴함
-    public Long createTeam(TeamCreateDto dto){
+    public Long createTeam(TeamCreateDto dto, MultipartFile imageFile){
         log.info("팀 생성 : {}", dto.getTeamName());
         //현재 로그인한 유저의 이름 가져오기
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         //유저 엔티티 가져오기
         User user = userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        // 이미지를 S3에 업로드하고 업로드된 이미지 URL을 반환
+        String imageUrl;
+
+        if (imageFile.isEmpty()){
+            imageUrl = "/assets/index/sample_img.png";
+        }
+        else {
+            try {
+                imageUrl = s3UploadService.upload(imageFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to upload image.");
+            }
+        }
 
         Team team = TeamCreateDto.getTeamEntity(dto);
 
@@ -62,6 +81,7 @@ public class TeamService {
             Recruit recruit = TeamCreateDto.getRecruitEntity(dto);
             recruit.setTeamManagerId(user.getId());
             recruit.setTeamId(team.getId());
+            recruit.setImageFileName(imageUrl);
 
             recruitRepository.save(recruit);
         }
