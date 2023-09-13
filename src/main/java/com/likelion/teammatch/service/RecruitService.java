@@ -110,7 +110,8 @@ public class RecruitService {
         String imageUrl;
 
         if (imageFile.isEmpty()){
-            imageUrl = "/assets/index/sample_img.png";
+            // 이미지를 업로드하지 않은 경우, 이전 이미지 URL을 가져옴
+            imageUrl = recruit.getImageFileName();
         }
         else {
             try {
