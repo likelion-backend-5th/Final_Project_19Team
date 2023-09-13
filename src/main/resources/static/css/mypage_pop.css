@@ -2,9 +2,9 @@
   visibility: hidden;
   width: 380px;
   height: 238px;
-  position: relative;
-  top: 28px;
-  left: 433px;
+  position: absolute;
+  top: 289px;
+  left: 1169px;
   box-sizing: border-box;
   padding: 10px;
   border: solid 0.05rem #000000;
