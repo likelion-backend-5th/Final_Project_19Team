@@ -49,6 +49,9 @@ public class User implements UserDetails {
 
     private String ServerRole;
 
+    private Integer grade;
+    private Integer giveUpCount;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

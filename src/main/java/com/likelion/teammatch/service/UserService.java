@@ -53,6 +53,8 @@ public class UserService {
         user.setPassword(dto.getPassword());
         user.setEmail(dto.getEmail());
         user.setPhone(dto.getPhone());
+        user.setGrade(2000);//기본 점수 실버 2000점
+        user.setGiveUpCount(0);//기본 중도포기 횟수 0건
 
         user = userRepository.save(user);
 
