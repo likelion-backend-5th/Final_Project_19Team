@@ -60,7 +60,7 @@
     }
 
     function connect() {
-        const socket = new WebSocket('ws://ec2-54-180-26-79.ap-northeast-2.compute.amazonaws.com:8080/chatting');
+        const socket = new WebSocket('ws://localhost:8080/chatting');
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
@@ -90,11 +90,13 @@
         senderAndTimeSpan.appendChild(document.createTextNode(senderAndTimeText));
         if (messageOutput.sender === username) {
             senderAndTimeSpan.classList.add('mymsg_sender_time');
+            div.appendChild(senderAndTimeSpan);
+            div.classList.add('massege_box_mymsg');
         } else {
             senderAndTimeSpan.classList.add('msg_sender_time');
+            div.appendChild(senderAndTimeSpan);
+            div.classList.add('massege_box_msg');
         }
-        div.appendChild(senderAndTimeSpan);
-        div.classList.add('massege_box');
 
         const messageSpan = document.createElement('span');
         if (messageOutput.sender === username) {

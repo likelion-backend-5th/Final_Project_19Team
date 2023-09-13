@@ -100,7 +100,15 @@
 }
 
 
-.massege_box {
+.massege_box_msg {
+    align-items: self-start;
+    flex-direction: column;
+    justify-content: end;
+    display: flex;
+    margin: 15px 5px;
+}
+
+.massege_box_mymsg {
     align-items: end;
     flex-direction: column;
     justify-content: end;
@@ -142,24 +150,31 @@
     top: 2px;
     position: relative;
     bottom: 4px;
+    left: 0;
+    margin: 0;
 }
 
 .chat_wrap .msg {
+    left: -3px;
     top: 10px;
     bottom: 10px;
-    left: 2px;
+    margin: 0;
     position: relative;
-    background: #fff;
-    border-radius: 10px;
+    width: fit-content;
+    max-width: 151px;
+    background: white;
+    border-radius: 5px;
     padding: 4px;
-    display: inline-block;
-    max-width: 60%;
+    display: flex;
+    justify-content: center;
+    word-break: break-all;
 }
 
 /*내가 보낸 메시지*/
 .chat_wrap .mymsg_sender_time {
+    margin: 0;
     top: 2px;
-    left: 100px;
+    right: 9px;
     position: relative;
 }
 
