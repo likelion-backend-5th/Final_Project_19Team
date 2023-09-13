@@ -18,14 +18,9 @@
 
 
     <div class="flexing">
-        <!-- 실시간 참가자 목록 -->
-        <div id="participants-list">
-            <h4 class="talking_member">현재 대화 멤버</h4>
-            <ul class="chat_list" id="participants"></ul>
-        </div>
         <div class="chat_body">
             <!-- 채팅 내용 박스 -->
-            <div class="inner">
+            <div id="inner" class="inner">
                 <!--받은 응답을 표시하는 부분-->
                 <p id="response"></p>
             </div>
@@ -37,26 +32,21 @@
             </form>
 
         </div>
-
     </div>
-
 
 </div>
 
-<!--<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>-->
 <script src="/js/stomp.js"></script>
 <script type="text/javascript">
     let stompClient;
     const pathname = window.location.pathname;
     const roomId = parseInt(pathname.split("/")[2]);    // teamId로 roomId를 생성했음
     const username = "[[${ username }]]";
+    const chatInner = document.getElementById("inner");    // 스크롤
 
-    //participants 추가
-    function addParticipants(participantname) {
-        const participantsList = document.getElementById('participants');
-        const listItem = document.createElement('li');
-        listItem.textContent = participantname;
-        participantsList.appendChild(listItem);
+
+    function scrollToBottom() {
+        chatInner.scrollTop = chatInner.scrollHeight;
     }
 
     function connect() {
@@ -69,11 +59,10 @@
                 if (Array.isArray(jsonMessage)) initialMessages(jsonMessage)
                 else receiveMessage(jsonMessage);
             });
-
+            scrollToBottom();
         }, function (error) {
             console.error('WebSocket 연결 오류: ' + error);
         });
-        addParticipants(username);
     }
 
     function initialMessages(messageList) {
@@ -94,7 +83,7 @@
             senderAndTimeSpan.classList.add('msg_sender_time');
         }
         div.appendChild(senderAndTimeSpan);
-        div.classList.add('massege_box');
+        div.classList.add('message_box');
 
         const messageSpan = document.createElement('span');
         if (messageOutput.sender === username) {
@@ -106,6 +95,7 @@
         div.appendChild(messageSpan);
 
         response.appendChild(div);
+        scrollToBottom();
     }
 
 
