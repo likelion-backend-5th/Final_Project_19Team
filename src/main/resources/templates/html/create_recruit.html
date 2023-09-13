@@ -15,7 +15,7 @@
 
 
 <div class="main">
-    <form class="createForm slide-in-top" th:method="post" id="createForm">
+    <form class="createForm slide-in-top" th:method="post" id="createForm" enctype="multipart/form-data">
         <div class="createFormLogo">
             <div class="createFormLogoText">Create_recruit</div>
             <img class="createFormLogoImg" src="../../static/assets/create/close.svg" th:src="@{/assets/create/close.svg}" alt="#" onclick="closePage()"/>
@@ -126,6 +126,10 @@
 
                     </script>
                 </div>
+            </div>
+            <div class="recruitTitleInfo" id="recruitImageInfo">
+                <div class="teamTagLabel" title="이미지를 넣어주세요!">Image</div>
+                <input class="imageFileInput" id="file" name="imageFile" type="file">
             </div>
 
         </div>

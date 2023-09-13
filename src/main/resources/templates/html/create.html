@@ -17,7 +17,7 @@
 <body>
 <div class="main">
 
-    <form class="createForm slide-in-top" th:action="@{/createTeam}" th:method="post" id="createForm">
+    <form class="createForm slide-in-top" th:action="@{/createTeam}" th:method="post" id="createForm" enctype="multipart/form-data">
         <div class="createFormLogo">
             <div class="createFormLogoText">Create Team </div>
             <img class="createFormLogoImg" src="../../static/assets/create/close.svg" th:src="@{/assets/create/close.svg}"  alt="#" onclick="closePage()"/>
@@ -166,11 +166,13 @@
                         document.getElementById('recruitDetailsInfo').style.display = 'flex';
                         document.getElementById('recruitTechStackInfo').style.display = 'flex';
                         document.getElementById('recruitNumberInput').style.display = 'flex';
+                        document.getElementById('recruitImageInfo').style.display = 'flex';
                     } else {
                         document.getElementById('recruitTitleInfo').style.display = 'none';
                         document.getElementById('recruitDetailsInfo').style.display = 'none';
                         document.getElementById('recruitTechStackInfo').style.display = 'none';
                         document.getElementById('recruitNumberInput').style.display = 'none';
+                        document.getElementById('recruitImageInfo').style.display = 'none';
                     }
                 }
             </script>
@@ -268,7 +270,10 @@
                     }
                 }
             </script>
-
+            <div class="recruitTitleInfo" id="recruitImageInfo">
+                <div class="teamTagLabel" title="이미지를 넣어주세요!">Image</div>
+                <input class="imageFileInput" id="file" name="imageFile" type="file">
+            </div>
         </div>
         <div class="singUpButtonGroup">
             <button class="singUpButton" id="signUpButton" type="submit">등록</button>
