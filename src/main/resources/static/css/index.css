@@ -1,0 +1,442 @@
+* {
+    box-sizing: border-box;
+    font-family: Noto Sans KR, 'Source Sans Pro';
+    margin: 0 auto;
+}
+
+span {
+    color: #1E1E1E;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 32px;
+    /* 160% */
+    letter-spacing: 0.25px;
+}
+
+.top {
+    width: 100%;
+    margin-top: 32px;
+    display: flex;
+
+}
+
+.contents {
+    color: #1E1E1E;
+    font-size: 10px;
+    text-align: left;
+    font-weight: 500;
+    width: 250px;
+    overflow-wrap: break-word;
+}
+
+
+.nav {
+    position: relative;
+    left: -10px;
+    display: flex;
+}
+
+.nav_logo {
+    position: relative;
+    margin: 0 40px 0 0;
+}
+
+.nav_logo_img {
+    position: relative;
+    top: -0.3rem;
+}
+
+.nav_logo_text {
+    position: relative;
+    left: 0.5rem;
+    top: -0.8rem;
+}
+
+.nav_search {
+    margin: 0 40px 0 0;
+    position: relative;
+    padding-left: 20px;
+    padding-top: 3px;
+    width: 900px;
+    height: 34px;
+    flex-shrink: 0;
+    border-radius: 18px;
+    background: #E5E5E5;
+}
+
+.nav_search_img {
+    position: relative;
+    top: 0.3rem;
+    left: 0px;
+}
+
+.nav_search_input {
+    height: 25px;
+    background: #E5E5E5;
+    border: none;
+}
+
+.nav_btn {
+    margin: 0;
+    display: flex;
+}
+
+.nav_btn_list {
+    display: flex;
+    margin-right: 17px;
+    width: 34px;
+    height: 34px;
+    padding: 10px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background-color: #CCC;
+    border: 0px;
+    padding: 0;
+}
+
+/*즐겨찾기 히든*/
+#starBtn {
+    display: none;
+}
+
+#logoutBtn{
+    padding-left: 2px;
+}
+
+.nav_btn_list_selected {
+    background-color: #B73A3A;
+}
+
+.nav_btn_list:hover{
+    background-color: #B73A3A;
+}
+
+.stars_btn:hover{
+    background-color: #B73A3A;
+}
+
+.quick_filter {
+    height: 93px;
+    margin-top: 27px;
+    flex-shrink: 0;
+    background: rgba(204, 204, 204, 0.50);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.quick_filter_body {
+    padding-top: 8px;
+    max-width: 1330px;
+}
+
+.quick_filter_body_img {
+    position: relative;
+    top: 0.3rem;
+}
+
+.quick_filter_text {
+    position: relative;
+    left: 0.3rem;
+}
+
+.quick_filter_btn {
+    position: relative;
+    left: 1.8rem;
+    font-weight: 500;
+    color: #1E1E1E;
+    text-align: center;
+    letter-spacing: 1.25px;
+    margin-top: 5px;
+    margin-left: 5px;
+    height: 34px;
+    padding: 0 10px;
+    border-radius: 3px;
+    color: #1e1e1e;
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    border: 0px;
+}
+
+
+.selected {
+    color: white;
+    background: #3F51B5;
+}
+
+.match {
+    position: relative;
+    display: flex;
+    width: 1440px;
+    margin-top: 22px;
+    margin-bottom: 0.8rem;
+}
+
+.match_making {
+    position: relative;
+    left: -14rem;
+}
+
+.match_making_img {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    top: 0.2rem;
+}
+
+.match_making_text {
+    position: relative;
+    left: 0.3rem;
+}
+
+.sort {
+    position: relative;
+    right: -11rem;
+}
+
+.sort_img {
+    position: relative;
+    top: 0.2rem;
+    left: 0.3rem;
+    width: 24px;
+    height: 24px;
+}
+
+.sort_text {
+    position: relative;
+    left: 0.3rem;
+}
+
+.match_making_btn {
+    position: relative;
+    top: -0.1rem;
+    left: 0.8rem;
+    vertical-align: middle;
+    width: 26px;
+    height: 26px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 10px;
+    font-size: 15px;
+    color: white;
+    border: 0;
+    background: #3F51B5;
+    border-radius: 50%;
+}
+
+.sort_up_btn:hover, .sort_down_btn:hover, .match_making_btn:hover{
+    background: #B73A3A;
+}
+
+.sort_up_btn,
+.sort_down_btn {
+    position: relative;
+    top: -0.2rem;
+    left: 0.8rem;
+    margin-right: 0.2rem;
+    vertical-align: middle;
+    width: 26px;
+    height: 26px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 10px;
+    font-size: 10px;
+    color: white;
+    border: 0;
+    background: #3F51B5;
+    border-radius: 50%;
+}
+
+.grid_report {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    row-gap: 2rem;
+    column-gap: 0rem;
+    max-width: 1300px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.grid_report_item {
+    width: 290px;
+    height: 300px;
+    background-color: #ffffff;
+    color: white;
+    padding: 0px;
+    border: solid 2px #6c757d;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.grid_report_item_img {
+    position: relative;
+    /* 부모 요소에 상대적인 위치 설정 */
+    display: inline-block;
+    width: 100%;
+}
+
+.grid_report_item_img_img {
+    width: 100%;
+    max-height: 100px;
+    border-radius: 5px;
+}
+
+.stars_btn {
+    position: relative;
+    width: 28px;
+    height: 28px;
+    top: -91px;
+    right: -112px;
+    border: none;
+    border-radius: 50%;
+    background-color: #6f6f6f;
+    color: white;
+    text-align: center;
+    line-height: 10px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.grid_report_item_text {
+    position: relative;
+    /* 부모 요소에 상대적인 위치 설정 */
+    display: inline-block;
+    width: 90%;
+}
+
+.title {
+    margin-top: 5px;
+    font-weight: 600;
+    text-align: left;
+    color: #1E1E1E;
+}
+
+.status {
+    position: absolute;
+    width: 50px;
+    height: 23px;
+    /* 버튼의 위치를 설정하기 위해 절대 위치 설정 */
+    top: -20px;
+    /* 원하는 위치로 조절 */
+    right: 5px;
+    /* 원하는 위치로 조절 */
+    border: none;
+    border-radius: 4px;
+    background-color: #ff0000;
+    color: #FFF;
+    text-align: center;
+    line-height: 10px;
+    font-size: 10px;
+    cursor: pointer;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+    /* 200% */
+    letter-spacing: 0.1px;
+    background: #B73A3A;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.status1 {
+    position: absolute;
+    width: 50px;
+    height: 23px;
+    /* 버튼의 위치를 설정하기 위해 절대 위치 설정 */
+    top: -20px;
+    /* 원하는 위치로 조절 */
+    right: 5px;
+    /* 원하는 위치로 조절 */
+    border: none;
+    border-radius: 4px;
+    background-color: #ff0000;
+    color: #FFF;
+    text-align: center;
+    line-height: 10px;
+    font-size: 10px;
+    cursor: pointer;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+    /* 200% */
+    letter-spacing: 0.1px;
+    background: #78AE65;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.stacks {
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    margin: 10px 10px;
+}
+
+.stacks_button {
+    margin: 0;
+    margin-left: 3px;
+    font-size: 10px;
+    font-weight: 200;
+    color: #1E1E1E;
+    text-align: center;
+    letter-spacing: 1.25px;
+    height: 20px;
+    border-radius: 3px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    color: white;
+    background: #3F51B5;
+    border: 0;
+}
+
+.content {
+    overflow: hidden;
+    font-size: 15px;
+    font-weight: 200;
+    margin-top: 10px;
+    text-align: left;
+    color: #1E1E1E;
+}
+
+.grid_report_item_text_low2 {
+    display: flex;
+    position: absolute;
+    width: 20px;
+    height: 23px;
+    /* 버튼의 위치를 설정하기 위해 절대 위치 설정 */
+    top: 160px;
+    /* 원하는 위치로 조절 */
+    right: 80px;
+    /* 원하는 위치로 조절 */
+    border-radius: 4px;
+    color: #FFF;
+}
+
+.grid_report_item_text_low2_img {
+    width: 20px;
+}
+
+.grid_report_item_text_low2_flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.grid_report_item_text_low2_span {
+    text-align: center;
+    line-height: 22px;
+    font-size: 15px;
+    font-style: normal;
+}
+
+.grid_report_item_text_low2_button {
+    text-align: center;
+    padding-right: 5px;
+    line-height: 10px;
+    font-size: 20px;
+    font-style: normal;
+    border: none;
+    background-color: white;
+}

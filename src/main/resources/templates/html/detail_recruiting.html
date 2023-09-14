@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>detail_recruiting</title>
+    <link rel="stylesheet" th:href="@{../css/detail_recruiting.css}" href="../../static/css/detail_recruiting.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons%3A400">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+KR%3A700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%3A400%2C500%2C700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro%3A400%2C500%2C700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans%3A400">
+</head>
+
+<body>
+<div class="mainContainer">
+    <div class="recruitContainer">
+        <div class="auto-group-y3v9-Nwb">
+            <div class="new-create-hU5">Detail recruiting</div>
+            <img class="close-cL9" src="../../static/assets/myprofile_edit/close.svg" th:src="@{/assets/myprofile_edit/close.svg}" alt="#" onclick="closePage()">
+            <script>
+                function closePage(){
+                    window.location.href = '/main';
+                }
+            </script>
+        </div>
+        <div class="singupbutton-jvZ" th:text="${recruit.getRecruitTitle()}">Title : </div>
+
+        <div class="teamCreateInputGroup">
+            <div class="recruitContainerLeft">
+
+                <div class="teamSingleLineInputGroup">
+                    <div class="teamTagLabel">팀 이름</div>
+                    <div class="teamTagButton" th:text="${recruit.getTeamName()}">name</div>
+                </div>
+
+                <div class="teamSingleLineInputGroup">
+                    <div class="teamTagLabel">Type</div>
+                    <div class="teamTagButton" th:text="${recruit.getTeamType()}">프로젝트</div>
+                </div>
+
+
+                <div class="teamSingleLineInputGroup">
+                    <div class="teamTagLabel">Where</div>
+                    <div class="teamTagButton" th:if="${recruit.getIsOnline()}">온라인</div>
+                    <div class="teamTagButton" th:if="!${recruit.getIsOnline()}">오프라인</div>
+                </div>
+                <div class="teamSingleLineInputGroup">
+                    <div class="teamTagLabel">Wanted</div>
+                    <div class="teamTagButton" th:each="tech : ${recruit.getTechStackName()}" th:text="${tech}">HTML</div>
+                </div>
+
+                <div class="teamSingleLineInputGroup">
+                    <div class="teamTagLabel">모집인원</div>
+                    <div class="teamTagButton" th:text="${recruit.getRecruitMemberNum()}">3</div>
+                </div>
+
+                <div class="teamSingleLineInputGroup">
+                    <div class="teamTagLabel">작성일자</div>
+                    <div class="teamTagButton" th:utext="${#temporals.format(recruit.getCreatedAt(), 'yyyy.MM.dd')}">2022.08.31</div>
+                </div>
+
+                <div class="teamSingleLineInputGroup">
+                    <div class="teamTagLabel">매니저</div>
+                    <div class="teamTagButton" th:attr="username=${recruit.getTeamManagerUsername()}" th:text="${recruit.getTeamManagerUsername()}" onclick="getProfile(this)">Moon</div>
+                </div>
+
+            </div>
+
+            <div class="recruitContainerRight">
+                <div class="recruitRecruitDescribeGroup">
+                    <div class="recruitRightTagLabel">모집내용</div>
+                    <div class="recruitRightRecruitDescribe">
+                        <textarea class="recruitRightRecruitDescribeBox" th:text="${recruit.getTeamRecruitDetails()}" readonly>
+                            안녕하세요!
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="teamDescribeContainer">
+            <div class="teamDescribeLabel">팀 정보</div>
+            <textarea class="teamDescribeBox" th:text="${recruit.getTeamDescribe()}" readonly>팀 설명 와다다다</textarea>
+        </div>
+        <div class="buttonGroup">
+
+            <!-- 1. 모집중/등록자 View-->
+            <a class="grayButton neon-gray-button" th:if="${isManager} and !${isFinished}" th:href="@{'/recruit/' + ${recruitId} + '/edit'}">수정</a>
+            <div class="redButton neon-red-button" th:if="!${isFinished} and ${isManager}" onclick="closeRecruit()">모집마감</div>
+
+            <!-- 2. 모집중/참여자 View-->
+            <div class="redButton neon-red-button" th:if="!${isManager} and !${isFinished}" onclick="createApply()">참여신청</div>
+
+        </div>
+    </div>
+
+    <div class="applyContainer" th:if="${isManager}">
+        <div class="applyLabel">모집 신청 목록</div>
+        <div class="applySection">
+            <div class="commentEach" th:each="applyDto : ${applyList}">
+                <div class="commentTop">
+                    <div class="commentUsername" th:attr="username=${applyDto.getUsername()}" th:text="${applyDto.getUsername()}" onclick="getProfile(this)">username</div>
+                    <div class="commentButtonGroup">
+                        <button class="commentEditButton" th:attr="apply-id=${applyDto.getId()}" onclick="acceptApply(this)">수락</button>
+                        <button class="commentDeleteButton" th:attr="apply-id=${applyDto.getId()}" onclick="denyApply(this)">거절</button>
+                    </div>
+                </div>
+                <div class="applyIntroduction" th:text="${applyDto.getIntroduction()}">
+                    질문있습니다! 왜 이렇게 타임리프가 어려운거죠??
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function createApply(){
+            let recruitId = [[${ recruitId }]];
+
+            let applyText = window.prompt("참여 신청 글을 간단하게 적어주세요!");
+            fetch('/recruit/' + recruitId + '/apply', {
+                method: 'POST',
+                body: applyText,
+                credentials: 'include' // 인증정보를 포함하는 옵션
+            });
+        }
+
+        async function closeRecruit(){
+            let recruitId = [[${ recruitId }]];
+
+            let response = await fetch('/recruit/' + recruitId + '/finish', {
+                method: 'POST',
+                credentials: 'include' // 인증정보를 포함하는 옵션
+            });
+
+            if (response.ok){
+                window.location.reload();
+            }
+
+        }
+
+        async function acceptApply(element){
+            let recruitId = [[${ recruitId }]];
+            let applyId = element.getAttribute("apply-id");
+            let response = await fetch('/recruit/' + recruitId + '/apply/' + applyId + '?status=accept', {
+                method: 'POST',
+                credentials: 'include' // 인증정보를 포함하는 옵션
+            });
+
+            if (response.ok){
+                window.location.reload();
+            }
+
+
+        }
+
+        async function denyApply(element){
+            let recruitId = [[${ recruitId }]];
+            let applyId = element.getAttribute("apply-id");
+            let response = await fetch('/recruit/' + recruitId + '/apply/' + applyId + '?status=deny', {
+                method: 'POST',
+                credentials: 'include' // 인증정보를 포함하는 옵션
+            });
+
+            if (response.ok){
+                window.location.reload();
+            }
+        }
+    </script>
+
+
+
+    <div class="commentContainer">
+        <form class="commentForm" th:action="@{'/recruit/' + ${recruitId} + '/comment'}" method="post">
+            <label class="commentFormLabel" >댓글 작성:</label>
+            <div class="commentFormInputWithButton">
+                <textarea class="commentInput" id="commentInput" name="commentInput" required></textarea>
+                <button class="commentButton neon-soda-button" type="submit">작성</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="hidden" class="commentContainers">
+        <div class="commentSection">
+            <div class="commentEach" th:each="comment : ${comments}">
+                <div class="commentTop">
+                    <div class="commentUsername" th:attr="username=${comment.getUsername()}" th:text="${comment.getUsername()}" onclick="getProfile(this)">username</div>
+                    <div class="commentButtonGroup">
+                        <button class="commentEditButton" th:attr="comment-id=${comment.getCommentId()}, comment-text=${comment.getContent()}" onclick="editComment(this)">수정</button>
+                        <button class="commentDeleteButton" th:attr="comment-id=${comment.getCommentId()}" onclick="deleteComment(this)">삭제</button>
+                    </div>
+                </div>
+                <div class="commentContent" th:text="${comment.getContent()}">
+                    질문있습니다! 왜 이렇게 타임리프가 어려운거죠??
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function editComment(element) {
+            let editedComment = window.prompt("수정된 댓글을 입력해주세요!", element.getAttribute("comment-text"));
+
+            let commentId = element.getAttribute("comment-id");
+            let recruitId = [[${ recruitId }]];
+            let response = await fetch('/api/recruit/' + recruitId + '/comment/' + commentId, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: editedComment,
+                credentials: 'include' // 인증정보를 포함하는 옵션
+            });
+
+            if (response.status === 403){
+                alert("본인이 작성한 댓글이 아닙니다.")
+            }
+            window.location.reload();
+        }
+
+        async function deleteComment(element) {
+            let commentId = element.getAttribute("comment-id");
+            let recruitId = [[${ recruitId }]];
+            let response = await fetch('/api/recruit/' + recruitId + '/comment/' + commentId, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include' // 인증정보를 포함하는 옵션
+            });
+
+            if (response.status === 403){
+                alert("본인이 작성한 댓글이 아닙니다.")
+            }
+
+            window.location.reload();
+        }
+
+        function getProfile(element){
+            let username = element.getAttribute("username");
+
+            window.location.href = '/profile/' + username;
+        }
+    </script>
+
+
+</div>
+</body>
+
+</html>

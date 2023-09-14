@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>mypage</title>
+  <link rel="stylesheet" th:href="@{../../css/myprofile_edit.css}" href="../../static/css/myprofile_edit.css">
+  <link th:href="@{../../bootstrap/bootstrap.css}" href="../../static/bootstrap/bootstrap.css" rel="stylesheet">
+</head>
+<body>
+
+<form class="container" id="profileForm" th:action="@{'/profile/' + ${profile.getUsername()} + '/edit'}" method="post">
+
+  <div class="profileContainer">
+    <div class="profileTitleGroup">
+      <div class="profileTitleUsername" th:text="${profile.getUsername()}">Username</div>
+      <img class="close-cL9" th:src="@{/assets/myprofile_edit/close.svg}" th:attr="username=${profile.getUsername()}" src="../../static/assets/myprofile_edit/close.svg" alt="#" onclick="closePage(this)">
+      <script>
+        function closePage(element){
+          let usernameForClose = element.getAttribute("username");
+          window.location.href = '/profile/' + usernameForClose;
+        }
+      </script>
+    </div>
+
+    <div class="profileInfoGroup1">
+      <div class="profileContainerLeft">
+
+        <div class="profileSingleLineGroup">
+          <div class="profileTagLabel">Email</div>
+          <input class="profileTagButton" th:value="${profile.getEmail()}" id="email" name="email"/>
+        </div>
+
+        <div class="profileSingleLineGroup">
+          <div class="profileTagLabel">Phone</div>
+          <input class="profileTagButton" th:value="${profile.getPhone()}" id="phone" name="phone"/>
+        </div>
+
+
+        <div class="profileSingleLineGroup">
+          <div class="profileTagLabel">Location</div>
+          <input class="profileTagButton" th:value="${profile.getLocation()}" id="location" name="location"/>
+        </div>
+
+
+        <div class="profileSingleLineGroup">
+          <div class="profileTagLabel">GITHUB</div>
+          <input class="profileTagButton" th:value="${profile.getGithub()}" id="github" name="github"/>
+        </div>
+      </div>
+
+      <div class="profileContainerRight">
+        <div class="profileLongLineGroup1">
+          <div class="profileRightTagLabel">수상경력</div>
+          <div class="profileRightDescribe">
+            <textarea class="profileRightDescribeBox" th:text="${profile.getPrize()}" id="prize" name="prize"> </textarea>
+          </div>
+        </div>
+        <div class="profileLongLineGroup2">
+          <div class="profileRightTagLabel">과거경력</div>
+          <div class="profileRightDescribe">
+            <textarea class="profileRightDescribeBox" th:text="${profile.getPast()}" id="past" name="past"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="profileInfoGroup2">
+      <div class="profileDoubleLineGroup">
+        <div class="profileDoubleTagLabel" title="자신의 기술 스택을 골라주세요!">Tech</div>
+        <div class="profileTechStackInputGroup">
+          <div class="profileTechStackInputWithSearchGroup" id="profileTechStackInputWithSearchGroup">
+            <input class="profileTechStackInput" id="profileTechStackInput">
+            <div class="profileTechStackInputSearch"  onclick="techStackInputEntered()">Search</div>
+          </div>
+
+          <div class="profileTechStackLabelGroup" id="profileTechStackLabelGroup">
+          </div>
+          <input hidden="hidden" type="text" id="techStackInputString" name="techStackInputString">
+
+          <script>
+            let profileTechStackInput = document.getElementById("profileTechStackInput");
+
+            let techStackLabelGroup = document.getElementById("profileTechStackLabelGroup");
+            let techStackForm = document.getElementById('techStackInputString');
+            async function techStackInputEntered(){
+              let techStackValue = profileTechStackInput.value;
+              let response = await fetch('/api/techStackExists', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: techStackValue,
+                credentials: 'include' // 인증정보를 포함하는 옵션
+              });
+
+              if (await response.text() === 'true'){
+                let techStackName = techStackValue.toLowerCase();
+                if (checkTechStackAlreadyIncluded(techStackName)){
+                  alert('이미 포함된 techStack 이름입니다.');
+                }
+                else {
+                  let newDiv = document.createElement('div');
+                  newDiv.classList.add("profileTechStackLabel");
+                  newDiv.innerText = techStackName;
+                  techStackLabelGroup.appendChild(newDiv);
+                  techStackForm.value = techStackName + "/" + techStackForm.value ;
+                  techStackNum = techStackNum + 1;
+                }
+              }
+              else {
+                alert('서버에서 관리하지 않는 techStack 이름입니다.');
+              }
+            }
+
+            function checkTechStackAlreadyIncluded(name){
+              let divList = document.getElementsByClassName('profileTechStackLabel');
+              // 가져온 div 요소들을 순회하면서 조건을 확인합니다.
+              for (let i = 0; i < divList.length; i++){
+                if (divList[i].innerText === name){
+                  return true;
+                }
+              }
+              return false;
+            }
+
+          </script>
+        </div>
+      </div>
+
+
+    </div>
+
+    <div class="profileInfoGroup3">
+      <div class="profileDoubleLineGroup">
+        <div class="profileDoubleTagLabel" title="자신에 대한 설명을 적어주세요!">About Me</div>
+        <input class="profileAboutMe" th:value="${profile.getIntroduction()}" id="introduction" name="introduction">
+      </div>
+    </div>
+
+
+
+    <div class="buttonGroup">
+
+      <!-- 1. 모집중/등록자 View-->
+      <button class="grayButton neon-soda-button" type="submit">수정</button>
+    </div>
+
+
+
+
+  </div>
+</form>
+
+</body>
+</html>

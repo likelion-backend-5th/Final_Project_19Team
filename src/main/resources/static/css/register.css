@@ -1,0 +1,246 @@
+html {
+    font-size: 62.5%;
+}
+
+* {
+    margin: 0 auto;
+    padding: 0;
+}
+
+ul,
+li {
+    list-style: none;
+}
+
+input {
+    border: none;
+}
+
+.flexmain {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 50vw;
+    height: 75vh;
+    top: 10vh;
+    border: solid 0.2rem #1e1e1e;
+    box-sizing: border-box;
+    border-radius: 1rem;
+    box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
+}
+
+.flexing1{
+    display: flex;
+    width: 45vw;
+    height: 75vh;
+    position: relative;
+    top: 2vh;
+    box-sizing: border-box;
+    border-radius: 1rem;
+}
+
+.item--XW1 {
+    position: relative;
+    box-sizing: border-box;
+    border-radius: 1rem;
+}
+
+.item--XW2{
+    position: relative;
+    box-sizing: border-box;
+    border-radius: 1rem;
+}
+
+.close-Uem {
+    width: 1.591rem;
+    height: 1.591rem;
+    position: absolute;
+    left: 37.9045rem;
+    top: 2.0045rem;
+    object-fit: contain;
+    vertical-align: top;
+}
+
+.close-PDj {
+    position: relative;
+    right: -46rem;
+    top: -8rem;
+}
+
+.image-9-KdT {
+    width: 5.8rem;
+    height: 5.2rem;
+    position: relative;
+    top: 4rem;
+    box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
+    border-radius: 0.5rem;
+}
+
+.image-9-CWd {
+    width: 5.8rem;
+    height: 5.2rem;
+}
+
+.sign-up-page-QZo {
+    position: relative;
+    margin-top: 2rem;
+    height: 4.1rem;
+    text-align: center;
+    font-size: 3rem;
+    font-weight: 600;
+    line-height: 10rem;
+    color: #1e1e1e;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+}
+
+
+.line-12-cLR {
+    width: 80rem;
+    height: 0.1rem;
+    position: relative;
+    top: 5rem;
+    background-color: #000000;
+}
+
+.flex {
+    display: flex;
+    position: relative;
+    top: 7rem;
+    flex-direction: column;
+    align-items: center;
+}
+
+.flex1{
+    display: flex;
+    position: relative;
+    top: 7rem;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.nameinputcomponent-M37 {
+    width: 33.9rem;
+    height: 4.1rem;
+    border-radius: 1rem;
+    margin-bottom: 2.5rem;
+}
+
+.teamTechStackLabelGroup{
+    width: 33.9rem;
+    height: 4.1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.techStackLabel{
+    margin-left: 0;
+    background: #d1d2d4;
+    border: solid 0.05rem #d1d2d4;
+    min-width: 5rem;
+    width: fit-content;
+    height: 2rem;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.5rem;
+}
+
+.idinput-HBf {
+    width: 33.9rem;
+    height: 4.1rem;
+    border: solid 0.05rem #471d1d;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    border-radius: 5px;
+}
+
+.id-PkV {
+    position: relative;
+    top: calc(20%);
+    left: calc(5%);
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.4475;
+    color: #000000;
+    font-family: Noto Sans KR, 'Source Sans Pro';
+}
+
+.checkbutton-PTf {
+    width: 6.1rem;
+    height: 2.5rem;
+    position: relative;
+    left: 12rem;
+    top: -1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1.4475;
+    color: #ffffff;
+    font-family: Noto Sans KR, 'Source Sans Pro';
+    white-space: nowrap;
+    background-color: #6065d8;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
+}
+
+.item--QmP {
+    position: relative;
+    top: calc(5%);
+    left: calc(5%);
+    font-size: 1.3rem;
+    font-weight: 400;
+    line-height: 1.2;
+    color: #b63939;
+    font-family: Noto Serif HK, 'Source Sans Pro';
+}
+
+.singupbutton-Quo {
+    visibility: hidden;
+    top: -3rem;
+    width: 10.4rem;
+    height: 5.4rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffffff;
+    border: 0;
+    font-family: Noto Sans KR, 'Source Sans Pro';
+    background-color: #b63939;
+    border-radius: 5px;
+    box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
+}
+
+.singupbutton-Quo:hover{
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+}
+
+.searchBtn{
+    position: relative;
+    top: calc(-41%);
+    left: calc(38%);
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.4475;
+    color: #ffffff;
+    font-family: Noto Sans KR, 'Source Sans Pro';
+    background: #3f51b5;
+    width: 5rem;
+    height: 3rem;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+}
+
+.searchBtn:hover {
+    box-shadow: 0 0 10px #3f51b5;
+}

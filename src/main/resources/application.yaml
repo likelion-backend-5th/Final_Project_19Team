@@ -1,0 +1,23 @@
+# ec2에서 실제로 쓰이는 단계.
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/team-match-db?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    username: root
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql : true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: false
+  web:
+    resources:
+      static-locations: file:media/,classpath:/static
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+jwt:
+  secret: QF2plCk4pMQZysgPC0hSOjNY6rnkmfEGFpJ1EawBM92/L0hp+a99RR4mWAN4WCO32nTsa5Bjaz82B5nuW4IaAg==

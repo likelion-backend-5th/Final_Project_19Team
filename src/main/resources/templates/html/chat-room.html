@@ -1,0 +1,125 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>채팅방</title>
+    <link rel="stylesheet" th:href="@{../../css/chat-room.css}" href="../../static/css/chat-room.css">
+</head>
+<body onLoad="connect()">
+<p>
+<h3 id="room-name"></h3>
+
+<!-- 채팅창 외부 컨테이너-->
+<div id="conversationDiv" class="chat_wrap">
+    <div class="out_btn">
+        <span class="usernames" id="username" th:text="${username}"></span>
+        <a class="out_link" href="/teamlist">채팅 나가기</a>
+        <p></p>
+    </div>
+
+
+    <div class="flexing">
+        <div class="chat_body">
+            <!-- 채팅 내용 박스 -->
+            <div id="inner" class="inner">
+                <!--받은 응답을 표시하는 부분-->
+                <p id="response"></p>
+            </div>
+
+            <!-- 메시지 입력/전송 양식-->
+            <form class="message" id="message-form">
+                <input class="message_text" type="text" id="message" placeholder="메시지를 입력하세요."/>
+                <button class="message_send" type="submit">Send</button>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+<script src="/js/stomp.js"></script>
+<script type="text/javascript">
+    let stompClient;
+    const pathname = window.location.pathname;
+    const roomId = parseInt(pathname.split("/")[2]);    // teamId로 roomId를 생성했음
+    const username = "[[${ username }]]";
+    const chatInner = document.getElementById("inner");    // 스크롤
+
+
+    function scrollToBottom() {
+        chatInner.scrollTop = chatInner.scrollHeight;
+    }
+
+    function connect() {
+        const socket = new WebSocket('ws://ec2-54-180-26-79.ap-northeast-2.compute.amazonaws.com:8080/chatting');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            console.log('Connected: ' + frame);
+            stompClient.subscribe(`/topic/${roomId}`, function (message) {
+                const jsonMessage = JSON.parse(message.body);
+                if (Array.isArray(jsonMessage)) initialMessages(jsonMessage)
+                else receiveMessage(jsonMessage);
+            });
+            scrollToBottom();
+        }, function (error) {
+            console.error('WebSocket 연결 오류: ' + error);
+        });
+    }
+
+    function initialMessages(messageList) {
+        for (const message of messageList)
+            receiveMessage(message)
+    }
+
+    function receiveMessage(messageOutput) {
+        const response = document.getElementById('response');
+        const div = document.createElement('div');
+
+        const senderAndTimeSpan = document.createElement('span');
+        const senderAndTimeText = `[ ${messageOutput.sender} ]  ${messageOutput.time}`;
+        senderAndTimeSpan.appendChild(document.createTextNode(senderAndTimeText));
+        if (messageOutput.sender === username) {
+            senderAndTimeSpan.classList.add('mymsg_sender_time');
+            div.appendChild(senderAndTimeSpan);
+            div.classList.add('massege_box_mymsg');
+        } else {
+            senderAndTimeSpan.classList.add('msg_sender_time');
+            div.appendChild(senderAndTimeSpan);
+            div.classList.add('massege_box_msg');
+        }
+
+        const messageSpan = document.createElement('span');
+        if (messageOutput.sender === username) {
+            messageSpan.classList.add('mymsg');
+        } else {
+            messageSpan.classList.add('msg');
+        }
+        messageSpan.appendChild(document.createTextNode(messageOutput.message));
+        div.appendChild(messageSpan);
+
+        response.appendChild(div);
+        scrollToBottom();
+    }
+
+
+    document.getElementById("message-form").addEventListener("submit", (event) => {
+        event.preventDefault()
+
+        const messageInput = document.getElementById('message');
+        const message = messageInput.value.trim();
+        if (message) {
+            stompClient.send("/app/chat",
+                {
+                    "Authorization": "Bearer JWT"
+                },
+                JSON.stringify({
+                    'roomId': roomId,
+                    'sender': username,
+                    'message': message
+                })
+            );
+            messageInput.value = null;
+        }
+    });
+</script>
+</body>
+</html>

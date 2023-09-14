@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{../../css/create_recruit.css}" href="../../static/css/create_recruit.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons%3A400">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+KR%3A700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%3A400%2C500%2C700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro%3A400%2C500%2C700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans%3A400">
+</head>
+
+<body>
+
+
+<div class="main">
+    <form class="createForm slide-in-top" th:method="post" id="createForm" enctype="multipart/form-data">
+        <div class="createFormLogo">
+            <div class="createFormLogoText">Create_recruit</div>
+            <img class="createFormLogoImg" src="../../static/assets/create/close.svg" th:src="@{/assets/create/close.svg}" alt="#" onclick="closePage()"/>
+            <script>
+                function closePage(){
+                    window.location.href = '/main';
+                }
+            </script>
+        </div>
+        <input class="createTeamName" th:value="${teamName}" readonly>
+        <div class="teamCreateInputGroup">
+            <div class="recruitTitleInfo" id="recruitTitleInfo">
+
+                <div class="teamTechLabel" title="모집 공고글에 적히게 될 설명을 적어주세요!">모집공고 제목</div>
+                <textarea class="recruitTitleInput" type="text" id="teamRecruitName" name="teamRecruitName" th:text="${teamRecruitName}"></textarea>
+            </div>
+
+            <div class="recruitDetailsInfo" id="recruitDetailsInfo">
+                <div class="teamTechLabel-big" title="모집 공고글에 적히게 될 설명을 적어주세요!">모집내용</div>
+                <textarea class="teamCreateTextarea" name="teamRecruitDetails" id="teamRecruitDetails" th:text="${teamRecruitDetails}"></textarea>
+            </div>
+
+            <div class="teamSingleLineInputGroup">
+                <div class="teamTagLabel" title="몇명의 팀원들을 모집하실 생각인가요?">모집인원</div>
+                <input type="text" class="teamNumberInput" id="memberNum" name="memberNum" th:value="${memberNum}" required onchange="onlyNumberInput(this)">
+                <label class="teamNumberInputLabel" for="memberNum" >명</label>
+            </div>
+            <script>
+                let isEdit = [[${ isEdit }]];
+                if (isEdit){
+                    document.getElementById('createForm').setAttribute("action", '/recruit/' + [[${recruitId}]] + '/edit');
+                }
+                else {
+                    document.getElementById('createForm').setAttribute("action", '/team/' + [[${teamId}]] + '/recruit');
+                }
+                function onlyNumberInput(element){
+                    let inputValue = element.value;
+                    if (inputValue !== "" && !isNumeric(inputValue)) {
+                        alert('숫자를 입력하세요.');
+                        element.value = ''; // 값을 지움
+                    }
+                    function isNumeric(value) {
+                        return /^\d+$/.test(value);
+                    }
+                }
+            </script>
+            <div class="teamSingleLineInputGroup" id="recruitTechStackInfo">
+                <div class="teamTechLabel" title="이번에 모집할 기술 스택을 최대 4가지까지 골라주세요!">Wanted</div>
+                <div class="teamTechStackInputGroup">
+                    <div class="teamTechStackInputWithSearchGroup" id="recruitTechStackInputWithSearchGroup">
+                        <input class="teamTechStackInput" id="recruitTechStackInput" placeholder="기술스택을 입력 하세요(java, react, vue, spring...)">
+                        <div class="teamTechStackInputSearch"  onclick="recruitTechStackInputEntered()">Search</div>
+                    </div>
+
+                    <div class="teamTechStackLabelGroup" id="recruitTechStackLabelGroup"></div>
+                    <label class="teamTechStatus">현재 기술 스택: </label><text class="teamTechStatus" id="techStackList" th:text="${techStackList}"></text>
+                    <input hidden="hidden" type="text" id="recruitTechStackList" name="techStackWanted">
+
+                    <script>
+                        let recruitTechStackNum = 0;
+                        let recruitTechStackInput = document.getElementById("recruitTechStackInput");
+
+                        let recruitTechStackLabelGroup = document.getElementById("recruitTechStackLabelGroup");
+                        let recruitTechStackForm = document.getElementById('recruitTechStackList');
+                        async function recruitTechStackInputEntered(){
+                            let techStackValue = recruitTechStackInput.value;
+                            let response = await fetch('/api/techStackExists', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: techStackValue,
+                                credentials: 'include' // 인증정보를 포함하는 옵션
+                            });
+
+                            if (await response.text() === 'true'){
+                                let techStackName = techStackValue.toLowerCase();
+                                if (checkTechStackAlreadyIncluded(techStackName)){
+                                    alert('이미 포함된 techStack 이름입니다.');
+                                }
+                                else if (recruitTechStackNum >= 4) {
+                                    alert('최대 4개까지 기술 스택을 고를 수 있습니다!');
+                                }
+                                else {
+                                    let newDiv = document.createElement('div');
+                                    newDiv.classList.add("recruitTechStackLabel");
+                                    newDiv.innerText = techStackName;
+                                    recruitTechStackLabelGroup.appendChild(newDiv);
+                                    recruitTechStackForm.value = techStackName + "/" + recruitTechStackForm.value ;
+                                    recruitTechStackNum = recruitTechStackNum + 1;
+                                }
+                            }
+                            else {
+                                alert('서버에서 관리하지 않는 techStack 이름입니다.');
+                            }
+                        }
+
+                        function checkTechStackAlreadyIncluded(name){
+                            let divList = document.getElementsByClassName('recruitTechStackLabel');
+                            // 가져온 div 요소들을 순회하면서 조건을 확인합니다.
+                            for (let i = 0; i < divList.length; i++){
+                                if (divList[i].innerText === name){
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+
+                    </script>
+                </div>
+            </div>
+            <div class="recruitTitleInfo" id="recruitImageInfo">
+                <div class="teamTagLabel" title="이미지를 넣어주세요!">Image</div>
+                <input class="imageFileInput" id="file" name="imageFile" type="file">
+            </div>
+
+        </div>
+
+        <div class="singUpButtonGroup">
+            <button class="singUpButton" id="signUpButton" type="submit">등록</button>
+        </div>
+    </form>
+
+
+
+</div>
+
+
+</body>
+</html>

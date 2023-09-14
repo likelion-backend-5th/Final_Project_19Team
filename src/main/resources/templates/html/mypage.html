@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>mypage</title>
+    <link rel="stylesheet" th:href="@{../css/mypage.css}" href="../../static/css/mypage.css">
+    <link th:href="@{../bootstrap/bootstrap.css}" href="../../static/bootstrap/bootstrap.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="profileContainer">
+        <div class="profileTitleGroup">
+            <div class="profileTitleUsername" th:text="${profile.getUsername()}">Username</div>
+            <img class="close-cL9" src="../../static/assets/mypage/close.svg" th:src="@{/assets/mypage/close.svg}" alt="#" onclick="closePage()">
+            <script>
+                function closePage(){
+                    window.location.href = '/main';
+                }
+            </script>
+        </div>
+
+        <div class="profileInfoGroup">
+            <div class="profileContainerLeft">
+
+                <div class="profileSingleLineGroup">
+                    <div class="profileTagLabel">Email</div>
+                    <div class="profileTagButton1" th:text="${profile.getEmail()}">email</div>
+                </div>
+
+                <div class="profileSingleLineGroup">
+                    <div class="profileTagLabel">Phone</div>
+                    <div class="profileTagButton1" th:text="${profile.getPhone()}">phone</div>
+                </div>
+
+
+                <div class="profileSingleLineGroup">
+                    <div class="profileTagLabel">Location</div>
+                    <div class="profileTagButton1" th:text="${profile.getLocation()}">location</div>
+                </div>
+                <div class="profileSingleLineGroup">
+                    <div class="profileTagLabel">Tech</div>
+                    <div class="profileTagButton" th:each="tech : ${profile.getTechStackList()}" th:text="${tech}">HTML</div>
+                </div>
+
+                <div class="profileSingleLineGroup">
+                    <div class="profileTagLabel">GITHUB</div>
+                    <div class="profileTagButton1" th:text="${profile.getGithub()}">https://github.com</div>
+                </div>
+                <div class="profileSingleLineGroup">
+                    <div class="profileTagLabel">Grade</div>
+                    <div class="profileTagButton" th:text="${profile.getGrade() + '점'}">1000점</div>
+                </div>
+                <div class="profileSingleLineGroup">
+                    <div class="profileTagLabel">GiveUpCount</div>
+                    <div class="profileTagButton" th:text="${profile.getGiveUpCount() + '건'}">0건</div>
+                </div>
+            </div>
+
+            <div class="profileContainerRight">
+                <div class="profileLongLineGroup">
+                    <div class="profileRightTagLabel">수상경력</div>
+                    <div class="profileRightDescribe">
+                        <div class="profileRightDescribeBox" th:text="${profile.getPrize()}">안녕하세요! </div>
+                    </div>
+                </div>
+                <div class="profileLongLineGroup">
+                    <div class="profileRightTagLabel">과거경력</div>
+                    <div class="profileRightDescribe">
+                        <div class="profileRightDescribeBox" th:text="${profile.getPast()}">안녕하세요! </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="profileInfoGroup">
+            <div class="profileDoubleLineGroup">
+                <div class="profileDoubleTagLabel" title="자신에 대한 설명을 적어주세요!">About Me</div>
+                <div class="profileAboutMe" th:text="${profile.getIntroduction()}">설명</div>
+            </div>
+        </div>
+
+<!--        <div class="profileTeamGroup" th:if="${isOwner}">-->
+
+<!--        </div>-->
+
+        <div class="buttonGroup">
+            <!-- 1. 모집중/등록자 View-->
+            <a class="redButton neon-red-button" th:if="${isOwner}" th:href="@{'/profile/' + ${profile.getUsername()} + '/edit'}">수정</a>
+            <a class="grayButton neon-gray-button" th:href="@{/teamlist}">팀 목록</a>
+        </div>
+
+
+
+
+    </div>
+</div>
+</body>
+</html>

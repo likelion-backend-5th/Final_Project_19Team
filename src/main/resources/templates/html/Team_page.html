@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" th:href="@{../css/Team_page.css}" href="../../static/css/Team_page.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%3A500" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro%3A400%2C500%2C700" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons%3A400" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter%3A400%2C700" />
+</head>
+
+<body>
+<div class="Team" th:if="${teamList.size()} == 0">
+    <p class="Team_text">현재 가입한 팀이 없습니다.</p>
+</div>
+
+<!--team 목록-->
+<div class="Team" th:each="team : ${teamList}">
+    <p class="Team_text" th:if="${team.getIsManager()}">Team page / Leader</p>
+    <p class="Team_text" th:if="!${team.getIsManager()}">Team page / Member</p>
+    <div class="Tema_box">
+        <div class="Team_box_detail">
+            <div class="btn_blue neon-soda-button" th:if="!${team.getIsFinished()}"
+                 th:attr="team-id=${team.getTeamId()}" onclick="goToTeamChat(this)">
+                팀 채팅방 이동
+            </div>
+            <div class="btn_basic neon-gray-button" th:attr="team-id=${team.getTeamId()}"
+                 onclick="goToDetails(this)">
+                상세보기
+            </div>
+            <div class="btn_basic neon-gray-button" th:if="!${team.getIsFinished()} and ${team.getIsManager()}"
+                 th:attr="team-id=${team.getTeamId()}" onclick="openRecruit(this)">
+                추가모집
+            </div>
+            <div class="btn_red neon-red-button" th:if="!${team.getIsFinished()} and ${team.getIsManager()}"
+                 th:attr="team-id=${team.getTeamId()}" onclick="finishTeam(this)">
+                팀 종료
+            </div>
+            <div class="btn_red neon-red-button" th:if="${team.getIsManager()}"
+                 th:attr="team-id=${team.getTeamId()}" onclick="deleteTeam(this)">
+                팀 삭제
+            </div>
+            <div class="btn_basic neon-gray-button" th:if="!${team.getIsManager()}"
+                 th:attr="team-id=${team.getTeamId()}" onclick="leaveTeam(this)">
+                팀 탈퇴하기
+            </div>
+        </div>
+        <div>
+            <div class="texts">
+                <p class="text_title">팀 이름</p>
+                <p class="text_sub" th:text="${team.getTeamName()}">일구하는주니어</p>
+            </div>
+            <div class="texts">
+                <p class="text_title">활동 장소</p>
+                <p class="text_sub" th:if="${team.getIsOnline()}">온라인</p>
+                <p class="text_sub" th:if="!${team.getIsOnline()}">오프라인</p>
+            </div>
+            <div class="texts">
+                <p class="text_title">현재 인원수</p>
+                <p class="text_sub" th:text="${team.getMemberNum()}">3</p>
+            </div>
+            <div class="texts">
+                <p class="text_title">종료 여부</p>
+                <p class="text_sub" th:if="${team.getIsFinished()}">종료됨</p>
+                <p class="text_sub" th:if="!${team.getIsFinished()}">진행중</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    function goToTeamChat(element) {
+        let teamId = element.getAttribute("team-id");
+        //팀 챗 이동
+        window.location.href = '/team/' + teamId + '/chatroom';
+    }
+
+
+    function goToDetails(element) {
+        let teamId = element.getAttribute("team-id");
+        //팀 상세보기 이동
+
+        window.location.href = '/team/' + teamId;
+    }
+
+    function openRecruit(element) {
+        let teamId = element.getAttribute("team-id");
+        //팀 추가모집 공고 열기
+        window.location.href = '/team/' + teamId + '/recruit';
+    }
+
+    async function finishTeam(element) {
+        alert('팀종료 누름');
+        let teamId = element.getAttribute("team-id");
+        //팀 종료하기
+        let response = await fetch('/api/team/' + teamId + '/finish', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include' // 인증정보를 포함하는 옵션
+        });
+
+        if (response.ok) {
+            window.location.reload();
+        }
+        else {
+            alert("해당 요청이 처리되지 않았습니다! 에러코드:" + response.status);
+        }
+    }
+
+    async function deleteTeam(element) {
+        let teamId = element.getAttribute("team-id");
+        //팀 삭제하기
+        let response = await fetch('/api/team/' + teamId + '/delete', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include' // 인증정보를 포함하는 옵션
+        });
+
+        if (response.ok) {
+            window.location.reload();
+        } else {
+            alert("해당 요청이 처리되지 않았습니다! 에러코드:" + response.status);
+        }
+    }
+
+    async function leaveTeam(element) {
+        let teamId = element.getAttribute("team-id");
+        //팀 탈퇴하기
+        let response = await fetch('/api/team/' + teamId + '/leave', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include' // 인증정보를 포함하는 옵션
+        });
+
+        if (response.ok) {
+            window.location.reload();
+        } else {
+            alert("해당 요청이 처리되지 않았습니다! 에러코드:" + response.status);
+        }
+    }
+</script>
+</body>
+
+</html>
